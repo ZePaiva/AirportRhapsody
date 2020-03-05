@@ -1,8 +1,7 @@
-package Rhapsody.Airport.v1;
+package Rhapsody;
+
 
 public class BusDriver implements Runnable {
     @Override
-    public void run() {
-
-    }
+    public void run() {}
 }
