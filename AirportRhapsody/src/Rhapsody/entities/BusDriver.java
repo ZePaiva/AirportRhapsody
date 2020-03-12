@@ -10,4 +10,5 @@ public class BusDriver extends Thread {
     public void goToDepartureTerminal(){}
     public void goToArrivalTerminal(){}
     public void parkTheBusAndLetPassOff(){}
+    public void parkTheBus(){}
 }
