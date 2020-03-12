@@ -1,7 +1,7 @@
 package Rhapsody.entities.states;
 
 /**
- * Enum class with possible states for the Passenger class
+ * Enum class with possible states for the BusDriver class
  * 
  * @author Jose Paiva
  * @author Andre Mourato
@@ -16,12 +16,16 @@ public enum BusDriverState {
      * or when the departure time has been reached<br/>
      * The driver is waken up the second time by the last passenger to enter the bus <p/>
      * @StateTransitions
-     * {@link Rhapsody.entities.BusDriver#hasDaysWorkEnded} keeps instance on the same state.<p/>
-     * {@link Rhapsody.entities.BusDriver#announcingBusBoarding} keeps instance on the same state. <p/>
-     * {@link Rhapsody.entities.BusDriver#goToDepartureTerminal} puts instante in {@link BusDriverState#DRIVING_FORWARD} state. <p/>
+     * <ul>
+     * {@link Rhapsody.entities.BusDriver#hasDaysWorkEnded} keeps instance on the same state.
+     * {@link Rhapsody.entities.BusDriver#announcingBusBoarding} keeps instance on the same state.
+     * {@link Rhapsody.entities.BusDriver#goToDepartureTerminal} puts instante in {@link BusDriverState#DRIVING_FORWARD} state. 
+     * </ul>
      * @Triggers
-     * {@link Rhapsody.entities.Passenger#takeABus} triggers {@link Rhapsody.entities.BusDriver#announcingBusBoarding} (wakes the bus driver). <p/>
+     * <ul>
+     * {@link Rhapsody.entities.Passenger#takeABus} triggers {@link Rhapsody.entities.BusDriver#announcingBusBoarding} (wakes the bus driver).
      * {@link Rhapsody.entities.Passenger#enterTheBus} triggers {@link Rhapsody.entities.BusDriver#goToDepartureTerminal} when bus is at full capacity.
+     * </ul> 
      */
     PARKING_AT_THE_ARRIVAL_LOUNGE,
     /**
