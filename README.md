@@ -1,25 +1,34 @@
-# AirportRhapsody
+# Exit codes
+0 -> Everything OK <br/>
+1 -> Logger initialization failed, check stacktrace for more <br/>
+2 -> Logger file update failed, check stacktrace and log file for more 
+
+# TBD
+## Airport (Main Class)
+* Generation of shared memory regions
+* Setting of loggers
+* Problem initialization
+* Simulation starting
+* Simulation finish
+* Clean exit
+* Get simulation parameters from an external file or from command line
+
+## Shared Memories
+Nothing Done Yet
 
 ## Entities
+
 ### Passenger
-	* Departing (Boolean)
-		> True if departing, False if arriving
-	* Baggage (BaggageType)
+* State Transitions
 
-### BusDriver
-	* Passengers (List of PassengerType)
-	
+### Bus Driver
+* State Transitions
+
 ### Porter
-	* Bags (List of BaggageType)
+* State Transitions
 
-### Plane
-	* Bags (List of BaggageType)
-	* Passengers (List of PassengerType)
-
-### Airport
-	* Voyages (List of VoyageType)
-	* Planes (List of Planes)
-
-### Voyage
-	* Passengers (List of PassengerType)
-
+# Finished
+Logger Class <br/>
+Passenger States <br/>
+Bus Driver States <br/>
+Porter States
