@@ -3,7 +3,7 @@ package Rhapsody.entities;
 import Rhapsody.entities.states.PassengerState;
 
 /**
- * Passenger Thread Implements the lif-cycle of th passenger and stores it's
+ * Passenger Thread Implements the life-cycle of th passenger and stores it's
  * current state.
  * 
  * @author José Paiva
@@ -11,11 +11,13 @@ import Rhapsody.entities.states.PassengerState;
  */
 public class Passenger extends Thread {
     
-
+    /**
+     * State for the Passenger thread
+     */
     private PassengerState currentState;
 
     public Passenger() {
-        currentState=currentState.AT_DISEMBARKING_ZONE;
+        this.currentState=currentState.AT_DISEMBARKING_ZONE;
     }
 
     public void run() {

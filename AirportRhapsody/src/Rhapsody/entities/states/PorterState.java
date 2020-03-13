@@ -20,7 +20,7 @@ public enum PorterState {
      * <ul>
      * <li>{@link Rhapsody.entities.Passenger#whatShouldIDo} triggers {@link Rhapsody.entities.BusDriver#goToDepartureTerminal} when arrival lounge is at full capacity.
      * </ul>
-     * /
+     */
     WAITING_FOR_PLANE_TO_LAND,
     /**
      * Transition state <p/>
