@@ -1,7 +1,8 @@
 # Exit codes
 0 -> Everything OK <br/>
 1 -> Logger initialization failed, check stacktrace for more <br/>
-2 -> Logger file update failed, check stacktrace and log file for more 
+2 -> Logger file update failed, check stacktrace and log file for more <br/>
+3 -> Lounge failed, check log file for more
 
 # TBD
 ## Airport (Main Class)

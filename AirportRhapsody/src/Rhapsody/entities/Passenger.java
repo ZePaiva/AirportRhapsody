@@ -1,29 +1,38 @@
 package Rhapsody.entities;
 
 import Rhapsody.entities.states.PassengerState;
+import Rhapsody.sharedMems.ArrivalTerminalExit;
+import Rhapsody.sharedMems.ArrivalTerminalTransfer;
+import Rhapsody.sharedMems.BaggageCollectionPoint;
+import Rhapsody.sharedMems.BaggageReclaim;
+import Rhapsody.sharedMems.DepartureTerminalEntrance;
+import Rhapsody.sharedMems.DepartureTerminalTransfer;
+import Rhapsody.sharedMems.GeneralRepository;
+import Rhapsody.sharedMems.Lounge;
+import Rhapsody.utils.Logger;
 
 /**
  * Passenger Thread Implements the life-cycle of the passenger and stores it's
  * current state. <p/>
  * 
- * Passenger life-cycle as 3 possible ways
+ * Passenger life-cycle as 2 possible ways
  * <ul>
  * <li> Arrival with all bags
  * <ol>
  * <li> Passengers arrives to the disembarking zone
- * <li> Passenger goes to luggage collection point
+ * <li> Passenger goes to luggage collection point (conveyor or storeroom)
  * <li> Passenger tries to collect a bag
  * <li> Repeat step 3 until passenger successfully collects all bags
- * <li> Passenger successfully collects all bags and goes Home
+ * <li> Passenger successfully collects all bags and goes Home or departs
  * </ol>
  * <li> Arrival with lost bags
  * <ol>
  * <li> Passengers arrives to the disembarking zone
- * <li> Passenger goes to luggage collection point
+ * <li> Passenger goes to luggage collection point (conveyor or storeroom)
  * <li> Passenger tries to collect a bag
  * <li> Repeat step 3 until passenger notices bag is lost
  * <li> Passenger goes to baggage reclaim office
- * <li> Passenger goes Home
+ * <li> Passenger goes Home or departs
  * </ol>
  * <li> Departure
  * <ol>
@@ -47,14 +56,69 @@ public class Passenger extends Thread {
 	private final int id;
 
 	/**
+	 * Number of flights
+	 */
+	private final int flights;
+
+	/**
+	 * Maximum amount of bags  
+ 	 */
+	private final int maxBags;
+
+	/**
+	 * Logger 
+	 */
+	private Logger logger;
+
+	/**
+	 * Arrival lounge variable
+	 */
+	private Lounge arrivalLounge;
+
+	/**
+	 * Baggage collection point shared memory variable 
+	 */
+	private BaggageCollectionPoint baggageCollectionPoint;
+
+	/**
+	 * Baggage reclaim point shared memmory variable
+	 */
+	private BaggageReclaim baggageReclaim;
+
+	/**
+	 * Arrival terminal exit where passenger declares as FDT type
+	 */
+	private ArrivalTerminalExit arrivalTerminalExit;
+
+	/**
+	 * Arrival terminal transfer quay
+	 */
+	private ArrivalTerminalTransfer arrivalTerminalTransfer;
+
+	/**
+	 * Departure terminal transfer quay
+	 */
+	private DepartureTerminalTransfer departureTerminalTransfer;
+
+	/**
+	 * Departure terminal entrance where passenger declares as TRT type
+	 */
+	private DepartureTerminalEntrance departureTerminalEntrance;
+
+	/**
+	 * General Repository of information
+	 */
+	private GeneralRepository generalRepository;
+
+	/**
 	 * Amount of bags the passenger has started
 	 */
-	private final int startingBags;
+	private int startingBags;
 
 	/**
 	 * Flight id of the passenger
 	 */
-	private final int passengerFlight;
+	private int passengerFlight;
 
 	/**
 	 * State for the Passenger thread
@@ -67,23 +131,47 @@ public class Passenger extends Thread {
 	private int currentBags;
 
 	/**
-	 * Situation of the passenger (is TRT or FDT)
+	 * Type of passenger <p/>
+	 * Can be TRT or FDT
 	 */
-	private String situation;
+	private String type;
 
 	/**
-	 * Constructor for passengger class
+	 * Passenger constructor method
 	 * 
 	 * @param id
-	 * @param bags
+	 * @param flights
+	 * @param logger
+	 * @param arrivalLounge
+	 * @param baggageCollectionPoint
+	 * @param baggageReclaim
+	 * @param arrivalTerminalExit
+	 * @param arrivalTerminalTransfer
+	 * @param departureTerminalTransfer
+	 * @param departureTerminalEntrance
+	 * @param currentState
 	 */
-	public Passenger(int id, int bags, int flight) {
+	public Passenger(int id, int flights, int maxBags, Logger logger, Lounge arrivalLounge, 
+						BaggageCollectionPoint baggageCollectionPoint, BaggageReclaim baggageReclaim, 
+						ArrivalTerminalExit arrivalTerminalExit, 
+						ArrivalTerminalTransfer arrivalTerminalTransfer, 
+						DepartureTerminalTransfer departureTerminalTransfer, 
+						DepartureTerminalEntrance departureTerminalEntrance, 
+						PassengerState currentState, GeneralRepository generalRepository) {
 		this.id = id;
-		this.startingBags = bags;
-		this.passengerFlight = flight;
-		this.currentBags = 0;
-		this.currentState=currentState.AT_DISEMBARKING_ZONE;
+		this.flights = flights;
+		this.maxBags = maxBags;
+		this.logger = logger;
+		this.arrivalLounge = arrivalLounge;
+		this.baggageCollectionPoint = baggageCollectionPoint;
+		this.baggageReclaim = baggageReclaim;
+		this.arrivalTerminalExit = arrivalTerminalExit;
+		this.arrivalTerminalTransfer = arrivalTerminalTransfer;
+		this.departureTerminalTransfer = departureTerminalTransfer;
+		this.departureTerminalEntrance = departureTerminalEntrance;
+		this.generalRepository = generalRepository;
 	}
+
 
 	/**
 	 * Passenger state alteration function 
@@ -92,6 +180,24 @@ public class Passenger extends Thread {
 	 */
 	public void setCurrentState(PassengerState state) {
 		this.currentState = state;
+	}
+
+	/**
+	 * Set the starting amount of bags for this passenger
+	 * 
+	 * @param startingBags
+	 */
+	public void setStartingBags(int startingBags) {
+		this.startingBags = startingBags;
+	}
+
+	/**
+	 * Set the flight id for this passenger
+	 * 
+	 * @param passengerFlight
+	 */
+	public void setPassengerFlight(int passengerFlight) {
+		this.passengerFlight = passengerFlight;
 	}
 
 	/**
@@ -136,26 +242,25 @@ public class Passenger extends Thread {
 	}
 
 	/**
-	 * Sets pasenger current bags
+	 * Sets passenger current bags
 	 */
 	public void setCurrentBags(int currentBags) {
 		this.currentBags = currentBags;
 	}
 
 	/**
-	 * Gets passenger current situation
-	 * @return situation of type string, varies between FDT & TRT & --- 
+	 * Returns passenger type
+	 * @return passenger type of type String
 	 */
-	public String getSituation() {
-		return this.situation;
+	public String getPassengerType() {
+		return this.type;
 	}
 
 	/**
-	 * Sets the passenger current situation
-	 * @param situation
+	 * Sets passenger type
 	 */
-	public void setSituation(String situation) {
-		this.situation = situation;
+	public void setPassengerType(String type) {
+		this.type=type;
 	}
 
 	/**
@@ -183,18 +288,8 @@ public class Passenger extends Thread {
 		 * {} -> state it will enter
 		 * () -> doubts/extra info
 		 * a-zA-Z0-9 -> specification
-		 *   
 		 *  
 		 */
+
 	}
-	
-	public void whatShouldIDo(){}
-	public void goCollectABag(){}
-	public void reportMissingBags(){}
-	public void goHome(){}
-	public void takeABus() {}
-	public void enterTheBus(){}
-	public void leaveTheBus(){}
-	public void prepareNextLeg(){}
-	
 }

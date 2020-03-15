@@ -25,15 +25,15 @@ public class Logger {
 	/**
 	 * Number of flights in the airport
 	 */
-	private int flights;
+	private int flight;
 	/**
-	 * Passengers in each flight
+	 * Passengers id in the flight
 	 */
-	private int[][] flightPassengers;
+	private int flightPassengers[];
 	/**
-	 * Number of bags in each plane's hols
+	 * Number of bags in plane's hold
 	 */
-	private int[] bagsOnPlane;
+	private int bagsOnPlane;
 	/**
 	 * State of the porter
 	 */
@@ -119,14 +119,14 @@ public class Logger {
 	 * @param passengersStartingBags (int [])
 	 * @param passengersCurrentBags (int [])
 	 */
-	public Logger(String logFilePath, int flights, int[][] flightPassengers, int[] bagsOnPlane, 
+	public Logger(String logFilePath, int flight, int[] flightPassengers, int bagsOnPlane, 
 					PorterState porterState, int bagsOnConveyor, int bagsOnStoreroom, 
 					BusDriverState busDriverState, int[] waitingQueue, int[] busSeats, 
 					PassengerState[] passengersState, String[] passengersSituation, 
 					int[] passengersStartingBags, int[] passengersCurrentBags, 
 					int[] passengerFlight) {
 		this.logFilePath = logFilePath;
-		this.flights = flights;
+		this.flight = flight;
 		this.flightPassengers = flightPassengers;
 		this.bagsOnPlane = bagsOnPlane;
 		this.porterState = porterState;
@@ -170,7 +170,7 @@ public class Logger {
 			for (int seat=1; seat <= this.busSeats.length; seat++) { bufferedWriter.write(String.format(" S%d",seat)); }
 
 			// printing flight passengers
-			for (int passenger=1; passenger <= this.flightPassengers[0].length; passenger++) { bufferedWriter.write(String.format(" St%d Si%d NR%d NA%d", passenger, passenger, passenger, passenger)); }
+			for (int passenger=1; passenger <= this.flightPassengers.length; passenger++) { bufferedWriter.write(String.format(" St%d Si%d NR%d NA%d", passenger, passenger, passenger, passenger)); }
 
 			bufferedWriter.write("\n");
 			bufferedWriter.close();
@@ -196,47 +196,45 @@ public class Logger {
 			 * For each flight will print all data for that flight
 			 * inside will have the queue and bus seats 
 			 */
-			for (int flight=1; flight <= this.flights; flight++) {
-				// writing about flight stuff
-				bufferedWriter.write(
-					String.format(
-						"%2d %2d\t%s %3d %3d\t%s ",
-						flight, bagsOnPlane[flight-1], porterState, bagsOnConveyor, lostBags, busDriverState  
-					)
-				);
-				// writing about waiting queue
-				for (int q=1; q <= this.waitingQueue.length; q++) {
-					if (this.waitingQueue[q-1] == -1) {
-						bufferedWriter.write("-- ");
-					} else {
-						bufferedWriter.write(String.format("%2d ", this.waitingQueue[q-1]));
-					}
+			// writing about flight stuff
+			bufferedWriter.write(
+				String.format(
+					"%2d %2d\t%s %3d %3d\t%s ",
+					this.flight, this.bagsOnPlane, this.porterState, this.bagsOnConveyor, this.lostBags, this.busDriverState  
+				)
+			);
+			// writing about waiting queue
+			for (int q=1; q <= this.waitingQueue.length; q++) {
+				if (this.waitingQueue[q-1] == -1) {
+					bufferedWriter.write("-- ");
+				} else {
+					bufferedWriter.write(String.format("%2d ", this.waitingQueue[q-1]));
 				}
-				// writing about bus seats
-				for (int s=1; s <= this.busSeats.length; s++) {
-					if (this.busSeats[s-1] == -1) {
-						bufferedWriter.write("-- ");
-					} else {
-						bufferedWriter.write(String.format("%2d ", this.busSeats[s-1]));
-					}
-				}
-				// writing about passengers
-				for (int p=1; p <= this.flightPassengers[flight-1].length; p++) {
-					if (this.flightPassengers[flight-1][p-1] == -1) {
-						bufferedWriter.write("------------------ --- -- --");
-					} else {
-						int pId=this.flightPassengers[flight-1][p-1];
-						bufferedWriter.write(String.format(
-							"%s %s %2d %2d ", 
-							this.passengersState[pId], this.passengersSituation[pId], 
-							this.passengersStartingBags[pId], this.passengersCurrentBags[pId]
-							)
-						);
-					}
-				}
-				// flush to new line
-				bufferedWriter.write("\n");
 			}
+			// writing about bus seats
+			for (int s=1; s <= this.busSeats.length; s++) {
+				if (this.busSeats[s-1] == -1) {
+					bufferedWriter.write("-- ");
+				} else {
+					bufferedWriter.write(String.format("%2d ", this.busSeats[s-1]));
+				}
+			}
+			// writing about passengers
+			for (int p=1; p <= this.flightPassengers.length; p++) {
+				if (this.flightPassengers[p-1] == -1) {
+					bufferedWriter.write("------------------ --- -- --");
+				} else {
+					int pId=this.flightPassengers[p-1];
+					bufferedWriter.write(String.format(
+						"%s %s %2d %2d ", 
+						this.passengersState[pId], this.passengersSituation[pId], 
+						this.passengersStartingBags[pId], this.passengersCurrentBags[pId]
+						)
+					);
+				}
+			}
+			// flush to new line
+			bufferedWriter.write("\n");
 			bufferedWriter.close();
 			fileWriter.close();
 		} catch (IOException e) {
@@ -345,9 +343,9 @@ public class Logger {
 	 * @param passengerId
 	 */
 	public synchronized void addPassengerToFlight(int flightId, int passengerId) {
-		for (int i = 0; i < this.flightPassengers[flightId].length; i++) {
-			if (this.flightPassengers[flightId][i] == -1) {
-				this.flightPassengers[flightId][i] = passengerId;
+		for (int i = 0; i < this.flightPassengers.length; i++) {
+			if (this.flightPassengers[i] == -1) {
+				this.flightPassengers[i] = passengerId;
 				break;
 			}
 		}
@@ -360,9 +358,9 @@ public class Logger {
 	 * @param passengerId
 	 */
 	public synchronized void removePassengerFromFlight(int flightId, int passengerId) {
-		for (int i = 0; i < this.flightPassengers[flightId].length; i++) {
-			if (this.flightPassengers[flightId][i] == passengerId) {
-				this.flightPassengers[flightId][i] = -1;
+		for (int i = 0; i < this.flightPassengers.length; i++) {
+			if (this.flightPassengers[i] == passengerId) {
+				this.flightPassengers[i] = -1;
 				break;
 			}
 		}
@@ -374,8 +372,17 @@ public class Logger {
 	 * @param flightId
 	 * @param bagAmount
 	 */
-	public synchronized void updateBagsInPlane(int flightId, int bagAmount) {
-		this.bagsOnPlane[flightId]=bagAmount;
+	public synchronized void updateBagsInPlane(int bagAmount) {
+		this.bagsOnPlane=bagAmount;
+		this.updateFileLog();
+	}
+
+	/**
+	 * Updates the flightId with the new flightId
+	 * @param flight
+	 */
+	public synchronized void updateFlight(int flight) {
+		this.flight=flight;
 		this.updateFileLog();
 	}
 

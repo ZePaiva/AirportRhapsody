@@ -16,10 +16,10 @@ public enum PassengerState {
 	 * <p/>
 	 * @StateTransitions
 	 * <ul>
-	 * {@link Rhapsody.entities.Passenger#whatShouldIDo} keeps instance on this state. 
-	 * {@link Rhapsody.entities.Passenger#goCollectABag} puts instance in {@link PassengerState#AT_LUGGAGE_COLLECTION} state.
-	 * {@link Rhapsody.entities.Passenger#goHome} puts instance in {@link PassengerState#EXIT_TERMINAL} state.
-	 * {@link Rhapsody.entities.Passenger#takeABus} puts instance in {@link PassengerState#ARRIVING_TRANSFER_TERMINAL} state.
+	 * <li>{@link Rhapsody.sharedMems.Lounge#whatShouldIDo} keeps instance on this state. 
+	 * <li>{@link Rhapsody.sharedMems.BaggageCollectionPoint#goCollectABag} or {@link Rhapsody.sharedMems.TemporaryStorage#goCollectABag} puts instance in {@link PassengerState#AT_LUGGAGE_COLLECTION} state.
+	 * <li>{@link Rhapsody.sharedMems.ArrivalTerminaExit#goHome} puts instance in {@link PassengerState#EXIT_TERMINAL} state.
+	 * <li>{@link Rhapsody.sharedMems.ArrivalTerminaTransfer#takeABus} puts instance in {@link PassengerState#ARRIVING_TRANSFER_TERMINAL} state.
 	 * </ul>
 	 */
 	AT_DISEMBARKING_ZONE,
@@ -33,16 +33,9 @@ public enum PassengerState {
 	 * <p/>
 	 * @StateTransitions
 	 * <ul>
-	 * {@link Rhapsody.entities.Passenger#goCollectABag} puts instance in {@link PassengerState#AT_LUGGAGE_COLLECTION} state.
-	 * {@link Rhapsody.entities.Passenger#goHome} puts instance in {@link PassengerState#EXIT_ARRIVAL_TERMINAL} state.
-	 * {@link Rhapsody.entities.Passenger#reportMissingBags} puts instance in {@link PassengerState#AT_LUGGAGE_RECLAIM} state.
-	 * </ul>
-	 * @Triggers
-	 * <ul>
-	 * {@link Rhapsody.entities.Porter#carryItToAppropriateStore} wakes up the Passenger instance to check if it's passenger baggage and might decrease the instance baggage countdown if positive.
-	 * {@link Rhapsody.entities.Porter#tryToCollectABag} signals bags collection finished.
-	 * In case the baggage countdown is not 0 after baggage collection is finished, {@link Rhapsody.entities.Passenger#reportMissingBags} is triggered.<br/>
-	 * In case the baggage countdown is 0 after baggage collection is finished, {@link Rhapsody.entities.Passenger#goHome} is triggered.<br/>
+	 * <li>{@link Rhapsody.sharedMems.BaggageCollectionPoint#goCollectABag} or {@link Rhapsody.sharedMems.TemporaryStorage#goCollectABag} puts instance in {@link PassengerState#AT_LUGGAGE_COLLECTION} state.
+	 * <li>{@link Rhapsody.sharedMems.ArrivalTerminalExit#goHome} puts instance in {@link PassengerState#EXIT_ARRIVAL_TERMINAL} state.
+	 * <li>{@link Rhapsody.sharedMems.BaggageReclaim#reportMissingBags} puts instance in {@link PassengerState#AT_LUGGAGE_RECLAIM} state.
 	 * </ul>
 	 */
 	AT_LUGGAGE_COLLECTION,
@@ -52,7 +45,7 @@ public enum PassengerState {
 	 * Passenger is at Luggage reclaim office
 	 * <p/>
 	 * @StateTransitions
-	 * {@link Rhapsody.entities.Passenger#goHome} puts instance in {@link PassengerState#EXIT_ARRIVAL_TERMINAL} state.
+	 * {@link Rhapsody.sharedMems.ArrivalTerminalExit#goHome} puts instance in {@link PassengerState#EXIT_ARRIVAL_TERMINAL} state.
 	 */
 	AT_LUGGAGE_RECLAIM,
 	/**
@@ -68,9 +61,7 @@ public enum PassengerState {
 	 * The Passenger is woken up by the Bus Driver to entry in the bus.
 	 * <p/>
 	 * @StateTransitions
-	 * {@link Rhapsody.entities.Passenger#enterTheBus} puts instance in {@link PassengerState#TERMINAL_TRANSFER} and wakes BusDriver up if needed.
-	 * @Triggers
-	 * {@link Rhapsody.entities.BusDriver#announcingBusBoarding} triggers {@link Rhapsody.entities.Passenger#enterTheBus}.
+	 * {@link Rhapsody.sharedMems.ArrivalTerminalTransfer#enterTheBus} puts instance in {@link PassengerState#TERMINAL_TRANSFER} and wakes BusDriver up if needed.
 	 */
 	ARRIVING_TRANSFER_TERMINAL,
 	/**
@@ -80,16 +71,14 @@ public enum PassengerState {
 	 * <p/>
 	 * @StateTransitions
 	 * StateTransitions
-	 * {@link Rhapsody.entities.Passenger#leaveTheBus} puts instance in {@link PassengerState#DEPARTING_TRANSFER_TERMINAL}.
-	 * @Triggers
-	 * {@link Rhapsody.entities.BusDriver#parkTheBusAndLetPassOff} triggers {@link Rhapsody.entities.Passenger#leaveTheBus}.
+	 * {@link Rhapsody.sharedMems.DepartureTerminalTransfer#leaveTheBus} puts instance in {@link PassengerState#DEPARTING_TRANSFER_TERMINAL}.
 	 */
 	TERMINAL_TRANSFER,
 	/**
 	 * Transition state
 	 * <p/>
 	 * StateTransitions
-	 * {@link Rhapsody.entities.Passenger#prepareNextLeg} puts instance in {@link PassengerState#DEPARTING}.
+	 * {@link Rhapsody.sharedMems.DepartureTerminalEntrance#prepareNextLeg} puts instance in {@link PassengerState#DEPARTING}.
 	 */
 	DEPARTING_TRANSFER_TERMINAL,
 	/**

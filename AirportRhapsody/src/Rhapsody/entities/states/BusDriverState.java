@@ -17,15 +17,10 @@ public enum BusDriverState {
 	 * The driver is waken up the second time by the last passenger to enter the bus <p/>
 	 * @StateTransitions
 	 * <ul>
-	 * {@link Rhapsody.entities.BusDriver#hasDaysWorkEnded} keeps instance on the same state.
-	 * {@link Rhapsody.entities.BusDriver#announcingBusBoarding} keeps instance on the same state.
-	 * {@link Rhapsody.entities.BusDriver#goToDepartureTerminal} puts instante in {@link BusDriverState#DRIVING_FORWARD} state. 
+	 * <li>{@link Rhapsody.sharedMems.ArrivalTerminalTransfer#hasDaysWorkEnded} keeps instance on the same state.
+	 * <li>{@link Rhapsody.sharedMems.ArrivalTerminalTransfer#announcingBusBoarding} keeps instance on the same state.
+	 * <li>{@link Rhapsody.sharedMems.ArrivalTerminalTransfer#goToDepartureTerminal} puts instante in {@link BusDriverState#DRIVING_FORWARD} state. 
 	 * </ul>
-	 * @Triggers
-	 * <ul>
-	 * {@link Rhapsody.entities.Passenger#takeABus} triggers {@link Rhapsody.entities.BusDriver#announcingBusBoarding} (wakes the bus driver).
-	 * {@link Rhapsody.entities.Passenger#enterTheBus} triggers {@link Rhapsody.entities.BusDriver#goToDepartureTerminal} when bus is at full capacity.
-	 * </ul> 
 	 */
 	PARKING_AT_THE_ARRIVAL_LOUNGE,
 	/**
@@ -33,7 +28,7 @@ public enum BusDriverState {
 	 * 
 	 * Used for when driver is transfering passengers to departure terminal <p/>
 	 * @StateTransitions
-	 * {@link Rhapsody.entities.BusDriver#parkTheBusAndLetPassOff} puts instante in {@link BusDriverState#PARKING_AT_THE_DEPARTURE_TERMINAL} state. <p/>
+	 * {@link Rhapsody.sharedMems.DepartureTerminalTransfer#parkTheBusAndLetPassOff} puts instante in {@link BusDriverState#PARKING_AT_THE_DEPARTURE_TERMINAL} state. <p/>
 	 * 
 	 */
 	DRIVING_FORWARD,
@@ -42,17 +37,14 @@ public enum BusDriverState {
 	 * <p/>
 	 * The driver is waken up by the last passenger to exit the bus. <p/>
 	 * @StateTransitions
-	 * {@link Rhapsody.entities.BusDriver#goToArrivalTerminal} puts instante in {@link BusDriverState#DRIVING_BACKWARD} state. <p/>
-	 * @Triggers
-	 * {@link Rhapsody.entities.Passenger#leaveTheBus()} triggers {@link Rhapsody.entities.BusDriver#goToArrivalTerminal} (wakes the bus driver). <p/>
+	 * {@link Rhapsody.sharedMems.DepartureTerminalTransfer#goToArrivalTerminal} puts instante in {@link BusDriverState#DRIVING_BACKWARD} state. <p/>
 	 */
 	PARKING_AT_THE_DEPARTURE_TERMINAL,
 	/**
 	 * Transition state
-	 * 
+	 * <p/>
 	 * Used for when driver is transfering passengers to arrival lounge
-	 * {@link Rhapsody.entities.BusDriver#parkTheBus} puts instante in {@link BusDriverState#PARKING_AT_THE_ARRIVAL_LOUNGE} state. <p/>
-	 * 
+	 * {@link Rhapsody.sharedMems.ArrivalTerminalTransfer#parkTheBus} puts instante in {@link BusDriverState#PARKING_AT_THE_ARRIVAL_LOUNGE} state. <p/>
 	 */
 	DRIVING_BACKWARD,
 }
