@@ -3,7 +3,9 @@ package Rhapsody.sharedMems;
 import java.util.ArrayList;
 import java.util.List;
 
+import Rhapsody.entities.Passenger;
 import Rhapsody.entities.Porter;
+import Rhapsody.entities.states.PassengerState;
 import Rhapsody.entities.states.PorterState;
 import Rhapsody.utils.Logger;
 import Rhapsody.utils.Luggage;
@@ -26,13 +28,14 @@ public class StoreRoom {
      */
     private List<Luggage> bagsInStoreRoom;
     
+
     /**
      * Contructor method for the StoreRoom 
      * @param logger
      */
     public StoreRoom(Logger logger) {
         this.logger=logger;
-        bagsInStoreRoom=new ArrayList<>();
+        this.bagsInStoreRoom=new ArrayList<>();
     }
 
     /**
@@ -57,7 +60,5 @@ public class StoreRoom {
             this.logger.updateStoreRoomBags(0);
         }
     }
-
-
     
 }

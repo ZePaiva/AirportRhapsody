@@ -48,18 +48,43 @@ public class Lounge {
 	public Lounge(Logger logger, int maxPassengerAmount) {
 		this.logger=logger;
 		this.passengersPerFlight=-1;
-		this.flight=-1;
+		this.flight=0;
 		this.passengersInFlight=new int[maxPassengerAmount];
 		Arrays.fill(this.passengersInFlight, -1);
 	}
 
 	/**
+	 * generate flight data for lounge
+	 */
+	public synchronized void generateFlight(){
+		for (int i = 0; i < this.passengersInFlight.length; i++) {
+			this.passengersInFlight[i]=i;
+			this.logger.addPassengerToFlight(i);
+		}
+	}
+	
+	/**
 	 * Puts porter in {@link Rhapsody.entities.states.PorterState#WAITING_FOR_PLANE_TO_LAND} state
 	 */
 	public synchronized void takeARest() {
+		// get porter thread
 		Porter porter = (Porter) Thread.currentThread();
+
+		// update porter
 		porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
-		logger.updatePorterState(porter.getPorterState());
+		this.logger.updatePorterState(porter.getPorterState());
+		
+		// waits for all passengers to arrive
+		this.passengersPerFlight=this.passengersInFlight.length;
+		this.logger.updateFlight(this.flight);
+		while(this.passengersPerFlight>0) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				System.out.print("[LOUNGE] Porter interrupted, check log");
+				System.exit(3);
+			}
+		}
 	}
 
 	/**

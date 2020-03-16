@@ -101,30 +101,30 @@ public class Logger {
 	 */
 	private int lostBags;
 	
+
 	/**
 	 * Logger constructor
-	 * <p/>
-	 * @param logFilePath (String)
-	 * @param flights (int)
-	 * @param flightPassengers (int [][])
-	 * @param bagsOnPlane (int [])
-	 * @param porterState (PorterState)
-	 * @param bagsOnConveyor (int)
-	 * @param bagsOnStoreroom (int)
-	 * @param busDriverState (BusDriverState)
-	 * @param waitingQueue (int [])
-	 * @param busSeats (int [])
-	 * @param passengersState (PassengerState [])
-	 * @param passengersSituation (String [])
-	 * @param passengersStartingBags (int [])
-	 * @param passengersCurrentBags (int [])
+	 * 
+	 * @param logFilePath
+	 * @param flight
+	 * @param flightPassengers
+	 * @param bagsOnPlane
+	 * @param porterState
+	 * @param bagsOnConveyor
+	 * @param bagsOnStoreroom
+	 * @param busDriverState
+	 * @param waitingQueue
+	 * @param busSeats
+	 * @param passengersState
+	 * @param passengersSituation
+	 * @param passengersStartingBags
+	 * @param passengersCurrentBags
 	 */
 	public Logger(String logFilePath, int flight, int[] flightPassengers, int bagsOnPlane, 
 					PorterState porterState, int bagsOnConveyor, int bagsOnStoreroom, 
 					BusDriverState busDriverState, int[] waitingQueue, int[] busSeats, 
 					PassengerState[] passengersState, String[] passengersSituation, 
-					int[] passengersStartingBags, int[] passengersCurrentBags, 
-					int[] passengerFlight) {
+					int[] passengersStartingBags, int[] passengersCurrentBags) {
 		this.logFilePath = logFilePath;
 		this.flight = flight;
 		this.flightPassengers = flightPassengers;
@@ -170,7 +170,7 @@ public class Logger {
 			for (int seat=1; seat <= this.busSeats.length; seat++) { bufferedWriter.write(String.format(" S%d",seat)); }
 
 			// printing flight passengers
-			for (int passenger=1; passenger <= this.flightPassengers.length; passenger++) { bufferedWriter.write(String.format(" St%d Si%d NR%d NA%d", passenger, passenger, passenger, passenger)); }
+			for (int passenger=0; passenger <= this.flightPassengers.length; passenger++) { bufferedWriter.write(String.format(" St%d Si%d NR%d NA%d", passenger+1, passenger+1, passenger+1, passenger+1)); }
 
 			bufferedWriter.write("\n");
 			bufferedWriter.close();
@@ -178,6 +178,7 @@ public class Logger {
 		} catch (IOException e) {
 			System.err.println(e);
 			System.err.println("Error initiating logger");
+			e.printStackTrace();
 			System.exit(1);
 		}
 	} 
@@ -189,7 +190,7 @@ public class Logger {
 	 */
 	private synchronized void updateFileLog() {
 		try {
-			FileWriter fileWriter = new FileWriter(logFilePath);
+			FileWriter fileWriter = new FileWriter(logFilePath, true);
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
 			/*
@@ -221,11 +222,13 @@ public class Logger {
 				}
 			}
 			// writing about passengers
-			for (int p=1; p <= this.flightPassengers.length; p++) {
-				if (this.flightPassengers[p-1] == -1) {
+			for (int p=0; p < this.flightPassengers.length; p++) {
+				if (this.flightPassengers[p] == -1) {
 					bufferedWriter.write("------------------ --- -- --");
 				} else {
-					int pId=this.flightPassengers[p-1];
+					int pId=this.flightPassengers[p];
+					System.out.printf("Sb: %d, CD: %d, pID: %d\n", this.passengersStartingBags.length, 
+						this.passengersCurrentBags.length, pId);
 					bufferedWriter.write(String.format(
 						"%s %s %2d %2d ", 
 						this.passengersState[pId], this.passengersSituation[pId], 
@@ -344,6 +347,8 @@ public class Logger {
 	 */
 	public synchronized void addPassengerToFlight(int passengerId) {
 		for (int i = 0; i < this.flightPassengers.length; i++) {
+			System.out.printf("length: %d, ", this.flightPassengers.length);
+			System.out.printf("index: %d\n", i);
 			if (this.flightPassengers[i] == -1) {
 				this.flightPassengers[i] = passengerId;
 				break;

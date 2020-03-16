@@ -6,6 +6,15 @@ import Rhapsody.entities.BusDriver;
 import Rhapsody.entities.Passenger;
 import Rhapsody.entities.Porter;
 import Rhapsody.entities.states.PassengerState;
+import Rhapsody.sharedMems.ArrivalTerminalExit;
+import Rhapsody.sharedMems.ArrivalTerminalTransfer;
+import Rhapsody.sharedMems.BaggageCollectionPoint;
+import Rhapsody.sharedMems.BaggageReclaim;
+import Rhapsody.sharedMems.DepartureTerminalEntrance;
+import Rhapsody.sharedMems.DepartureTerminalTransfer;
+import Rhapsody.sharedMems.GeneralRepository;
+import Rhapsody.sharedMems.Lounge;
+import Rhapsody.sharedMems.StoreRoom;
 import Rhapsody.utils.Logger;
 import Rhapsody.utils.Luggage;
 
@@ -43,7 +52,7 @@ public class Airport {
 	/**
 	 * Logfile name
 	 */
-	public static final String logFile = "../logs/log.txt";
+	public static final String logFile = "logs/log.txt";
 
 	/**
 	 * Main method
@@ -51,11 +60,6 @@ public class Airport {
 	 * @param args runtime arguments
 	 */
 	public static void main(String args[]) {
-		
-		// Generate entities
-		Porter porter = new Porter();
-		BusDriver busDriver = new BusDriver();
-		Passenger[] passengers = new Passenger[N];
 
 		// Generate shared memory regions
 		/**
@@ -64,40 +68,78 @@ public class Airport {
 
 		// Generate logger
 		// create empty arrays
-		int[] flightPassengers = new int[K];
+		int[] flightPassengers = new int[N];
 		Arrays.fill(flightPassengers, -1);
-		Luggage[] bagsOnPlane = new Luggage[N*M];
 		int[] waitingQueue = new int[N];
 		Arrays.fill(waitingQueue, -1);
 		int[] seats = new int[T];
 		Arrays.fill(seats, -1);
-		PassengerState[] passengerStates = new PassengerState[K*N];
-		String[] passengerSituation = new String[K*N];
-		int[] bags = new int[K*N];
+		PassengerState[] passengersStates = new PassengerState[N];
+		Arrays.fill(passengersStates, null);
+		String[] passengersSituation = new String[N];
+		Arrays.fill(passengersSituation, null);
+		int[] bags = new int[N];
+		Arrays.fill(bags, -1);
 		// create logger
-		Logger logger = new Logger(logFile, K, flightPassengers, bagsOnPlane.length, 
-									porter.getPorterState(), 0, 0, busDriver.getBusDriverState(), 
-									waitingQueue, seats, passengerStates, passengerSituation, seats, 
-									bags, bags);
+		Logger logger = new Logger(logFile, 0, flightPassengers, 0, null, 0, 0, null, waitingQueue, 
+									seats, passengersStates, passengersSituation, bags, bags);
 
-		// Initialize Problem
-		/**
-		 * TBD
-		 */
+		// Generate shared memory entities
+		GeneralRepository generalRepository = new GeneralRepository(logger, N, M);
+		Lounge lounge = new Lounge(logger, N);
+		BaggageCollectionPoint baggageCollectionPoint = new BaggageCollectionPoint(logger);
+		StoreRoom storeRoom = new StoreRoom(logger);
+		BaggageReclaim baggageReclaim = new BaggageReclaim();
+		ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit();
+		ArrivalTerminalTransfer arrivalTerminalTransfer = new ArrivalTerminalTransfer();
+		DepartureTerminalTransfer departureTerminalTransfer = new DepartureTerminalTransfer();
+		DepartureTerminalEntrance departureTerminalEntrance = new DepartureTerminalEntrance();
 
-		// Start Simulation
-		/**
-		 * TBD
-		 */
+		// Generate working entities
+		Passenger[] passengers = new Passenger[N];
+		for (int i=0; i<passengers.length; i++) {
+			passengers[i] = new Passenger(i, K, M, logger, lounge, baggageCollectionPoint, 
+											baggageReclaim, arrivalTerminalExit, 
+											arrivalTerminalTransfer, departureTerminalTransfer, 
+											departureTerminalEntrance, generalRepository);
+			passengers[i].start();	
+		}
+		Porter porter = new Porter(generalRepository, storeRoom, lounge, baggageCollectionPoint, K);
+		porter.start();
+		BusDriver busDriver = new BusDriver();
+		busDriver.start();
 
 		// Wait until the end of simulation
-		/**
-		 * TBD
-		 */
+		// end of passengers
+		for (int i = 0; i < passengers.length; i++) {
+			try {
+				passengers[i].join();
+			} catch (InterruptedException e) {
+				System.err.println("Something happened with a passenger thread");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		// end of porter
+		try {
+			porter.join();
+		} catch (InterruptedException e) {
+			System.err.println("Something happened with the porter thread");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// end of bus driver
+		try {
+			busDriver.join();
+		} catch (InterruptedException e) {
+			System.err.println("Something happened with the bus driver thread");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		// exit cleanly
-		/**
-		 * TBD
-		 */
+		System.exit(0);
 	} 
 }

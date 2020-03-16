@@ -1,6 +1,8 @@
 package Rhapsody.sharedMems;
 
+import java.util.Collections;
 import java.util.EmptyStackException;
+import java.util.Random;
 import java.util.Stack;
 
 import Rhapsody.entities.Porter;
@@ -11,8 +13,8 @@ import Rhapsody.utils.Luggage;
 /**
  * General repository of information for the rhapsody
  * <p/>
- * Here lies the data that is general to all, like flightId, luggage on plane
- * and the real age fo the earth.
+ * Here lies the data that is general to all, like flightId, luggage on plane, passenger type 
+ * and the real age fo the earth according to the holy bible.
  * 
  * @author Jose Paiva
  * @author Andre Mourato
@@ -28,13 +30,48 @@ public class GeneralRepository {
      * Luggage on plane's hold
      */
     private Stack<Luggage> luggageOnPlane;
+
+    // generation parameters
+    /**
+     * amount of passengers per flight
+     */
+    private int passengersPerFlight;
+
+    /**
+     * maximum luggage per passenger
+     */
+    private int maxLuggageAmount;
+
+    /**
+     * random util for lfight generation
+     */
+    private Random random;
     
     /**
      * General Repository constructor
      */
-    public GeneralRepository(Logger logger){
+    public GeneralRepository(Logger logger, int passengersPerFlight, int maxLuggageAmount){
         this.logger=logger;
         this.luggageOnPlane=new Stack<>();
+        this.passengersPerFlight=passengersPerFlight;
+        this.maxLuggageAmount=maxLuggageAmount;
+        this.random=new Random();
+    }
+
+    /**
+     * Generates new starting parameters for the flight 
+     */
+    public synchronized void generateFlight(){
+        for (int p = 0; p < this.passengersPerFlight; p++) {
+            int randBags = random.nextInt(this.maxLuggageAmount);
+            System.out.println(randBags);
+            String situation = random.nextBoolean() ? "TRT" : "FDT";
+            for (int b = 0; b < randBags; b++) {
+                this.luggageOnPlane.push(new Luggage(p, situation));
+            }
+        }
+        // only used to cause randomness, can be deactivated
+        Collections.shuffle(this.luggageOnPlane);
     }
 
     /**
@@ -44,17 +81,6 @@ public class GeneralRepository {
     public synchronized void setLuggageOnPlain(Stack<Luggage> newFlight) {
         this.luggageOnPlane=newFlight;
         this.logger.updateBagsInPlane(newFlight.size());
-    }
-
-    /**
-     * Puts porter to sleep while no plane arrives
-     */
-    public synchronized void noMoreBagsToCollect(){
-        Porter porter = (Porter)Thread.currentThread();
-        porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
-        // alert all passengers bags are ready to collect
-        notifyAll();
-        this.logger.updatePorterState(porter.getPorterState());
     }
 
     /**

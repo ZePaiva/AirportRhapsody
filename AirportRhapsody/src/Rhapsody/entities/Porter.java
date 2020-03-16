@@ -1,6 +1,10 @@
 package Rhapsody.entities;
 
 import Rhapsody.entities.states.PorterState;
+import Rhapsody.sharedMems.BaggageCollectionPoint;
+import Rhapsody.sharedMems.GeneralRepository;
+import Rhapsody.sharedMems.Lounge;
+import Rhapsody.sharedMems.StoreRoom;
 import Rhapsody.utils.Luggage;
 
 /**
@@ -22,16 +26,53 @@ public class Porter extends Thread{
 	private Luggage currentBag;
 
 	/**
+	 * General repository of information (plane hol mostly)
+	 */
+	private GeneralRepository generalRepository;
+
+	/**
+	 * StoreRoom entity
+	 */
+	private StoreRoom storeRoom;
+
+	/**
+	 * Baggage collection entity
+	 */
+	private BaggageCollectionPoint baggageCollectionPoint;
+
+	/**
+	 * Lounge entity
+	 */
+	private Lounge lounge;
+
+	/**
 	 * While true the porter will try to get more bags
 	 */
 	private boolean planeHasBags;
 
 	/**
-	 * Porter constructor mehtod
+	 * number of flights for this simulation
 	 */
-	public Porter(){
+	private final int flights;
+
+	/**
+	 * Porter constructor mehtod
+	 * @param generalRepository
+	 * @param storeRoom
+	 * @param lounge
+	 * @param baggageCollectionPoint
+	 * @param flights
+	 */
+	public Porter(GeneralRepository generalRepository, StoreRoom storeRoom, Lounge lounge,  
+					BaggageCollectionPoint baggageCollectionPoint, int flights){
 		this.currentState=PorterState.WAITING_FOR_PLANE_TO_LAND;
 		this.currentBag=null;
+		this.planeHasBags=false;
+		this.flights=flights;
+		this.baggageCollectionPoint=baggageCollectionPoint;
+		this.generalRepository=generalRepository;
+		this.storeRoom=storeRoom;
+		this.lounge=lounge;
 	}
 
 	/**
@@ -74,8 +115,43 @@ public class Porter extends Thread{
 		this.planeHasBags = has;
 	}
 
+
+	/**
+	 * Porter life-cycle
+	 */
 	@Override
 	public void run() {
-		System.out.printf("Porter with id %l is up", this.getId() );
+		System.out.printf("Porter with id %d is up\n", (int) this.getId() );
+		for (int flights = 0; flights <= this.flights; flights++) {
+			// generate new data for this flight
+			this.generalRepository.generateFlight();	
+			this.lounge.generateFlight();
+
+			// wait for all passengers to disembark
+			this.lounge.takeARest();
+
+			// baggage collection and transportation
+			while(this.planeHasBags) {
+				this.generalRepository.tryToCollectABag();
+				if (this.currentBag.getLuggageType().equals("TRT")) {
+					this.storeRoom.carryItToAppropriateStore();
+				} else if (this.currentBag.getLuggageType().equals("FDT")) {
+					this.baggageCollectionPoint.carryItToAppropriateStore();
+				} else {
+					System.err.print("Bad type of luggage, someone is trying to hack us");
+				}
+			}
+
+			// wakes up all passengers waiting for the luggage to be disembarkeed
+			this.baggageCollectionPoint.noMoreBagsToCollect();
+
+			// reset thyself for the future
+			this.resetSelf(); 
+		}
+	}
+
+	private void resetSelf() {
+		this.currentBag=null;
+		this.planeHasBags=true;
 	}
 }

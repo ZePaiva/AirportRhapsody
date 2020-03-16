@@ -131,6 +131,11 @@ public class Passenger extends Thread {
 	private int currentBags;
 
 	/**
+	 * Amount of lost bags
+	 */
+	private boolean lostBags;
+
+	/**
 	 * Type of passenger <p/>
 	 * Can be TRT or FDT
 	 */
@@ -157,7 +162,7 @@ public class Passenger extends Thread {
 						ArrivalTerminalTransfer arrivalTerminalTransfer, 
 						DepartureTerminalTransfer departureTerminalTransfer, 
 						DepartureTerminalEntrance departureTerminalEntrance, 
-						PassengerState currentState, GeneralRepository generalRepository) {
+						GeneralRepository generalRepository) {
 		this.id = id;
 		this.flights = flights;
 		this.maxBags = maxBags;
@@ -170,6 +175,9 @@ public class Passenger extends Thread {
 		this.departureTerminalTransfer = departureTerminalTransfer;
 		this.departureTerminalEntrance = departureTerminalEntrance;
 		this.generalRepository = generalRepository;
+		this.lostBags=false;
+		this.currentBags=0;
+		this.currentState=PassengerState.AT_DISEMBARKING_ZONE;
 	}
 
 
@@ -258,9 +266,18 @@ public class Passenger extends Thread {
 
 	/**
 	 * Sets passenger type
+	 * @param type
 	 */
 	public void setPassengerType(String type) {
 		this.type=type;
+	}
+
+	/**
+	 * Sets if passenger has lsot at least 1 bag, unsets otherwise
+	 * @param lost
+	 */
+	public void lostBags(boolean lost) {
+		this.lostBags=lost;
 	}
 
 	/**
@@ -290,6 +307,6 @@ public class Passenger extends Thread {
 		 * a-zA-Z0-9 -> specification
 		 *  
 		 */
-
+		System.out.printf("Passenger %d is up\n", this.id);
 	}
 }
