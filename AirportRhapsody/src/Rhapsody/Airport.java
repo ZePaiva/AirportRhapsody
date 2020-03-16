@@ -43,7 +43,7 @@ public class Airport {
 	/**
 	 * Logfile name
 	 */
-	public static final String logFile = "logs/log.txt";
+	public static final String logFile = "../logs/log.txt";
 
 	/**
 	 * Main method
