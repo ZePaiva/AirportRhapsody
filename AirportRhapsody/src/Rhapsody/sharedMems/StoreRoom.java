@@ -9,12 +9,12 @@ import Rhapsody.utils.Logger;
 import Rhapsody.utils.Luggage;
 
 /**
- * Conveyor Belt shared memory entity
+ * Storeroom shared memory entity
  * 
  * @author Jose Paiva
  * @author Andre Mourato
  */
-public class BaggageCollectionPoint{
+public class StoreRoom {
 
     /**
      * Logger for debugging purposes
@@ -22,29 +22,29 @@ public class BaggageCollectionPoint{
     private Logger logger;
 
     /**
-     * Amount of bags in the conveyor belt
+     * Luggage currently present in the storeroom
      */
-    private List<Luggage> bagsInConveyorBelt;
-
+    private List<Luggage> bagsInStoreRoom;
+    
     /**
-     * Constructor of Baggage collection point
+     * Contructor method for the StoreRoom 
      * @param logger
      */
-    public BaggageCollectionPoint(Logger logger) {
-        this.logger = logger;
-        bagsInConveyorBelt = new ArrayList<>();
+    public StoreRoom(Logger logger) {
+        this.logger=logger;
+        bagsInStoreRoom=new ArrayList<>();
     }
 
     /**
-     * Method to deposit a bag in the conveyor belt <p/>
-     * <b>DOES NOT ALTER BAGS IN PLANE'S HOLD OR STOREROOM<b/>  
+     * Method to deposit a bag in storeroom. <p/>
+     * <b>DOES NOT ALTER BAGS IN PLANE'S HOLD OR CONVEYOR BELT<b/>  
      */
     public synchronized void carryItToAppropriateStore() {
         Porter porter = (Porter) Thread.currentThread();
         try {
-            this.bagsInConveyorBelt.add(porter.getCurrentLuggage());
+            this.bagsInStoreRoom.add(porter.getCurrentLuggage());
             porter.setCurrentLuggage(null);
-            this.logger.updateStoreRoomBags(this.bagsInConveyorBelt.size());
+            this.logger.updateStoreRoomBags(this.bagsInStoreRoom.size());
         } catch (NullPointerException e) {
             System.err.print("[StoreRoom] Porter has no bag, reseting porter");
             // resetting porter
@@ -53,12 +53,11 @@ public class BaggageCollectionPoint{
             porter.setCurrentLuggage(null);
             this.logger.updatePorterState(porter.getPorterState());
             // resetting luggage on storeroom
-            this.bagsInConveyorBelt=new ArrayList<>();
+            this.bagsInStoreRoom=new ArrayList<>();
             this.logger.updateStoreRoomBags(0);
         }
     }
 
 
-
-	
+    
 }

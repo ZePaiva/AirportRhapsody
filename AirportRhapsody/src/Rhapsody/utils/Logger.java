@@ -339,10 +339,9 @@ public class Logger {
 	// Flights update functions
 	/**
 	 * Update flight with one new passenger
-	 * @param flightId
 	 * @param passengerId
 	 */
-	public synchronized void addPassengerToFlight(int flightId, int passengerId) {
+	public synchronized void addPassengerToFlight(int passengerId) {
 		for (int i = 0; i < this.flightPassengers.length; i++) {
 			if (this.flightPassengers[i] == -1) {
 				this.flightPassengers[i] = passengerId;
@@ -354,10 +353,9 @@ public class Logger {
 
 	/**
 	 * Update flight with one new passenger
-	 * @param flightId
 	 * @param passengerId
 	 */
-	public synchronized void removePassengerFromFlight(int flightId, int passengerId) {
+	public synchronized void removePassengerFromFlight(int passengerId) {
 		for (int i = 0; i < this.flightPassengers.length; i++) {
 			if (this.flightPassengers[i] == passengerId) {
 				this.flightPassengers[i] = -1;
@@ -369,7 +367,6 @@ public class Logger {
 
 	/**
 	 * Update plane luggage amount
-	 * @param flightId
 	 * @param bagAmount
 	 */
 	public synchronized void updateBagsInPlane(int bagAmount) {

@@ -17,7 +17,7 @@ public enum PassengerState {
 	 * @StateTransitions
 	 * <ul>
 	 * <li>{@link Rhapsody.sharedMems.Lounge#whatShouldIDo} keeps instance on this state. 
-	 * <li>{@link Rhapsody.sharedMems.BaggageCollectionPoint#goCollectABag} or {@link Rhapsody.sharedMems.TemporaryStorage#goCollectABag} puts instance in {@link PassengerState#AT_LUGGAGE_COLLECTION} state.
+	 * <li>{@link Rhapsody.sharedMems.BaggageCollectionPoint#goCollectABag} or {@link Rhapsody.sharedMems.StoreRoom#goCollectABag} puts instance in {@link PassengerState#AT_LUGGAGE_COLLECTION} state.
 	 * <li>{@link Rhapsody.sharedMems.ArrivalTerminaExit#goHome} puts instance in {@link PassengerState#EXIT_TERMINAL} state.
 	 * <li>{@link Rhapsody.sharedMems.ArrivalTerminaTransfer#takeABus} puts instance in {@link PassengerState#ARRIVING_TRANSFER_TERMINAL} state.
 	 * </ul>
@@ -33,7 +33,7 @@ public enum PassengerState {
 	 * <p/>
 	 * @StateTransitions
 	 * <ul>
-	 * <li>{@link Rhapsody.sharedMems.BaggageCollectionPoint#goCollectABag} or {@link Rhapsody.sharedMems.TemporaryStorage#goCollectABag} puts instance in {@link PassengerState#AT_LUGGAGE_COLLECTION} state.
+	 * <li>{@link Rhapsody.sharedMems.BaggageCollectionPoint#goCollectABag} or {@link Rhapsody.sharedMems.StoreRoom#goCollectABag} puts instance in {@link PassengerState#AT_LUGGAGE_COLLECTION} state.
 	 * <li>{@link Rhapsody.sharedMems.ArrivalTerminalExit#goHome} puts instance in {@link PassengerState#EXIT_ARRIVAL_TERMINAL} state.
 	 * <li>{@link Rhapsody.sharedMems.BaggageReclaim#reportMissingBags} puts instance in {@link PassengerState#AT_LUGGAGE_RECLAIM} state.
 	 * </ul>

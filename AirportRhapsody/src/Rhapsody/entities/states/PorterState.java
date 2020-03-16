@@ -14,7 +14,7 @@ public enum PorterState {
 	 * @StateTransitions
 	 * <ul>
 	 * <li>{@link Rhapsody.sharedMems.Lounge#takeARest} keeps instance on the same state.
-	 * <li>{@link Rhapsody.sharedMems.BaggageCollectionPoint#tryToCollectABag} or {@link Rhapsody.sharedMems.TemporaryStorage#tryToCollectABag} puts instante in {@link PorterState#AT_THE_PLANES_HOLD} state. 
+	 * <li>{@link Rhapsody.sharedMems.BaggageCollectionPoint#tryToCollectABag} or {@link Rhapsody.sharedMems.StoreRoom#tryToCollectABag} puts instante in {@link PorterState#AT_THE_PLANES_HOLD} state. 
 	 * </ul>
 	 */
 	WAITING_FOR_PLANE_TO_LAND,
@@ -23,9 +23,9 @@ public enum PorterState {
 	 * The porter is getting some baggages. <p/>
 	 * @StateTransitions
 	 * <ul>
-	 * <li>{@link Rhapsody.sharedMems.BaggageCollectionPoint#noMoreBagsToCollect} or {@link Rhapsody.sharedMems.TemporaryStorage#noMoreBagsToCollect} puts instante in {@link PorterState#WAITING_FOR_PLANE_TO_LAND} state.
+	 * <li>{@link Rhapsody.sharedMems.BaggageCollectionPoint#noMoreBagsToCollect} or {@link Rhapsody.sharedMems.StoreRoom#noMoreBagsToCollect} puts instante in {@link PorterState#WAITING_FOR_PLANE_TO_LAND} state.
 	 * <li>{@link Rhapsody.sharedMems.BaggageCollectionPoint#carryItToAppropriateStore} puts instante in {@link PorterState#AT_THE_LUGGAGE_BELT_CONVEYOR} state if baggage claimed. 
-	 * <li>{@link Rhapsody.sharedMems.TemporaryStorage#carryItToAppropriateStore} puts instante in {@link PorterState#AT_THE_STOREROOM} state if baggage not claimed.
+	 * <li>{@link Rhapsody.sharedMems.StoreRoom#carryItToAppropriateStore} puts instante in {@link PorterState#AT_THE_STOREROOM} state if baggage not claimed.
 	 * </ul>
 	 */
 	AT_THE_PLANES_HOLD,
@@ -43,7 +43,7 @@ public enum PorterState {
 	 * The porter is giving some baggages. <p/>
 	 * @StateTransitions
 	 * <ul>
-	 * <li>{@link Rhapsody.sharedMems.TemporaryStorage#tryToCollectABag} puts instante in {@link PorterState#AT_THE_PLANES_HOLD} state.
+	 * <li>{@link Rhapsody.sharedMems.StoreRoom#tryToCollectABag} puts instante in {@link PorterState#AT_THE_PLANES_HOLD} state.
 	 * </ul>
 	 */
 	AT_THE_STOREROOM;
