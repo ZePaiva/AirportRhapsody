@@ -176,6 +176,7 @@ public class Logger {
 			bufferedWriter.close();
 			fileWriter.close();
 		} catch (IOException e) {
+			System.err.println(e);
 			System.err.println("Error initiating logger");
 			System.exit(1);
 		}
