@@ -275,8 +275,6 @@ public class Logger {
 					bufferedWriter.write("--- --- --- --- ");
 				} else {
 					int pId=this.flightPassengers[p];
-					System.out.printf("Sb: %d, CD: %d, pID: %d\n", this.passengersStartingBags[pId], 
-						this.passengersCurrentBags[pId], pId);
 					bufferedWriter.write(String.format(
 						"%s %s %3d %3d ", 
 						this.passengersState[pId], this.passengersSituation[pId], 
@@ -500,8 +498,6 @@ public class Logger {
 	 */
 	public synchronized void updateStartingBags(int passengerId, int startingBags, boolean noLog){
 		this.passengersStartingBags[passengerId]=startingBags;
-		Arrays.stream(this.passengersStartingBags).forEach(System.out::print);
-		System.out.println();
 		if (!noLog){
 			this.updateFileLog();
 		}
@@ -514,8 +510,6 @@ public class Logger {
 	 */
 	public synchronized void updateCurrentBags(int passengerId, int bagAmount, boolean noLog){
 		this.passengersCurrentBags[passengerId]=bagAmount;
-		Arrays.stream(this.passengersCurrentBags).forEach(System.out::print);
-		System.out.println();
 		if (!noLog){
 			this.updateFileLog();
 		}

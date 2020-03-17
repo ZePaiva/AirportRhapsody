@@ -131,6 +131,11 @@ public class Passenger extends Thread {
 	 * Boolean to check if the airport has closed
 	 */
 	private boolean canFly;
+	
+	/**
+	 * Last Flight id
+	 */
+	private int flight;
 
 	/**
 	 * Passenger constructor method
@@ -168,8 +173,24 @@ public class Passenger extends Thread {
 		this.currentState=PassengerState.AT_DISEMBARKING_ZONE;
 		this.startingBags=0;
 		this.canFly=true;
+		this.flight=-1;
 	}
 
+	/**
+	 * Get passenger last flightID
+	 * @return
+	 */
+	public int getFlight() {
+		return this.flight;
+	}
+
+	/**
+	 * Set passenger Last flightID
+	 * @param flight
+	 */
+	public void setFlight(int flight) {
+		this.flight = flight;
+	}
 
 	/**
 	 * Passenger state alteration function 
@@ -262,30 +283,30 @@ public class Passenger extends Thread {
 
 	/**
 	 * Passenger life-cycle
+	 * Passenger arrives and informs of it's arival to the lounge [Lounge.java] {AT_DISEMBARKING_ZONE}
+	 * The Lounge puts the passenger on hold until it can go to the baggage collection point (porter might be busy with another plane)
+	 * The Lounge checks if this passenger is the last of it's flight, if it is awakes the porter, if it's not allows the porter to sleep more
+	 * When the porter awakes goes to the baggage collection point [BaggageCollectionPoint.java] {AT_LUGGAGE_COLLECTION}
+	 * In collection point tries to collect all bags
+	 * If successfull will go back to lounge or goHome (50/50 chance) {AT_DISEMBARKING_ZONE, EXIT_ARRIVAL_TERMINAL}
+	 * If porter signals end of bags before it has collected all bags it will go to baggage reclaim office {AT_LUGGAGE_RECLAIM}
+	 * Baggage Reclaim office will answer all at the same time(?) [BaggageReclaim.java]
+	 * After claiming all luggage it will try to enter the bus waiting line [ArrivalTerminalTransfer] {ARRIVING_TRANSFER_TERMINAL}
+	 * Waits for the bus to arrive
+	 * Try to get in the bus or wait if bus is full {TERMINAL_TRANSFER}
+	 * Arrives at departure terminal transfer quay [DepartureTerminalTransfer.java] {DEPARTING_TRANSFER_TERMINAL}
+	 * Enters the departure terminal to prepare next leg of journey [DepartureTerminalEntrance.java] {DEPARTING}
+	 * 
+	 * Notes:
+	 * [] -> shared memory region which will control
+	 * {} -> state it will enter
+	 * () -> doubts/extra info
+	 * a-zA-Z0-9 -> specification
+	 * 
 	 */
 	public void run() {
 		// run
-		/**
-		 * Passenger arrives and informs of it's arival to the lounge [Lounge.java] {AT_DISEMBARKING_ZONE}
-		 * The Lounge puts the passenger on hold until it can go to the baggage collection point (porter might be busy with another plane)
-		 * The Lounge checks if this passenger is the last of it's flight, if it is awakes the porter, if it's not allows the porter to sleep more
-		 * When the porter awakes goes to the baggage collection point [BaggageCollectionPoint.java] {AT_LUGGAGE_COLLECTION}
-		 * In collection point tries to collect all bags
-		 * If successfull will go back to lounge or goHome (50/50 chance) {AT_DISEMBARKING_ZONE, EXIT_ARRIVAL_TERMINAL}
-		 * If porter signals end of bags before it has collected all bags it will go to baggage reclaim office {AT_LUGGAGE_RECLAIM}
-		 * Baggage Reclaim office will answer all at the same time(?) [BaggageReclaim.java]
-		 * After claiming all luggage it will try to enter the bus waiting line [ArrivalTerminalTransfer] {ARRIVING_TRANSFER_TERMINAL}
-		 * Waits for the bus to arrive
-		 * Try to get in the bus or wait if bus is full {TERMINAL_TRANSFER}
-		 * Arrives at departure terminal transfer quay [DepartureTerminalTransfer.java] {DEPARTING_TRANSFER_TERMINAL}
-		 * Enters the departure terminal to prepare next leg of journey [DepartureTerminalEntrance.java] {DEPARTING}
-		 * 
-		 * Notes:
-		 * [] -> shared memory region which will control
-		 * {} -> state it will enter
-		 * () -> doubts/extra info
-		 * a-zA-Z0-9 -> specification
-		 *  
+		/** 
 		 */
 		//System.out.printf("Passenger %d is up\n", this.getPassengerId());
 		while(this.canFly) {
@@ -305,12 +326,19 @@ public class Passenger extends Thread {
 					}
 				}
 				this.arrivalTerminalExit.goHome();
+				if (this.canFly)
+					this.generalRepository.goHome();
+				System.out.println(this.canFly);
 			} else if (this.type.equals("TRT")) {     	// in case it's a transit type passenger
 				// go take a bus
+				this.arrivalTerminalExit.goHome();
+				if (this.canFly)
+					this.generalRepository.goHome();
+				System.out.println(this.canFly);
 			} else { 									// in case it failed upon starting
 				System.err.printf("[PASSENGER] Passenger %d had wrong start", this.id);
 				System.exit(5);
-			}	
+			}
 		}
 	}
 }

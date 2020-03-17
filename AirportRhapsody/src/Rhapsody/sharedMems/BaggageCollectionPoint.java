@@ -101,6 +101,7 @@ public class BaggageCollectionPoint{
         // if there ar no more bags in the conveyor belt
         if (this.bagsInConveyorBelt.isEmpty()) {
             passenger.lostBags(true);
+            this.collectedAllBags=false;
         } else {
             // if there are bags try to find one of the current passenger and removes it
             Luggage bag = this.bagsInConveyorBelt.stream()

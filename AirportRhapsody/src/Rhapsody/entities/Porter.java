@@ -145,7 +145,10 @@ public class Porter extends Thread{
 			this.baggageCollectionPoint.noMoreBagsToCollect();
 
 			// reset thyself for the future
-			this.resetSelf(); 
+			this.resetSelf();
+			
+			// warns that it has processed all luggage
+			this.generalRepository.takeARest();
 		}
 	}
 

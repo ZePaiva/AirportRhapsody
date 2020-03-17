@@ -35,6 +35,11 @@ public class Lounge {
 	private final int flights;
 
 	/**
+	 * Current flight that is being processed
+	 */
+	private int currentFlight;
+
+	/**
 	 * amount of passengers ready to disembark
 	 */
 	private int passengersDisembarked;
@@ -80,16 +85,17 @@ public class Lounge {
 		
 		// waits for all passengers to arrive
 		this.passengersDisembarked=0;
-		this.logger.updateFlight(flightId, false);
+		this.currentFlight=flightId;
 		while(!this.allDisembarked) {
 			try {
-				//System.out.printf("PORTER PD: %d | PF: %d\n", this.passengersDisembarked, this.passengersPerFlight);
+				System.out.printf("PORTER PD: %d | PF: %d\n", this.passengersDisembarked, this.passengersPerFlight);
 				wait();
 			} catch (InterruptedException e) {
 				System.err.print("[LOUNGE] Porter interrupted, check log\n");
 				System.exit(3);
 			}
 		}
+		this.allDisembarked=false;
 
 		// checks if it is time to end simulation
 		if (flightId==this.flights) {
@@ -105,6 +111,13 @@ public class Lounge {
 	public synchronized void whatShouldIDo() {
 		Passenger passenger = (Passenger) Thread.currentThread();
 		int pId=passenger.getPassengerId();
+		if (passenger.getFlight()!=this.currentFlight){
+			passenger.setFlight(this.currentFlight);
+		} else {
+			this.currentFlight++;
+			passenger.setFlight(this.currentFlight);
+		}
+		this.logger.updateFlight(this.currentFlight, true);
 		passenger.setCurrentState(PassengerState.AT_DISEMBARKING_ZONE);
 		this.logger.updatePassengerState(passenger.getCurrentState(), pId, false);
 		// disembartks and notifies all so that passengers can start moving
@@ -113,7 +126,7 @@ public class Lounge {
 		
 		// waits until airport is closed or all passengers disembark
 		while(this.airportOpen && this.passengersDisembarked!=this.passengersPerFlight){
-			//System.out.printf("P%d WSID | PD: %d | PF: %d | AO: %s\n", passenger.getPassengerId(), this.passengersDisembarked, this.passengersPerFlight, Boolean.toString(this.airportOpen));
+			System.out.printf("P%d WSID | PD: %d | PF: %d | AO: %s\n", passenger.getPassengerId(), this.passengersDisembarked, this.passengersPerFlight, Boolean.toString(this.airportOpen));
 			try {
 				wait();
 			} catch (InterruptedException e) {
@@ -122,6 +135,6 @@ public class Lounge {
 			}
 		}
 		this.allDisembarked=true;
-		passenger.canFly(!this.airportOpen);
+		passenger.canFly(this.airportOpen);
 	}
 }

@@ -50,6 +50,16 @@ public class GeneralRepository {
     private Random random;
 
     /**
+     * Number of passengers that ended their journey
+     */
+    private int endPassengers;
+
+    /**
+     * Has porter finished processing (can be only TRT passengers)
+     */
+    private boolean endFlightPort;
+
+    /**
      * General Repository constructor
      * @param logger
      * @param passengersPerFlight
@@ -67,6 +77,7 @@ public class GeneralRepository {
      * Method to generate passenger situation
      */
     public synchronized void generatePassenger() {
+        this.endPassengers=0;
         Passenger passenger = (Passenger)Thread.currentThread();
         int randBags = random.nextInt(this.maxLuggageAmount+1);
         String situation = random.nextBoolean() ? "TRT" : "FDT";
@@ -134,9 +145,35 @@ public class GeneralRepository {
             porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
             porter.setCurrentLuggage(null);
             // resetting luggage stack
-            this.luggageOnPlane=new Stack<>();
+            this.luggageOnPlane=new Stack<>();  
             this.logger.updatePorterState(porter.getPorterState(), true);
             this.logger.updateBagsInPlane(0, false);
         }
     }
+    
+    /**
+     * Method to put pasenger on hold until all passengers have ended 
+     */
+    public synchronized void goHome() {
+        this.endPassengers++;
+        if (this.endPassengers==this.passengersPerFlight && this.endFlightPort){
+            notifyAll();
+        } else {
+            while (this.endPassengers!=this.passengersPerFlight || !this.endFlightPort) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    System.err.print("[GENERALREPOSITORY] Pasenger interrupted, check log\n");
+				    System.exit(3);
+                }
+            }
+        }
+    }
+    
+    public synchronized void takeARest() {
+        this.endFlightPort=true;
+        notifyAll();
+    }
+
+
 }
