@@ -31,7 +31,7 @@ public class Airport {
 	/**
 	 * Number of planes landing
 	 */
-	public static final int K = 6;
+	public static final int K = 2;
 
 	/**
 	 * Number of Passengers arriving in each plane
@@ -76,14 +76,14 @@ public class Airport {
 		Arrays.fill(bags, -1);
 		// create logger
 		Logger logger = new Logger(logFile, 1, flightPassengers, 0, null, 0, 0, null, waitingQueue, 
-									seats, passengersStates, passengersSituation, bags, bags);
+									seats, passengersStates, passengersSituation, bags, bags.clone());
 
 		// Generate shared memory entities
 		GeneralRepository generalRepository = new GeneralRepository(logger, N, M);
 		Lounge lounge = new Lounge(logger, N, K);
 		BaggageCollectionPoint baggageCollectionPoint = new BaggageCollectionPoint(logger);
 		StoreRoom storeRoom = new StoreRoom(logger);
-		BaggageReclaim baggageReclaim = new BaggageReclaim();
+		BaggageReclaim baggageReclaim = new BaggageReclaim(logger);
 		ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(logger);
 		ArrivalTerminalTransfer arrivalTerminalTransfer = new ArrivalTerminalTransfer();
 		DepartureTerminalTransfer departureTerminalTransfer = new DepartureTerminalTransfer();

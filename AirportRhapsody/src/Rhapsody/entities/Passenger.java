@@ -294,15 +294,22 @@ public class Passenger extends Thread {
 
 			if (this.type.equals("FDT")) { 			  	// in case this passenger is of Final Destination type
 				// check if it has bags
-				if (this.startingBags==0) {
+				if (this.startingBags!=0) {
 					// get bags
+					while(!this.lostBags && this.currentBags!=this.startingBags) {
+						this.baggageCollectionPoint.goCollectABag();
+					}
+					if (this.lostBags) {
+						// reclaim bag
+						this.baggageReclaim.reportMissingBags(); 
+					}
 				}
 				this.arrivalTerminalExit.goHome();
 			} else if (this.type.equals("TRT")) {     	// in case it's a transit type passenger
 				// go take a bus
 			} else { 									// in case it failed upon starting
-				System.err.printf("[PASSENGER] Passenger %d had wrong start");
-				this.currentThread().interrupt();
+				System.err.printf("[PASSENGER] Passenger %d had wrong start", this.id);
+				System.exit(5);
 			}	
 		}
 	}

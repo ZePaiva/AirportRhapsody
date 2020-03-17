@@ -83,12 +83,13 @@ public class GeneralRepository {
         passenger.setPassengerType(situation);
         passenger.setStartingBags(randBags);
         passenger.setCurrentState(PassengerState.AT_DISEMBARKING_ZONE);
-        System.out.printf("P%d | Bags: %d\n", passenger.getPassengerId(), randBags);
+        System.out.printf("P%d | Bags: %d | SB: %d\n", passenger.getPassengerId(), randBags, passenger.getStartingBags());
         this.logger.updateBagsInPlane(this.luggageOnPlane.size(), true);
-        this.logger.updateStartingBags(passenger.getPassengerId(), randBags, true);
         this.logger.updateSituation(passenger.getPassengerId(), situation, true);
-        this.logger.addPassengerToFlight(passenger.getPassengerId(), true);
+        this.logger.updateStartingBags(passenger.getPassengerId(), randBags, true);
+        this.logger.updateCurrentBags(passenger.getPassengerId(), 0, true);
         this.logger.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
+        this.logger.addPassengerToFlight(passenger.getPassengerId(), true);
     }
 
     /**
@@ -109,6 +110,8 @@ public class GeneralRepository {
         porter.setPorterState(PorterState.AT_THE_PLANES_HOLD);
         if (this.luggageOnPlane.empty()) {
             porter.planeHasBags(false);
+        } else {
+            porter.planeHasBags(true);
         }
         this.logger.updatePorterState(porter.getPorterState(), false);
     }
@@ -123,7 +126,7 @@ public class GeneralRepository {
             Luggage bag = this.luggageOnPlane.pop();
             porter.setCurrentLuggage(bag);
             System.out.printf("%s\n", bag.toString());
-            this.logger.updateBagsInPlane(this.luggageOnPlane.size(), false);
+            this.logger.updateBagsInPlane(this.luggageOnPlane.size(), true);
         } catch (EmptyStackException e) {
             System.err.print("[GeneralRepository] Luggage stack already empty, reseting porter");
             // resetting porter

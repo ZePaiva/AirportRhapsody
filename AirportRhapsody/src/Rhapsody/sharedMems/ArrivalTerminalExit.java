@@ -31,7 +31,7 @@ public class ArrivalTerminalExit {
 		Passenger passenger = (Passenger) Thread.currentThread();
 		passenger.setCurrentState(PassengerState.EXIT_ARRIVAL_TERMINAL);
 		this.logger.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
-		this.logger.updateTRTPassengers(1, false);
+		this.logger.updateFDTPassengers(1, false);
 	}
 	
 }

@@ -128,6 +128,7 @@ public class Porter extends Thread{
 
 			// baggage collection and transportation
 			this.generalRepository.tryToCollectABag();
+			System.out.printf("has bags %s\n", Boolean.toString(this.planeHasBags));
 			while(this.planeHasBags) {
 				this.generalRepository.carryItToAppropriateStore();
 				if (this.currentBag.getLuggageType().equals("TRT")) {

@@ -7,6 +7,7 @@ import Rhapsody.entities.states.PorterState;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Logger class
@@ -204,7 +205,7 @@ public class Logger {
 			);
 			bufferedWriter.write(
 				String.format(
-					"N. of bags that should have benn transported in the planes hold = %d\n", 
+					"N. of bags that should have been transported in the planes hold = %d\n", 
 					this.transportedBags
 				)
 			);
@@ -244,8 +245,9 @@ public class Logger {
 			// writing about flight stuff
 			bufferedWriter.write(
 				String.format(
-					"%2d %2d\t%s %3d %3d\t%s ",
-					this.flight, this.bagsOnPlane, this.porterState, this.bagsOnConveyor, this.lostBags, this.busDriverState  
+					"%2d %2d %s %2d %2d %s ",
+					this.flight, this.bagsOnPlane, this.porterState, this.bagsOnConveyor, 
+					this.bagsOnStoreroom, this.busDriverState  
 				)
 			);
 			// writing about waiting queue
@@ -273,8 +275,8 @@ public class Logger {
 					bufferedWriter.write("--- --- --- --- ");
 				} else {
 					int pId=this.flightPassengers[p];
-					//System.out.printf("Sb: %d, CD: %d, pID: %d\n", this.passengersStartingBags.length, 
-					//	this.passengersCurrentBags.length, pId);
+					System.out.printf("Sb: %d, CD: %d, pID: %d\n", this.passengersStartingBags[pId], 
+						this.passengersCurrentBags[pId], pId);
 					bufferedWriter.write(String.format(
 						"%s %s %3d %3d ", 
 						this.passengersState[pId], this.passengersSituation[pId], 
@@ -498,6 +500,8 @@ public class Logger {
 	 */
 	public synchronized void updateStartingBags(int passengerId, int startingBags, boolean noLog){
 		this.passengersStartingBags[passengerId]=startingBags;
+		Arrays.stream(this.passengersStartingBags).forEach(System.out::print);
+		System.out.println();
 		if (!noLog){
 			this.updateFileLog();
 		}
@@ -510,6 +514,8 @@ public class Logger {
 	 */
 	public synchronized void updateCurrentBags(int passengerId, int bagAmount, boolean noLog){
 		this.passengersCurrentBags[passengerId]=bagAmount;
+		Arrays.stream(this.passengersCurrentBags).forEach(System.out::print);
+		System.out.println();
 		if (!noLog){
 			this.updateFileLog();
 		}

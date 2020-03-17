@@ -44,6 +44,8 @@ public class StoreRoom {
      */
     public synchronized void carryItToAppropriateStore() {
         Porter porter = (Porter) Thread.currentThread();
+        porter.setPorterState(PorterState.AT_THE_STOREROOM);
+        this.logger.updatePorterState(porter.getPorterState(), true);
         try {
             this.bagsInStoreRoom.add(porter.getCurrentLuggage());
             porter.setCurrentLuggage(null);

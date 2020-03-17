@@ -49,11 +49,13 @@ public class BaggageCollectionPoint{
      */
     public synchronized void carryItToAppropriateStore() {
         Porter porter = (Porter) Thread.currentThread();
+        porter.setPorterState(PorterState.AT_THE_LUGGAGE_BELT_CONVEYOR);
+        this.logger.updatePorterState(porter.getPorterState(), true);
         this.collectedAllBags=false;
         try {
             this.bagsInConveyorBelt.add(porter.getCurrentLuggage());
             porter.setCurrentLuggage(null);
-            this.logger.updateStoreRoomBags(this.bagsInConveyorBelt.size(), true);
+            this.logger.updateConveyorBags(this.bagsInConveyorBelt.size(), false);
         } catch (NullPointerException e) {
             System.err.print("[StoreRoom] Porter has no bag, reseting porter");
             // resetting porter
@@ -83,8 +85,7 @@ public class BaggageCollectionPoint{
      */
     public synchronized void goCollectABag(){
         Passenger passenger = (Passenger) Thread.currentThread();
-        passenger.setCurrentState(PassengerState.AT_LUGGAGE_COLLECTION);
-
+        System.out.println("Trying to collect a bag");
         // wait until all luggage has been collected
         while(!this.collectedAllBags){
             try{
@@ -94,6 +95,8 @@ public class BaggageCollectionPoint{
                 System.exit(3);
             }
         }
+        passenger.setCurrentState(PassengerState.AT_LUGGAGE_COLLECTION);
+        this.logger.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), false);
 
         // if there ar no more bags in the conveyor belt
         if (this.bagsInConveyorBelt.isEmpty()) {
@@ -112,11 +115,13 @@ public class BaggageCollectionPoint{
                 passenger.lostBags(true);
             } else {
                 passenger.setCurrentBags(passenger.getCurrentBags()+1);
+                System.out.println(passenger.getCurrentBags());
+                System.out.println(passenger.getStartingBags());
             }
         }
 
         // log updates
-        this.logger.updateConveyorBags(this.bagsInConveyorBelt.size(), false);
+        this.logger.updateConveyorBags(this.bagsInConveyorBelt.size(), true);
         this.logger.updateCurrentBags(passenger.getPassengerId(), passenger.getCurrentBags(), false);
     }
 	
