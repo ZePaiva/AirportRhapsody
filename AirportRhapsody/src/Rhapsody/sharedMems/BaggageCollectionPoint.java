@@ -53,17 +53,17 @@ public class BaggageCollectionPoint{
         try {
             this.bagsInConveyorBelt.add(porter.getCurrentLuggage());
             porter.setCurrentLuggage(null);
-            this.logger.updateStoreRoomBags(this.bagsInConveyorBelt.size());
+            this.logger.updateStoreRoomBags(this.bagsInConveyorBelt.size(), true);
         } catch (NullPointerException e) {
             System.err.print("[StoreRoom] Porter has no bag, reseting porter");
             // resetting porter
             porter.planeHasBags(false);
             porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
             porter.setCurrentLuggage(null);
-            this.logger.updatePorterState(porter.getPorterState());
+            this.logger.updatePorterState(porter.getPorterState(), true);
             // resetting luggage on storeroom
             this.bagsInConveyorBelt=new ArrayList<>();
-            this.logger.updateStoreRoomBags(0);
+            this.logger.updateStoreRoomBags(0, false);
         }
     }
 
@@ -74,7 +74,7 @@ public class BaggageCollectionPoint{
         Porter porter = (Porter) Thread.currentThread();
         porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
         this.collectedAllBags=true;
-        this.logger.updatePorterState(porter.getPorterState());
+        this.logger.updatePorterState(porter.getPorterState(), false);
         notifyAll();
     }
 
@@ -116,8 +116,8 @@ public class BaggageCollectionPoint{
         }
 
         // log updates
-        this.logger.updateConveyorBags(this.bagsInConveyorBelt.size());
-        this.logger.updateCurrentBags(passenger.getPassengerId(), passenger.getCurrentBags());
+        this.logger.updateConveyorBags(this.bagsInConveyorBelt.size(), false);
+        this.logger.updateCurrentBags(passenger.getPassengerId(), passenger.getCurrentBags(), false);
     }
 	
 }

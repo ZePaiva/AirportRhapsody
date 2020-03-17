@@ -5,7 +5,9 @@ import java.util.EmptyStackException;
 import java.util.Random;
 import java.util.Stack;
 
+import Rhapsody.entities.Passenger;
 import Rhapsody.entities.Porter;
+import Rhapsody.entities.states.PassengerState;
 import Rhapsody.entities.states.PorterState;
 import Rhapsody.utils.Logger;
 import Rhapsody.utils.Luggage;
@@ -46,9 +48,12 @@ public class GeneralRepository {
      * random util for lfight generation
      */
     private Random random;
-    
+
     /**
      * General Repository constructor
+     * @param logger
+     * @param passengersPerFlight
+     * @param maxLuggaageAmount
      */
     public GeneralRepository(Logger logger, int passengersPerFlight, int maxLuggageAmount){
         this.logger=logger;
@@ -59,19 +64,31 @@ public class GeneralRepository {
     }
 
     /**
-     * Generates new starting parameters for the flight 
+     * Method to generate passenger situation
      */
-    public synchronized void generateFlight(){
-        for (int p = 0; p < this.passengersPerFlight; p++) {
-            int randBags = random.nextInt(this.maxLuggageAmount);
-            System.out.println(randBags);
-            String situation = random.nextBoolean() ? "TRT" : "FDT";
-            for (int b = 0; b < randBags; b++) {
-                this.luggageOnPlane.push(new Luggage(p, situation));
+    public synchronized void generatePassenger() {
+        Passenger passenger = (Passenger)Thread.currentThread();
+        int randBags = random.nextInt(this.maxLuggageAmount+1);
+        String situation = random.nextBoolean() ? "TRT" : "FDT";
+        for (int b = 0; b < randBags; b++) {
+            if (this.luggageOnPlane.size() >= this.passengersPerFlight * this.maxLuggageAmount) {
+                System.err.print("[GENERALREPOSITORY] cant stop for some reason\n");
+                System.exit(3);
+            }
+            if (random.nextInt(100) <= 90) {
+                this.luggageOnPlane.push(new Luggage(passenger.getPassengerId(), situation));
+                this.logger.updatePlaneHoldBags(+1, true);   
             }
         }
-        // only used to cause randomness, can be deactivated
-        Collections.shuffle(this.luggageOnPlane);
+        passenger.setPassengerType(situation);
+        passenger.setStartingBags(randBags);
+        passenger.setCurrentState(PassengerState.AT_DISEMBARKING_ZONE);
+        System.out.printf("P%d | Bags: %d\n", passenger.getPassengerId(), randBags);
+        this.logger.updateBagsInPlane(this.luggageOnPlane.size(), true);
+        this.logger.updateStartingBags(passenger.getPassengerId(), randBags, true);
+        this.logger.updateSituation(passenger.getPassengerId(), situation, true);
+        this.logger.addPassengerToFlight(passenger.getPassengerId(), true);
+        this.logger.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
     }
 
     /**
@@ -80,7 +97,7 @@ public class GeneralRepository {
      */
     public synchronized void setLuggageOnPlain(Stack<Luggage> newFlight) {
         this.luggageOnPlane=newFlight;
-        this.logger.updateBagsInPlane(newFlight.size());
+        this.logger.updateBagsInPlane(newFlight.size(), true);
     }
 
     /**
@@ -93,7 +110,7 @@ public class GeneralRepository {
         if (this.luggageOnPlane.empty()) {
             porter.planeHasBags(false);
         }
-        this.logger.updatePorterState(porter.getPorterState());
+        this.logger.updatePorterState(porter.getPorterState(), false);
     }
 
     /**
@@ -105,7 +122,8 @@ public class GeneralRepository {
         try {
             Luggage bag = this.luggageOnPlane.pop();
             porter.setCurrentLuggage(bag);
-            this.logger.updateBagsInPlane(this.luggageOnPlane.size());
+            System.out.printf("%s\n", bag.toString());
+            this.logger.updateBagsInPlane(this.luggageOnPlane.size(), false);
         } catch (EmptyStackException e) {
             System.err.print("[GeneralRepository] Luggage stack already empty, reseting porter");
             // resetting porter
@@ -114,8 +132,8 @@ public class GeneralRepository {
             porter.setCurrentLuggage(null);
             // resetting luggage stack
             this.luggageOnPlane=new Stack<>();
-            this.logger.updatePorterState(porter.getPorterState());
-            this.logger.updateBagsInPlane(0);
+            this.logger.updatePorterState(porter.getPorterState(), true);
+            this.logger.updateBagsInPlane(0, false);
         }
     }
 }

@@ -22,7 +22,7 @@ public enum BusDriverState {
 	 * <li>{@link Rhapsody.sharedMems.ArrivalTerminalTransfer#goToDepartureTerminal} puts instante in {@link BusDriverState#DRIVING_FORWARD} state. 
 	 * </ul>
 	 */
-	PARKING_AT_THE_ARRIVAL_LOUNGE,
+	PARKING_AT_THE_ARRIVAL_LOUNGE ("PKAL"),
 	/**
 	 * Transition state<p/>
 	 * 
@@ -31,7 +31,7 @@ public enum BusDriverState {
 	 * {@link Rhapsody.sharedMems.DepartureTerminalTransfer#parkTheBusAndLetPassOff} puts instante in {@link BusDriverState#PARKING_AT_THE_DEPARTURE_TERMINAL} state. <p/>
 	 * 
 	 */
-	DRIVING_FORWARD,
+	DRIVING_FORWARD ("DRFW"),
 	/**
 	 * Blocking state
 	 * <p/>
@@ -39,12 +39,22 @@ public enum BusDriverState {
 	 * @StateTransitions
 	 * {@link Rhapsody.sharedMems.DepartureTerminalTransfer#goToArrivalTerminal} puts instante in {@link BusDriverState#DRIVING_BACKWARD} state. <p/>
 	 */
-	PARKING_AT_THE_DEPARTURE_TERMINAL,
+	PARKING_AT_THE_DEPARTURE_TERMINAL ("PKDT"),
 	/**
 	 * Transition state
 	 * <p/>
 	 * Used for when driver is transfering passengers to arrival lounge
 	 * {@link Rhapsody.sharedMems.ArrivalTerminalTransfer#parkTheBus} puts instante in {@link BusDriverState#PARKING_AT_THE_ARRIVAL_LOUNGE} state. <p/>
 	 */
-	DRIVING_BACKWARD,
+	DRIVING_BACKWARD ("DRBW");
+
+	private final String state;
+	private BusDriverState(String state) {
+		this.state=state;
+	}
+
+	@Override
+	public String toString(){
+		return this.state;
+	}
 }

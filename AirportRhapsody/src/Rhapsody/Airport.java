@@ -16,7 +16,6 @@ import Rhapsody.sharedMems.GeneralRepository;
 import Rhapsody.sharedMems.Lounge;
 import Rhapsody.sharedMems.StoreRoom;
 import Rhapsody.utils.Logger;
-import Rhapsody.utils.Luggage;
 
 /**
  * Airport Main class 
@@ -32,12 +31,12 @@ public class Airport {
 	/**
 	 * Number of planes landing
 	 */
-	public static final int K = 5;
+	public static final int K = 6;
 
 	/**
 	 * Number of Passengers arriving in each plane
 	 */
-	public static final int N = 6;
+	public static final int N = 1;
 
 	/**
 	 * Number of maximum baggages
@@ -61,11 +60,6 @@ public class Airport {
 	 */
 	public static void main(String args[]) {
 
-		// Generate shared memory regions
-		/**
-		 * TBD
-		 */
-
 		// Generate logger
 		// create empty arrays
 		int[] flightPassengers = new int[N];
@@ -81,33 +75,33 @@ public class Airport {
 		int[] bags = new int[N];
 		Arrays.fill(bags, -1);
 		// create logger
-		Logger logger = new Logger(logFile, 0, flightPassengers, 0, null, 0, 0, null, waitingQueue, 
+		Logger logger = new Logger(logFile, 1, flightPassengers, 0, null, 0, 0, null, waitingQueue, 
 									seats, passengersStates, passengersSituation, bags, bags);
 
 		// Generate shared memory entities
 		GeneralRepository generalRepository = new GeneralRepository(logger, N, M);
-		Lounge lounge = new Lounge(logger, N);
+		Lounge lounge = new Lounge(logger, N, K);
 		BaggageCollectionPoint baggageCollectionPoint = new BaggageCollectionPoint(logger);
 		StoreRoom storeRoom = new StoreRoom(logger);
 		BaggageReclaim baggageReclaim = new BaggageReclaim();
-		ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit();
+		ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(logger);
 		ArrivalTerminalTransfer arrivalTerminalTransfer = new ArrivalTerminalTransfer();
 		DepartureTerminalTransfer departureTerminalTransfer = new DepartureTerminalTransfer();
 		DepartureTerminalEntrance departureTerminalEntrance = new DepartureTerminalEntrance();
 
 		// Generate working entities
-		Passenger[] passengers = new Passenger[N];
-		for (int i=0; i<passengers.length; i++) {
-			passengers[i] = new Passenger(i, K, M, logger, lounge, baggageCollectionPoint, 
-											baggageReclaim, arrivalTerminalExit, 
-											arrivalTerminalTransfer, departureTerminalTransfer, 
-											departureTerminalEntrance, generalRepository);
-			passengers[i].start();	
-		}
 		Porter porter = new Porter(generalRepository, storeRoom, lounge, baggageCollectionPoint, K);
 		porter.start();
 		BusDriver busDriver = new BusDriver();
 		busDriver.start();
+		Passenger[] passengers = new Passenger[N];
+		for (int i=0; i<passengers.length; i++) {
+			passengers[i]= new Passenger(i, logger, lounge, baggageCollectionPoint, baggageReclaim, 
+											arrivalTerminalExit, arrivalTerminalTransfer, 
+											departureTerminalTransfer, departureTerminalEntrance, 
+											generalRepository);
+			passengers[i].start();	
+		}
 
 		// Wait until the end of simulation
 		// end of passengers
@@ -140,6 +134,7 @@ public class Airport {
 		}
 
 		// exit cleanly
+		logger.finish();
 		System.exit(0);
 	} 
 }

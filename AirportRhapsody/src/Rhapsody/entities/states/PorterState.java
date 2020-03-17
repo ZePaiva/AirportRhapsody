@@ -17,7 +17,7 @@ public enum PorterState {
 	 * <li>{@link Rhapsody.sharedMems.BaggageCollectionPoint#tryToCollectABag} or {@link Rhapsody.sharedMems.StoreRoom#tryToCollectABag} puts instante in {@link PorterState#AT_THE_PLANES_HOLD} state. 
 	 * </ul>
 	 */
-	WAITING_FOR_PLANE_TO_LAND,
+	WAITING_FOR_PLANE_TO_LAND ("WPTL"),
 	/**
 	 * Transition state <p/>
 	 * The porter is getting some baggages. <p/>
@@ -28,7 +28,7 @@ public enum PorterState {
 	 * <li>{@link Rhapsody.sharedMems.StoreRoom#carryItToAppropriateStore} puts instante in {@link PorterState#AT_THE_STOREROOM} state if baggage not claimed.
 	 * </ul>
 	 */
-	AT_THE_PLANES_HOLD,
+	AT_THE_PLANES_HOLD ("ATPH"),
 	/**
 	 * Transition state <p/>
 	 * The porter is giving some baggages. <p/>
@@ -37,7 +37,7 @@ public enum PorterState {
 	 * <li>{@link Rhapsody.sharedMems.BaggageCollectionPoint#tryToCollectABag} puts instante in {@link PorterState#AT_THE_PLANES_HOLD} state.
 	 * </ul>
 	 */
-	AT_THE_LUGGAGE_BELT_CONVEYOR,
+	AT_THE_LUGGAGE_BELT_CONVEYOR ("ATCB"),
 		/**
 	 * Transition state <p/>
 	 * The porter is giving some baggages. <p/>
@@ -46,5 +46,16 @@ public enum PorterState {
 	 * <li>{@link Rhapsody.sharedMems.StoreRoom#tryToCollectABag} puts instante in {@link PorterState#AT_THE_PLANES_HOLD} state.
 	 * </ul>
 	 */
-	AT_THE_STOREROOM;
+	AT_THE_STOREROOM ("ATSR");
+
+	private final String state;
+
+	private PorterState(String state) {
+		this.state=state;
+	}
+
+	@Override
+	public String toString(){
+		return this.state;
+	}
 }

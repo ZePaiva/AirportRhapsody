@@ -121,18 +121,15 @@ public class Porter extends Thread{
 	 */
 	@Override
 	public void run() {
-		System.out.printf("Porter with id %d is up\n", (int) this.getId() );
-		for (int flights = 0; flights <= this.flights; flights++) {
-			// generate new data for this flight
-			this.generalRepository.generateFlight();	
-			this.lounge.generateFlight();
-
+		//System.out.printf("Porter with id %d is up\n", (int) this.getId() );
+		for (int flights = 1; flights <= this.flights; flights++) {
 			// wait for all passengers to disembark
-			this.lounge.takeARest();
+			this.lounge.takeARest(flights);
 
 			// baggage collection and transportation
+			this.generalRepository.tryToCollectABag();
 			while(this.planeHasBags) {
-				this.generalRepository.tryToCollectABag();
+				this.generalRepository.carryItToAppropriateStore();
 				if (this.currentBag.getLuggageType().equals("TRT")) {
 					this.storeRoom.carryItToAppropriateStore();
 				} else if (this.currentBag.getLuggageType().equals("FDT")) {
@@ -140,6 +137,7 @@ public class Porter extends Thread{
 				} else {
 					System.err.print("Bad type of luggage, someone is trying to hack us");
 				}
+				this.generalRepository.tryToCollectABag();
 			}
 
 			// wakes up all passengers waiting for the luggage to be disembarkeed

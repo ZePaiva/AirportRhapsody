@@ -27,91 +27,101 @@ public class Lounge {
 	 * Information about amount of passengers of each flight. <p/>
 	 * Starts with -1 in all, 0 means all passengers disembarked.
 	 */
-	private int passengersPerFlight;
+	private final int passengersPerFlight;
 
 	/**
-	 * ID's of the passengers in the current arriving flight
+	 * Maximum amount of flights 
 	 */
-	private int[] passengersInFlight;
-	
+	private final int flights;
+
 	/**
-	 * Current arriving flight Id
+	 * amount of passengers ready to disembark
 	 */
-	private int flight;
+	private int passengersDisembarked;
+
+	/**
+	 * Informs when simulation is finished
+	 */
+	private boolean airportOpen;
+
+	/**
+	 * Porter variable to check if all passenger have disembarked or not
+	 */
+	private boolean allDisembarked;
+
 
 	/**
 	 * Contructor method for the Lounge class
 	 * 
 	 * @param logger
 	 * @param maxPassengerAmount
+	 * @param flights
 	 */
-	public Lounge(Logger logger, int maxPassengerAmount) {
+	public Lounge(Logger logger, int maxPassengerAmount, int flights) {
 		this.logger=logger;
-		this.passengersPerFlight=-1;
-		this.flight=0;
-		this.passengersInFlight=new int[maxPassengerAmount];
-		Arrays.fill(this.passengersInFlight, -1);
+		this.passengersPerFlight=maxPassengerAmount;
+		this.passengersDisembarked=0;
+		this.flights=1;
+		this.airportOpen=true;
+		this.allDisembarked=false;
 	}
 
 	/**
-	 * generate flight data for lounge
-	 */
-	public synchronized void generateFlight(){
-		for (int i = 0; i < this.passengersInFlight.length; i++) {
-			this.passengersInFlight[i]=i;
-			this.logger.addPassengerToFlight(i);
-		}
-	}
-	
-	/**
 	 * Puts porter in {@link Rhapsody.entities.states.PorterState#WAITING_FOR_PLANE_TO_LAND} state
+	 * @param flightId
 	 */
-	public synchronized void takeARest() {
+	public synchronized void takeARest(int flightId) {
 		// get porter thread
 		Porter porter = (Porter) Thread.currentThread();
 
 		// update porter
 		porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
-		this.logger.updatePorterState(porter.getPorterState());
+		this.logger.updatePorterState(porter.getPorterState(), true);
 		
 		// waits for all passengers to arrive
-		this.passengersPerFlight=this.passengersInFlight.length;
-		this.logger.updateFlight(this.flight);
-		while(this.passengersPerFlight>0) {
+		this.passengersDisembarked=0;
+		this.logger.updateFlight(flightId, false);
+		while(!this.allDisembarked) {
 			try {
+				//System.out.printf("PORTER PD: %d | PF: %d\n", this.passengersDisembarked, this.passengersPerFlight);
 				wait();
 			} catch (InterruptedException e) {
-				System.out.print("[LOUNGE] Porter interrupted, check log");
+				System.err.print("[LOUNGE] Porter interrupted, check log\n");
 				System.exit(3);
 			}
+		}
+
+		// checks if it is time to end simulation
+		if (flightId==this.flights) {
+			this.airportOpen=false;
+			notifyAll();
 		}
 	}
 
 	/**
-	 * Porter methdo to wait for all passengers of a new flight
-	 * @param newFlight
-	 */
-	public synchronized void waitForAllPassengers(int newFlight) {
-		this.passengersPerFlight=this.passengersInFlight.length;
-		this.flight=newFlight;
-		this.logger.updateFlight(this.flight);
-		while(this.passengersPerFlight>0) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				System.out.print("[PORTER] Interruption @ Lounge#waitForAllPassengers");
-				System.exit(3);
-			}
-		}
-	}
-
-	/**
-	 * Puts passenger in {@link Rhapsody.entities.states.PassengerState#AT_DISEMBARKING_ZONE} state
+	 * Puts passenger in {@link Rhapsody.entities.states.PassengerState#AT_DISEMBARKING_ZONE} state. <p/>
+	 * Disembarks passenger and notifies all other passengers
 	 */
 	public synchronized void whatShouldIDo() {
 		Passenger passenger = (Passenger) Thread.currentThread();
 		int pId=passenger.getPassengerId();
 		passenger.setCurrentState(PassengerState.AT_DISEMBARKING_ZONE);
-		this.logger.updatePassengerState(passenger.getCurrentState(), pId);
+		this.logger.updatePassengerState(passenger.getCurrentState(), pId, false);
+		// disembartks and notifies all so that passengers can start moving
+		this.passengersDisembarked+=1;
+		notifyAll();
+		
+		// waits until airport is closed or all passengers disembark
+		while(this.airportOpen && this.passengersDisembarked!=this.passengersPerFlight){
+			//System.out.printf("P%d WSID | PD: %d | PF: %d | AO: %s\n", passenger.getPassengerId(), this.passengersDisembarked, this.passengersPerFlight, Boolean.toString(this.airportOpen));
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				System.err.print("[LOUNGE] Passenger interrupted, check log\n");
+				System.exit(3);
+			}
+		}
+		this.allDisembarked=true;
+		passenger.canFly(!this.airportOpen);
 	}
 }

@@ -22,7 +22,7 @@ public enum PassengerState {
 	 * <li>{@link Rhapsody.sharedMems.ArrivalTerminaTransfer#takeABus} puts instance in {@link PassengerState#ARRIVING_TRANSFER_TERMINAL} state.
 	 * </ul>
 	 */
-	AT_DISEMBARKING_ZONE,
+	AT_DISEMBARKING_ZONE ("DEZ"),
 	/**
 	 * Blocking state with eventual transition.
 	 * <p/>
@@ -38,7 +38,7 @@ public enum PassengerState {
 	 * <li>{@link Rhapsody.sharedMems.BaggageReclaim#reportMissingBags} puts instance in {@link PassengerState#AT_LUGGAGE_RECLAIM} state.
 	 * </ul>
 	 */
-	AT_LUGGAGE_COLLECTION,
+	AT_LUGGAGE_COLLECTION ("LGC"),
 	/**
 	 * Transition state 
 	 * <p/>
@@ -47,12 +47,12 @@ public enum PassengerState {
 	 * @StateTransitions
 	 * {@link Rhapsody.sharedMems.ArrivalTerminalExit#goHome} puts instance in {@link PassengerState#EXIT_ARRIVAL_TERMINAL} state.
 	 */
-	AT_LUGGAGE_RECLAIM,
+	AT_LUGGAGE_RECLAIM ("LGR"),
 	/**
 	 * Blocking state with eventual transition (final state)<p/>
 	 * The passenger is waken up by the the last Passenger of each flight to exit the arrival terminal or to enter the departure terminal.
 	 */
-	EXIT_ARRIVAL_TERMINAL,
+	EXIT_ARRIVAL_TERMINAL ("EAT"),
 	/**
 	 * Blocking state
 	 * <p/>
@@ -63,7 +63,7 @@ public enum PassengerState {
 	 * @StateTransitions
 	 * {@link Rhapsody.sharedMems.ArrivalTerminalTransfer#enterTheBus} puts instance in {@link PassengerState#TERMINAL_TRANSFER} and wakes BusDriver up if needed.
 	 */
-	ARRIVING_TRANSFER_TERMINAL,
+	ARRIVING_TRANSFER_TERMINAL ("ATT"),
 	/**
 	 * Blocking state
 	 * <p/>
@@ -73,17 +73,28 @@ public enum PassengerState {
 	 * StateTransitions
 	 * {@link Rhapsody.sharedMems.DepartureTerminalTransfer#leaveTheBus} puts instance in {@link PassengerState#DEPARTING_TRANSFER_TERMINAL}.
 	 */
-	TERMINAL_TRANSFER,
+	TERMINAL_TRANSFER ("TTR"),
 	/**
 	 * Transition state
 	 * <p/>
 	 * StateTransitions
 	 * {@link Rhapsody.sharedMems.DepartureTerminalEntrance#prepareNextLeg} puts instance in {@link PassengerState#DEPARTING}.
 	 */
-	DEPARTING_TRANSFER_TERMINAL,
+	DEPARTING_TRANSFER_TERMINAL ("DTT"),
 	/**
 	 * Blocking state with eventual transition (final state)
 	 * The passenger is waken up by the last Passenger of each flight to exit the arrival terminal or to enter the departure terminal.
 	 */
-	DEPARTING;
+	DEPARTING ("DEP");
+
+	private final String state;
+
+	private PassengerState(String state) {
+		this.state = state;
+	}
+
+	@Override
+	public String toString(){
+		return this.state;
+	}
 }

@@ -56,16 +56,6 @@ public class Passenger extends Thread {
 	private final int id;
 
 	/**
-	 * Number of flights
-	 */
-	private final int flights;
-
-	/**
-	 * Maximum amount of bags  
- 	 */
-	private final int maxBags;
-
-	/**
 	 * Logger 
 	 */
 	private Logger logger;
@@ -115,10 +105,6 @@ public class Passenger extends Thread {
 	 */
 	private int startingBags;
 
-	/**
-	 * Flight id of the passenger
-	 */
-	private int passengerFlight;
 
 	/**
 	 * State for the Passenger thread
@@ -142,10 +128,14 @@ public class Passenger extends Thread {
 	private String type;
 
 	/**
+	 * Boolean to check if the airport has closed
+	 */
+	private boolean canFly;
+
+	/**
 	 * Passenger constructor method
 	 * 
 	 * @param id
-	 * @param flights
 	 * @param logger
 	 * @param arrivalLounge
 	 * @param baggageCollectionPoint
@@ -156,7 +146,7 @@ public class Passenger extends Thread {
 	 * @param departureTerminalEntrance
 	 * @param currentState
 	 */
-	public Passenger(int id, int flights, int maxBags, Logger logger, Lounge arrivalLounge, 
+	public Passenger(int id, Logger logger, Lounge arrivalLounge, 
 						BaggageCollectionPoint baggageCollectionPoint, BaggageReclaim baggageReclaim, 
 						ArrivalTerminalExit arrivalTerminalExit, 
 						ArrivalTerminalTransfer arrivalTerminalTransfer, 
@@ -164,8 +154,6 @@ public class Passenger extends Thread {
 						DepartureTerminalEntrance departureTerminalEntrance, 
 						GeneralRepository generalRepository) {
 		this.id = id;
-		this.flights = flights;
-		this.maxBags = maxBags;
 		this.logger = logger;
 		this.arrivalLounge = arrivalLounge;
 		this.baggageCollectionPoint = baggageCollectionPoint;
@@ -178,6 +166,8 @@ public class Passenger extends Thread {
 		this.lostBags=false;
 		this.currentBags=0;
 		this.currentState=PassengerState.AT_DISEMBARKING_ZONE;
+		this.startingBags=0;
+		this.canFly=true;
 	}
 
 
@@ -197,15 +187,6 @@ public class Passenger extends Thread {
 	 */
 	public void setStartingBags(int startingBags) {
 		this.startingBags = startingBags;
-	}
-
-	/**
-	 * Set the flight id for this passenger
-	 * 
-	 * @param passengerFlight
-	 */
-	public void setPassengerFlight(int passengerFlight) {
-		this.passengerFlight = passengerFlight;
 	}
 
 	/**
@@ -231,14 +212,6 @@ public class Passenger extends Thread {
 	 */
 	public int getStartingBags() {
 		return this.startingBags;
-	}
-
-	/**
-	 * Return's passenger flight id
-	 * @return passenger flight id of type int
-	 */
-	public int getFlight() {
-		return this.passengerFlight;
 	}
 
 	/**
@@ -281,6 +254,13 @@ public class Passenger extends Thread {
 	}
 
 	/**
+	 * Sets if airport is open or not
+	 */
+	public void canFly(boolean canFly) {
+		this.canFly = canFly;
+	}
+
+	/**
 	 * Passenger life-cycle
 	 */
 	public void run() {
@@ -307,6 +287,23 @@ public class Passenger extends Thread {
 		 * a-zA-Z0-9 -> specification
 		 *  
 		 */
-		System.out.printf("Passenger %d is up\n", this.id);
+		//System.out.printf("Passenger %d is up\n", this.getPassengerId());
+		while(this.canFly) {
+			generalRepository.generatePassenger();
+			arrivalLounge.whatShouldIDo();
+
+			if (this.type.equals("FDT")) { 			  	// in case this passenger is of Final Destination type
+				// check if it has bags
+				if (this.startingBags==0) {
+					// get bags
+				}
+				this.arrivalTerminalExit.goHome();
+			} else if (this.type.equals("TRT")) {     	// in case it's a transit type passenger
+				// go take a bus
+			} else { 									// in case it failed upon starting
+				System.err.printf("[PASSENGER] Passenger %d had wrong start");
+				this.currentThread().interrupt();
+			}	
+		}
 	}
 }

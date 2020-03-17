@@ -44,4 +44,15 @@ public class Luggage {
         return this.luggageType;
     }
 
+    /**
+     * toString method to return luggage in String
+     */
+    @Override
+    public String toString() {
+        return "{" +
+            " passengerId='" + getPassengerId() + "'" +
+            ", luggageType='" + getLuggageType() + "'" +
+            "}";
+    }
+
 }

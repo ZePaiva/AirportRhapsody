@@ -47,17 +47,17 @@ public class StoreRoom {
         try {
             this.bagsInStoreRoom.add(porter.getCurrentLuggage());
             porter.setCurrentLuggage(null);
-            this.logger.updateStoreRoomBags(this.bagsInStoreRoom.size());
+            this.logger.updateStoreRoomBags(this.bagsInStoreRoom.size(), false);
         } catch (NullPointerException e) {
             System.err.print("[StoreRoom] Porter has no bag, reseting porter");
             // resetting porter
             porter.planeHasBags(false);
             porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
             porter.setCurrentLuggage(null);
-            this.logger.updatePorterState(porter.getPorterState());
+            this.logger.updatePorterState(porter.getPorterState(), true);
             // resetting luggage on storeroom
             this.bagsInStoreRoom=new ArrayList<>();
-            this.logger.updateStoreRoomBags(0);
+            this.logger.updateStoreRoomBags(0, false);
         }
     }
     
