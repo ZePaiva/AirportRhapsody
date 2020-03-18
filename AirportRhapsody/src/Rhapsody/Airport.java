@@ -48,6 +48,7 @@ public class Airport {
 	 */
 	public static final int T = 3;
 
+	public static final int sleepTime = 100;
 	/**
 	 * Logfile name
 	 */
@@ -57,8 +58,9 @@ public class Airport {
 	 * Main method
 	 * 
 	 * @param args runtime arguments
+	 * @throws InterruptedException
 	 */
-	public static void main(String args[]) {
+	public static void main(String args[]) throws InterruptedException {
 
 		// Generate logger
 		// create empty arrays
@@ -80,7 +82,7 @@ public class Airport {
 
 		// Generate shared memory entities
 		GeneralRepository generalRepository = new GeneralRepository(logger, N, M);
-		Lounge lounge = new Lounge(logger, N, K);
+		Lounge lounge = new Lounge(logger, N);
 		BaggageCollectionPoint baggageCollectionPoint = new BaggageCollectionPoint(logger);
 		StoreRoom storeRoom = new StoreRoom(logger);
 		BaggageReclaim baggageReclaim = new BaggageReclaim(logger);
@@ -92,14 +94,16 @@ public class Airport {
 		// Generate working entities
 		Porter porter = new Porter(generalRepository, storeRoom, lounge, baggageCollectionPoint, K);
 		porter.start();
+		Thread.sleep(100);
 		BusDriver busDriver = new BusDriver();
 		busDriver.start();
+		Thread.sleep(100);
 		Passenger[] passengers = new Passenger[N];
 		for (int i=0; i<passengers.length; i++) {
-			passengers[i]= new Passenger(i, logger, lounge, baggageCollectionPoint, baggageReclaim, 
-											arrivalTerminalExit, arrivalTerminalTransfer, 
-											departureTerminalTransfer, departureTerminalEntrance, 
-											generalRepository);
+			passengers[i]= new Passenger(i, logger, sleepTime, lounge, baggageCollectionPoint, 
+											baggageReclaim, arrivalTerminalExit, 
+											arrivalTerminalTransfer, departureTerminalTransfer, 
+											departureTerminalEntrance, generalRepository);
 			passengers[i].start();	
 		}
 

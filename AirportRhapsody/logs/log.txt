@@ -4,23 +4,23 @@ FN BN Stat CB SR	Stat Q1 S1 S2 S3
 						PASSENGERS
 St1 Si1 NR1 NA1 
  1  2 WPTL  0  0 null -- -- -- -- 
+--- --- --- --- 
+ 1  2 WPTL  0  0 null -- -- -- -- 
 DEZ FDT   2   0 
  1  2 ATPH  0  0 null -- -- -- -- 
 DEZ FDT   2   0 
+ 1  2 ATPH  0  0 null -- -- -- -- 
+LGC FDT   2   0 
  1  1 ATCB  1  0 null -- -- -- -- 
-DEZ FDT   2   0 
+LGC FDT   2   0 
  1  1 ATPH  1  0 null -- -- -- -- 
-DEZ FDT   2   0 
+LGC FDT   2   0 
  1  0 ATCB  2  0 null -- -- -- -- 
-DEZ FDT   2   0 
+LGC FDT   2   0 
  1  0 ATPH  2  0 null -- -- -- -- 
-DEZ FDT   2   0 
- 1  0 WPTL  2  0 null -- -- -- -- 
-DEZ FDT   2   0 
+LGC FDT   2   0 
  1  0 WPTL  2  0 null -- -- -- -- 
 LGC FDT   2   0 
- 1  0 WPTL  1  0 null -- -- -- -- 
-LGC FDT   2   1 
  1  0 WPTL  1  0 null -- -- -- -- 
 LGC FDT   2   1 
  1  0 WPTL  0  0 null -- -- -- -- 
@@ -28,20 +28,26 @@ LGC FDT   2   2
  1  0 WPTL  0  0 null -- -- -- -- 
 EAT FDT   2   2 
  2  1 WPTL  0  0 null -- -- -- -- 
-DEZ TRT   1   0 
+--- --- --- --- 
+ 2  1 WPTL  0  0 null -- -- -- -- 
+DEZ FDT   1   0 
+ 2  1 WPTL  0  0 null -- -- -- -- 
+LGC FDT   1   0 
  2  1 ATPH  0  0 null -- -- -- -- 
-DEZ TRT   1   0 
- 2  0 ATSR  0  1 null -- -- -- -- 
-DEZ TRT   1   0 
- 2  0 ATPH  0  1 null -- -- -- -- 
-DEZ TRT   1   0 
- 2  0 WPTL  0  1 null -- -- -- -- 
-DEZ TRT   1   0 
- 2  0 WPTL  0  1 null -- -- -- -- 
-EAT TRT   1   0 
+LGC FDT   1   0 
+ 2  0 ATCB  1  0 null -- -- -- -- 
+LGC FDT   1   0 
+ 2  0 ATPH  1  0 null -- -- -- -- 
+LGC FDT   1   0 
+ 2  0 WPTL  1  0 null -- -- -- -- 
+LGC FDT   1   0 
+ 2  0 WPTL  1  0 null -- -- -- -- 
+LGR FDT   1   0 
+ 2  0 WPTL  1  0 null -- -- -- -- 
+EAT FDT   1   0 
 Final report
 N. of passengers which have this airport as their final destination = 2
 N. of passengers in transit = 0
 N. of bags that should have been transported in the planes hold = 3
-N. of bags that were lost = 0
+N. of bags that were lost = 1
 

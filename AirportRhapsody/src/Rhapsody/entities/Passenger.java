@@ -131,17 +131,18 @@ public class Passenger extends Thread {
 	 * Boolean to check if the airport has closed
 	 */
 	private boolean canFly;
-	
+
 	/**
-	 * Last Flight id
+	 * Max time a passenger can look at cellphone while waiting for their luggage (sleep time)
 	 */
-	private int flight;
+	private int lookAtCellPhone;
 
 	/**
 	 * Passenger constructor method
 	 * 
 	 * @param id
 	 * @param logger
+	 * @param lookAtCellPhone
 	 * @param arrivalLounge
 	 * @param baggageCollectionPoint
 	 * @param baggageReclaim
@@ -151,7 +152,7 @@ public class Passenger extends Thread {
 	 * @param departureTerminalEntrance
 	 * @param currentState
 	 */
-	public Passenger(int id, Logger logger, Lounge arrivalLounge, 
+	public Passenger(int id, Logger logger, int lookAtCellPhone, Lounge arrivalLounge, 
 						BaggageCollectionPoint baggageCollectionPoint, BaggageReclaim baggageReclaim, 
 						ArrivalTerminalExit arrivalTerminalExit, 
 						ArrivalTerminalTransfer arrivalTerminalTransfer, 
@@ -173,23 +174,7 @@ public class Passenger extends Thread {
 		this.currentState=PassengerState.AT_DISEMBARKING_ZONE;
 		this.startingBags=0;
 		this.canFly=true;
-		this.flight=-1;
-	}
-
-	/**
-	 * Get passenger last flightID
-	 * @return
-	 */
-	public int getFlight() {
-		return this.flight;
-	}
-
-	/**
-	 * Set passenger Last flightID
-	 * @param flight
-	 */
-	public void setFlight(int flight) {
-		this.flight = flight;
+		this.lookAtCellPhone=lookAtCellPhone;
 	}
 
 	/**
@@ -280,6 +265,7 @@ public class Passenger extends Thread {
 	public void canFly(boolean canFly) {
 		this.canFly = canFly;
 	}
+	
 
 	/**
 	 * Passenger life-cycle
@@ -318,7 +304,16 @@ public class Passenger extends Thread {
 				if (this.startingBags!=0) {
 					// get bags
 					while(!this.lostBags && this.currentBags!=this.startingBags) {
-						this.baggageCollectionPoint.goCollectABag();
+						try {
+							this.baggageCollectionPoint.goCollectABag();
+							long sleepTime= (long) (Math.random()*this.lookAtCellPhone);
+							System.out.printf("Sleep: %d\n", sleepTime);
+							sleep(sleepTime);
+						} catch (InterruptedException e) {
+							System.err.println("[PASSENGER] Interrupted while trying to get a bag");
+							System.exit(4);
+						}
+
 					}
 					if (this.lostBags) {
 						// reclaim bag
@@ -326,19 +321,21 @@ public class Passenger extends Thread {
 					}
 				}
 				this.arrivalTerminalExit.goHome();
-				if (this.canFly)
-					this.generalRepository.goHome();
-				System.out.println(this.canFly);
 			} else if (this.type.equals("TRT")) {     	// in case it's a transit type passenger
 				// go take a bus
 				this.arrivalTerminalExit.goHome();
-				if (this.canFly)
-					this.generalRepository.goHome();
-				System.out.println(this.canFly);
+				System.out.println("calling home");
 			} else { 									// in case it failed upon starting
 				System.err.printf("[PASSENGER] Passenger %d had wrong start", this.id);
 				System.exit(5);
 			}
+			this.generalRepository.passengerTerminated();
+			System.out.printf("P%d terminated\n", this.id);
+			this.arrivalLounge.resetFlight();
+			System.out.printf("P%d rf\n", this.id);
+			this.generalRepository.willFlyMore();
+			System.out.printf("P%d ccf: %s\n", this.id, this.canFly);
 		}
+		System.out.printf("exiting from passenger %d\n", this.id);
 	}
 }

@@ -51,8 +51,11 @@ public class BaggageCollectionPoint{
         Porter porter = (Porter) Thread.currentThread();
         porter.setPorterState(PorterState.AT_THE_LUGGAGE_BELT_CONVEYOR);
         this.logger.updatePorterState(porter.getPorterState(), true);
+        // warns that it has not picked all bags
         this.collectedAllBags=false;
         try {
+            System.out.printf("Collecting luggage\n");
+            // adds luggage to conveyor belt and logs it
             this.bagsInConveyorBelt.add(porter.getCurrentLuggage());
             porter.setCurrentLuggage(null);
             this.logger.updateConveyorBags(this.bagsInConveyorBelt.size(), false);
@@ -77,7 +80,7 @@ public class BaggageCollectionPoint{
         porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
         this.collectedAllBags=true;
         this.logger.updatePorterState(porter.getPorterState(), false);
-        notifyAll();
+        System.out.println("All Luggage collected");
     }
 
     /**
@@ -85,45 +88,49 @@ public class BaggageCollectionPoint{
      */
     public synchronized void goCollectABag(){
         Passenger passenger = (Passenger) Thread.currentThread();
-        System.out.println("Trying to collect a bag");
-        // wait until all luggage has been collected
-        while(!this.collectedAllBags){
-            try{
-                wait();
-            } catch (InterruptedException e) {
-                System.err.printf("[BaggageCollectionPoint] Passenger %d interrupted for some reason", passenger.getPassengerId());
-                System.exit(3);
-            }
+        
+        // updates passenger state if needed
+        System.out.printf("callbags %s\n", this.collectedAllBags);
+        if (passenger.getCurrentState()!=PassengerState.AT_LUGGAGE_COLLECTION) {
+            passenger.setCurrentState(PassengerState.AT_LUGGAGE_COLLECTION);
+            this.logger.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), false);
         }
-        passenger.setCurrentState(PassengerState.AT_LUGGAGE_COLLECTION);
-        this.logger.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), false);
 
-        // if there ar no more bags in the conveyor belt
-        if (this.bagsInConveyorBelt.isEmpty()) {
-            passenger.lostBags(true);
-            this.collectedAllBags=false;
-        } else {
-            // if there are bags try to find one of the current passenger and removes it
-            Luggage bag = this.bagsInConveyorBelt.stream()
-                            .filter(p -> p.getPassengerId()==passenger.getPassengerId())
-                            .findFirst()
-                            .map(p -> {
-                                this.bagsInConveyorBelt.remove(p);
-                                return p;
-                            })
-                            .orElse(null);
-            if (bag.equals(null)) {
+        // if there are bags try to find one of the current passenger and removes it
+        Luggage bag = this.bagsInConveyorBelt.stream()
+                .filter(p -> p.getPassengerId()==passenger.getPassengerId())
+                .findFirst()
+                .map(p -> {
+                    this.bagsInConveyorBelt.remove(p);
+                    return p;
+                })
+                .orElse(null);
+
+        // if stack is empty && collection has finished 
+        if (this.bagsInConveyorBelt.isEmpty() && this.collectedAllBags) {
+            if (bag == null){
+                System.out.printf("ERROR2: P%d | L: %s\n", passenger.getPassengerId(), bag==null ? "null" : bag.toString());
                 passenger.lostBags(true);
-            } else {
-                passenger.setCurrentBags(passenger.getCurrentBags()+1);
-                System.out.println(passenger.getCurrentBags());
-                System.out.println(passenger.getStartingBags());
+                return;
+            }
+        }
+        // if stack is NOT empty && collection has finished
+        else if (!this.bagsInConveyorBelt.isEmpty() && this.collectedAllBags) {
+            if (bag == null){
+                System.out.printf("ERROR2: P%d | L: %s\n", passenger.getPassengerId(), bag==null ? "null" : bag.toString());
+                passenger.lostBags(true);
+                return;
             }
         }
 
-        // log updates
-        this.logger.updateConveyorBags(this.bagsInConveyorBelt.size(), true);
-        this.logger.updateCurrentBags(passenger.getPassengerId(), passenger.getCurrentBags(), false);
+        System.out.printf("NO ERROR: P%d | L: %s | StSz %d \n", passenger.getPassengerId(), bag==null ? "null" : bag.toString(), this.bagsInConveyorBelt.size() );
+        if (bag != null) {
+            passenger.setCurrentBags(passenger.getCurrentBags()+1);
+            // log updates
+            this.logger.updateConveyorBags(this.bagsInConveyorBelt.size(), true);
+            this.logger.updateCurrentBags(passenger.getPassengerId(), passenger.getCurrentBags(), false);
+        } else {
+            return;
+        }
     }
-	
 }

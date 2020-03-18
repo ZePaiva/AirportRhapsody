@@ -30,52 +30,27 @@ public class Lounge {
 	private final int passengersPerFlight;
 
 	/**
-	 * Maximum amount of flights 
-	 */
-	private final int flights;
-
-	/**
-	 * Current flight that is being processed
-	 */
-	private int currentFlight;
-
-	/**
 	 * amount of passengers ready to disembark
 	 */
 	private int passengersDisembarked;
-
-	/**
-	 * Informs when simulation is finished
-	 */
-	private boolean airportOpen;
-
-	/**
-	 * Porter variable to check if all passenger have disembarked or not
-	 */
-	private boolean allDisembarked;
-
 
 	/**
 	 * Contructor method for the Lounge class
 	 * 
 	 * @param logger
 	 * @param maxPassengerAmount
-	 * @param flights
 	 */
-	public Lounge(Logger logger, int maxPassengerAmount, int flights) {
+	public Lounge(Logger logger, int maxPassengerAmount) {
 		this.logger=logger;
 		this.passengersPerFlight=maxPassengerAmount;
 		this.passengersDisembarked=0;
-		this.flights=1;
-		this.airportOpen=true;
-		this.allDisembarked=false;
 	}
 
 	/**
 	 * Puts porter in {@link Rhapsody.entities.states.PorterState#WAITING_FOR_PLANE_TO_LAND} state
 	 * @param flightId
 	 */
-	public synchronized void takeARest(int flightId) {
+	public synchronized void takeARest() {
 		// get porter thread
 		Porter porter = (Porter) Thread.currentThread();
 
@@ -84,23 +59,14 @@ public class Lounge {
 		this.logger.updatePorterState(porter.getPorterState(), true);
 		
 		// waits for all passengers to arrive
-		this.passengersDisembarked=0;
-		this.currentFlight=flightId;
-		while(!this.allDisembarked) {
+		while(this.passengersDisembarked < this.passengersPerFlight) {
 			try {
-				System.out.printf("PORTER PD: %d | PF: %d\n", this.passengersDisembarked, this.passengersPerFlight);
+				System.out.printf("PORTER %d | PD: %d | PF: %d | F\n", porter.getId(), this.passengersDisembarked, this.passengersPerFlight);
 				wait();
 			} catch (InterruptedException e) {
 				System.err.print("[LOUNGE] Porter interrupted, check log\n");
 				System.exit(3);
 			}
-		}
-		this.allDisembarked=false;
-
-		// checks if it is time to end simulation
-		if (flightId==this.flights) {
-			this.airportOpen=false;
-			notifyAll();
 		}
 	}
 
@@ -110,31 +76,33 @@ public class Lounge {
 	 */
 	public synchronized void whatShouldIDo() {
 		Passenger passenger = (Passenger) Thread.currentThread();
-		int pId=passenger.getPassengerId();
-		if (passenger.getFlight()!=this.currentFlight){
-			passenger.setFlight(this.currentFlight);
-		} else {
-			this.currentFlight++;
-			passenger.setFlight(this.currentFlight);
-		}
-		this.logger.updateFlight(this.currentFlight, true);
+
+		// updates state
 		passenger.setCurrentState(PassengerState.AT_DISEMBARKING_ZONE);
-		this.logger.updatePassengerState(passenger.getCurrentState(), pId, false);
-		// disembartks and notifies all so that passengers can start moving
-		this.passengersDisembarked+=1;
-		notifyAll();
-		
-		// waits until airport is closed or all passengers disembark
-		while(this.airportOpen && this.passengersDisembarked!=this.passengersPerFlight){
-			System.out.printf("P%d WSID | PD: %d | PF: %d | AO: %s\n", passenger.getPassengerId(), this.passengersDisembarked, this.passengersPerFlight, Boolean.toString(this.airportOpen));
+		this.logger.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
+		this.logger.addPassengerToFlight(passenger.getPassengerId(), false);
+		System.out.printf("P%d disembarked\n", passenger.getPassengerId());
+
+		// disembarks passenger
+		this.passengersDisembarked++;
+
+		// waits until all passengers disembarked
+		while (this.passengersDisembarked<this.passengersPerFlight) {
 			try {
 				wait();
 			} catch (InterruptedException e) {
-				System.err.print("[LOUNGE] Passenger interrupted, check log\n");
+				System.err.println("[LOUNGE] Passenger interrupted for some reason");
 				System.exit(3);
 			}
 		}
-		this.allDisembarked=true;
-		passenger.canFly(this.airportOpen);
+		notifyAll();
+	}
+
+	/**
+	 * Signals passenger life-cylce has terminated
+	 */
+	public synchronized void resetFlight() {
+		this.passengersDisembarked--;
+		notifyAll();
 	}
 }

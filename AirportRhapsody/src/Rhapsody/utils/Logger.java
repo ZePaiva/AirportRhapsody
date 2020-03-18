@@ -455,6 +455,18 @@ public class Logger {
 		}
 	}
 
+	/**
+	 * Method to clear all data relative to the flight
+	 * @param noLog
+	 */
+	public synchronized void clearFlight(boolean noLog){
+		Arrays.fill(this.flightPassengers, -1);
+		if (!noLog) {
+			this.updateFileLog();
+		}
+
+	}
+
 	// Porter update functions
 	/**
 	 * Updates the amount of bags in the conveyor's belt with a 

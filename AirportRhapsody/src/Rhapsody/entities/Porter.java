@@ -123,12 +123,15 @@ public class Porter extends Thread{
 	public void run() {
 		//System.out.printf("Porter with id %d is up\n", (int) this.getId() );
 		for (int flights = 1; flights <= this.flights; flights++) {
+			System.out.printf("F %d\n", flights);
+			// clears previous flight data
+			this.generalRepository.clearFlight(flights);
+			
 			// wait for all passengers to disembark
-			this.lounge.takeARest(flights);
+			this.lounge.takeARest();
 
 			// baggage collection and transportation
 			this.generalRepository.tryToCollectABag();
-			System.out.printf("has bags %s\n", Boolean.toString(this.planeHasBags));
 			while(this.planeHasBags) {
 				this.generalRepository.carryItToAppropriateStore();
 				if (this.currentBag.getLuggageType().equals("TRT")) {
@@ -143,13 +146,16 @@ public class Porter extends Thread{
 
 			// wakes up all passengers waiting for the luggage to be disembarkeed
 			this.baggageCollectionPoint.noMoreBagsToCollect();
+			System.out.println("Nomo bags");
 
 			// reset thyself for the future
 			this.resetSelf();
-			
-			// warns that it has processed all luggage
-			this.generalRepository.takeARest();
+
 		}
+
+		// signal that all flights have ended
+		this.generalRepository.allFlightsEnded();
+		System.out.print("exiting from porter\n");
 	}
 
 	private void resetSelf() {
