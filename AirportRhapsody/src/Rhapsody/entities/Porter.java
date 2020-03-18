@@ -127,6 +127,7 @@ public class Porter extends Thread{
 		for (int flights = 1; flights <= this.flights; flights++) {
 			// clears previous flight data
 			this.generalRepository.clearFlight(flights);
+			this.baggageCollectionPoint.clearFlight();
 			System.out.println(ANSI_CYAN+"[PORTER---] Ready to accept passengers from FLIGHT "+flights);
 			// wait for all passengers to disembark
 			this.lounge.takeARest();

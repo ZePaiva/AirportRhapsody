@@ -60,6 +60,7 @@ public class Lounge {
 		porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
 		this.logger.updatePorterState(porter.getPorterState(), true);
 		
+		System.out.printf(ANSI_WHITE+"[LOUNGE---] Porter waiting for passengers | CP: %d\n", this.passengersDisembarked);
 		// waits for all passengers to arrive
 		while(this.passengersDisembarked < this.passengersPerFlight) {
 			try {

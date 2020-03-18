@@ -65,6 +65,8 @@ public class GeneralRepository {
      */
     private boolean newFlight;
 
+	public static final String ANSI_WHITE = "\u001B[37m";
+
     /**
      * General Repository constructor
      * @param logger
@@ -78,7 +80,7 @@ public class GeneralRepository {
         this.maxLuggageAmount=maxLuggageAmount;
         this.random=new Random();
         this.allFlightsSimulated=false;
-        this.passengersTerminated=this.passengersPerFlight;
+        this.passengersTerminated=passengersPerFlight;
         this.newFlight=false;
     }
 
@@ -173,9 +175,11 @@ public class GeneralRepository {
      */
     public synchronized void clearFlight(int flightId) {
         // waits until all passengers have terminated
+        System.out.printf(ANSI_WHITE+"[GENERALRP] Porter waiting for passengers to terminate | CP: %d\n", this.passengersTerminated);
         while(this.passengersTerminated<this.passengersPerFlight){
             try {
                 wait();
+                System.out.printf(ANSI_WHITE+"[GENERALRP] Passenger Terminated | CP: %d\n", this.passengersTerminated);
             } catch (InterruptedException e) {
                 System.err.println("[GENERALREPOSITORY] Porter interrupoted while trying to clear flight data");
                 System.exit(3);

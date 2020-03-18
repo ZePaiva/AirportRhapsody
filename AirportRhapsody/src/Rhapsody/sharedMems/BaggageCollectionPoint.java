@@ -33,6 +33,8 @@ public class BaggageCollectionPoint{
      */
     private boolean collectedAllBags;
 
+	public static final String ANSI_WHITE = "\u001B[37m";
+
     /**
      * Constructor of Baggage collection point
      * @param logger
@@ -51,8 +53,7 @@ public class BaggageCollectionPoint{
         Porter porter = (Porter) Thread.currentThread();
         porter.setPorterState(PorterState.AT_THE_LUGGAGE_BELT_CONVEYOR);
         this.logger.updatePorterState(porter.getPorterState(), true);
-        // warns that it has not picked all bags
-        this.collectedAllBags=false;
+
         try {
             // adds luggage to conveyor belt and logs it
             this.bagsInConveyorBelt.add(porter.getCurrentLuggage());
@@ -103,6 +104,7 @@ public class BaggageCollectionPoint{
                 })
                 .orElse(null);
 
+        System.out.printf("Stiff: %s %s\n", this.bagsInConveyorBelt.isEmpty(), this.collectedAllBags);
         // if stack is empty && collection has finished 
         if (this.bagsInConveyorBelt.isEmpty() && this.collectedAllBags) {
             if (bag == null){
@@ -120,11 +122,19 @@ public class BaggageCollectionPoint{
 
         if (bag != null) {
             passenger.setCurrentBags(passenger.getCurrentBags()+1);
+            System.out.printf(ANSI_WHITE+"[BAGCOLLPT] Passenger %d has one more bag | CB: %d\n", passenger.getPassengerId(), passenger.getCurrentBags());
             // log updates
             this.logger.updateConveyorBags(this.bagsInConveyorBelt.size(), true);
             this.logger.updateCurrentBags(passenger.getPassengerId(), passenger.getCurrentBags(), false);
         } else {
             return;
         }
+    }
+
+    /**
+     * Method used to restar baggage collection
+     */
+    public synchronized void clearFlight() {
+        this.collectedAllBags=false;
     }
 }

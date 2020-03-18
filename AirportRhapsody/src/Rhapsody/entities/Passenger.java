@@ -296,7 +296,6 @@ public class Passenger extends Thread {
 		// run
 		/** 
 		 */
-		//System.out.printf(ANSI_GREEN+"Passenger %d is up\n", this.getPassengerId());
 		while(this.canFly) {
 			generalRepository.generatePassenger();
 			System.out.printf(ANSI_GREEN+"[PASSENGER] P%d started | SB: %d | Sit %s\n", this.id, this.startingBags, this.type);
@@ -311,7 +310,7 @@ public class Passenger extends Thread {
 						try {
 							this.baggageCollectionPoint.goCollectABag();
 							long sleepTime= (long) (Math.random()*this.lookAtCellPhone);
-							System.out.printf(ANSI_GREEN+"[PASSENGER] P%d  | BAGS: %d |Sleep: %d \n", this.id, this.currentBags, sleepTime);
+							System.out.printf(ANSI_GREEN+"[PASSENGER] P%d | BAGS: %d | Sleep: %d \n", this.id, this.currentBags, sleepTime);
 							sleep(sleepTime);
 						} catch (InterruptedException e) {
 							System.err.println("[PASSENGER] Interrupted while trying to get a bag");
@@ -335,10 +334,10 @@ public class Passenger extends Thread {
 				System.err.printf(ANSI_GREEN+"[PASSENGER] Passenger %d had wrong start", this.id);
 				System.exit(5);
 			}
+			this.arrivalLounge.resetFlight();
+			System.out.printf(ANSI_GREEN+"[PASSENGER] P%d flight reset\n", this.id);
 			this.generalRepository.passengerTerminated();
 			System.out.printf(ANSI_GREEN+"[PASSENGER] P%d terminated\n", this.id);
-			this.arrivalLounge.resetFlight();
-			System.out.printf(ANSI_GREEN+"[PASSENGER] P%d flight reser\n", this.id);
 			this.generalRepository.willFlyMore();
 			System.out.printf(ANSI_GREEN+"[PASSENGER] P%d will fly again? %s\n", this.id, this.canFly);
 		}
