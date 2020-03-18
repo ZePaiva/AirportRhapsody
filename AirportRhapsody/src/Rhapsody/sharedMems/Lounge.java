@@ -34,6 +34,8 @@ public class Lounge {
 	 */
 	private int passengersDisembarked;
 
+	public static final String ANSI_WHITE = "\u001B[37m";
+
 	/**
 	 * Contructor method for the Lounge class
 	 * 
@@ -61,10 +63,10 @@ public class Lounge {
 		// waits for all passengers to arrive
 		while(this.passengersDisembarked < this.passengersPerFlight) {
 			try {
-				System.out.printf("PORTER %d | PD: %d | PF: %d | F\n", porter.getId(), this.passengersDisembarked, this.passengersPerFlight);
 				wait();
+				System.out.printf(ANSI_WHITE+"[LOUNGE---] Passenger disembarked\n");
 			} catch (InterruptedException e) {
-				System.err.print("[LOUNGE] Porter interrupted, check log\n");
+				System.err.print("[LOUNGE---] Porter interrupted, check log\n");
 				System.exit(3);
 			}
 		}
@@ -81,7 +83,7 @@ public class Lounge {
 		passenger.setCurrentState(PassengerState.AT_DISEMBARKING_ZONE);
 		this.logger.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
 		this.logger.addPassengerToFlight(passenger.getPassengerId(), false);
-		System.out.printf("P%d disembarked\n", passenger.getPassengerId());
+		System.out.printf(ANSI_WHITE+"[LOUNGE---] P%d waiting for others\n", passenger.getPassengerId());
 
 		// disembarks passenger
 		this.passengersDisembarked++;
@@ -91,7 +93,7 @@ public class Lounge {
 			try {
 				wait();
 			} catch (InterruptedException e) {
-				System.err.println("[LOUNGE] Passenger interrupted for some reason");
+				System.err.println(ANSI_WHITE+"[LOUNGE---] Passenger interrupted for some reason");
 				System.exit(3);
 			}
 		}

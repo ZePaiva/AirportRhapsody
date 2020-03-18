@@ -31,7 +31,7 @@ public class Airport {
 	/**
 	 * Number of planes landing
 	 */
-	public static final int K = 2;
+	public static final int K = 1;
 
 	/**
 	 * Number of Passengers arriving in each plane

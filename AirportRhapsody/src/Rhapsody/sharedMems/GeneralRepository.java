@@ -109,7 +109,6 @@ public class GeneralRepository {
         this.logger.updateStartingBags(passenger.getPassengerId(), randBags, true);
         this.logger.updateCurrentBags(passenger.getPassengerId(), 0, true);
         this.logger.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
-        System.out.printf("P%d generated | SB %d | Sit %s\n", passenger.getPassengerId(), randBags, situation);
     }
 
     /**
@@ -166,7 +165,6 @@ public class GeneralRepository {
     public synchronized void allFlightsEnded() {
         this.allFlightsSimulated=true;
         this.newFlight=true;
-        System.out.printf("Notify %s\n", this.newFlight);
         notifyAll();
     }
 
@@ -211,18 +209,15 @@ public class GeneralRepository {
 
     public synchronized void willFlyMore() {
         Passenger passenger = (Passenger) Thread.currentThread();
-        System.out.printf("P%d terminating? %s\n", passenger.getPassengerId(), this.newFlight);
         // waits until it can generate a new flight or simulation ends
         while (!this.newFlight) {
             try {
-                System.out.printf("P%d waiting... %s\n", passenger.getPassengerId(), this.newFlight);
                 wait();
             } catch (InterruptedException e) {
                 System.err.print("[GENERALREPOSITORY] Passenger interrupted for some reason\n");
                 System.exit(3);
             }
         }
-        System.out.printf("P%d will fly again? %s\n", passenger.getPassengerId(), this.allFlightsSimulated);
         // signals passenger if simulation has ended
         passenger.canFly(!this.allFlightsSimulated);
     }

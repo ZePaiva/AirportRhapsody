@@ -55,6 +55,8 @@ public class Porter extends Thread{
 	 */
 	private final int flights;
 
+	public static final String ANSI_CYAN = "\u001B[36m";
+
 	/**
 	 * Porter constructor mehtod
 	 * @param generalRepository
@@ -121,14 +123,15 @@ public class Porter extends Thread{
 	 */
 	@Override
 	public void run() {
-		//System.out.printf("Porter with id %d is up\n", (int) this.getId() );
+		//System.out.printf(ANSI_CYAN+"Porter with id %d is up\n", (int) this.getId() );
 		for (int flights = 1; flights <= this.flights; flights++) {
-			System.out.printf("F %d\n", flights);
 			// clears previous flight data
 			this.generalRepository.clearFlight(flights);
-			
+			System.out.println(ANSI_CYAN+"[PORTER---] Ready to accept passengers from FLIGHT "+flights);
 			// wait for all passengers to disembark
 			this.lounge.takeARest();
+
+			System.out.printf(ANSI_CYAN+"[PORTER---] Starting to collect bags\n");
 
 			// baggage collection and transportation
 			this.generalRepository.tryToCollectABag();
@@ -136,8 +139,10 @@ public class Porter extends Thread{
 				this.generalRepository.carryItToAppropriateStore();
 				if (this.currentBag.getLuggageType().equals("TRT")) {
 					this.storeRoom.carryItToAppropriateStore();
+					System.out.println(ANSI_CYAN+"[PORTER---] Stored bag in STORAGE ROOM for TRT passenger");
 				} else if (this.currentBag.getLuggageType().equals("FDT")) {
 					this.baggageCollectionPoint.carryItToAppropriateStore();
+					System.out.println(ANSI_CYAN+"[PORTER---] Stored bag in CONVEYOR BELT for FDT passenger");
 				} else {
 					System.err.print("Bad type of luggage, someone is trying to hack us");
 				}
@@ -146,7 +151,7 @@ public class Porter extends Thread{
 
 			// wakes up all passengers waiting for the luggage to be disembarkeed
 			this.baggageCollectionPoint.noMoreBagsToCollect();
-			System.out.println("Nomo bags");
+			System.out.println(ANSI_CYAN+"[PORTER---] No more bags to collect for FLIGHT "+flights);
 
 			// reset thyself for the future
 			this.resetSelf();
@@ -155,7 +160,7 @@ public class Porter extends Thread{
 
 		// signal that all flights have ended
 		this.generalRepository.allFlightsEnded();
-		System.out.print("exiting from porter\n");
+		System.out.print("[PORTER---] Terminating porter thread, joining...\n");
 	}
 
 	private void resetSelf() {

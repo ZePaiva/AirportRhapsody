@@ -137,6 +137,8 @@ public class Passenger extends Thread {
 	 */
 	private int lookAtCellPhone;
 
+	public static final String ANSI_GREEN = "\u001B[32m";
+
 	/**
 	 * Passenger constructor method
 	 * 
@@ -294,10 +296,12 @@ public class Passenger extends Thread {
 		// run
 		/** 
 		 */
-		//System.out.printf("Passenger %d is up\n", this.getPassengerId());
+		//System.out.printf(ANSI_GREEN+"Passenger %d is up\n", this.getPassengerId());
 		while(this.canFly) {
 			generalRepository.generatePassenger();
+			System.out.printf(ANSI_GREEN+"[PASSENGER] P%d started | SB: %d | Sit %s\n", this.id, this.startingBags, this.type);
 			arrivalLounge.whatShouldIDo();
+			System.out.printf(ANSI_GREEN+"[PASSENGER] P%d disembarked\n", this.id);
 
 			if (this.type.equals("FDT")) { 			  	// in case this passenger is of Final Destination type
 				// check if it has bags
@@ -307,7 +311,7 @@ public class Passenger extends Thread {
 						try {
 							this.baggageCollectionPoint.goCollectABag();
 							long sleepTime= (long) (Math.random()*this.lookAtCellPhone);
-							System.out.printf("Sleep: %d\n", sleepTime);
+							System.out.printf(ANSI_GREEN+"[PASSENGER] P%d  | BAGS: %d |Sleep: %d \n", this.id, this.currentBags, sleepTime);
 							sleep(sleepTime);
 						} catch (InterruptedException e) {
 							System.err.println("[PASSENGER] Interrupted while trying to get a bag");
@@ -317,25 +321,27 @@ public class Passenger extends Thread {
 					}
 					if (this.lostBags) {
 						// reclaim bag
-						this.baggageReclaim.reportMissingBags(); 
+						this.baggageReclaim.reportMissingBags();
+						System.out.printf(ANSI_GREEN+"[PASSENGER] P%d lost %d bags\n", this.id, this.startingBags-this.currentBags); 
 					}
 				}
 				this.arrivalTerminalExit.goHome();
+				System.out.printf(ANSI_GREEN+"[PASSENGER] P%d going home\n", this.id);
 			} else if (this.type.equals("TRT")) {     	// in case it's a transit type passenger
 				// go take a bus
 				this.arrivalTerminalExit.goHome();
-				System.out.println("calling home");
+				System.out.printf(ANSI_GREEN+"[PASSENGER] P%d going to next flight\n", this.id);
 			} else { 									// in case it failed upon starting
-				System.err.printf("[PASSENGER] Passenger %d had wrong start", this.id);
+				System.err.printf(ANSI_GREEN+"[PASSENGER] Passenger %d had wrong start", this.id);
 				System.exit(5);
 			}
 			this.generalRepository.passengerTerminated();
-			System.out.printf("P%d terminated\n", this.id);
+			System.out.printf(ANSI_GREEN+"[PASSENGER] P%d terminated\n", this.id);
 			this.arrivalLounge.resetFlight();
-			System.out.printf("P%d rf\n", this.id);
+			System.out.printf(ANSI_GREEN+"[PASSENGER] P%d flight reser\n", this.id);
 			this.generalRepository.willFlyMore();
-			System.out.printf("P%d ccf: %s\n", this.id, this.canFly);
+			System.out.printf(ANSI_GREEN+"[PASSENGER] P%d will fly again? %s\n", this.id, this.canFly);
 		}
-		System.out.printf("exiting from passenger %d\n", this.id);
+		System.out.printf(ANSI_GREEN+"[PASSENGER] P%d exiting run(), joining...\n", this.id);
 	}
 }

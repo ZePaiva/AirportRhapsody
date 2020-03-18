@@ -54,13 +54,12 @@ public class BaggageCollectionPoint{
         // warns that it has not picked all bags
         this.collectedAllBags=false;
         try {
-            System.out.printf("Collecting luggage\n");
             // adds luggage to conveyor belt and logs it
             this.bagsInConveyorBelt.add(porter.getCurrentLuggage());
             porter.setCurrentLuggage(null);
             this.logger.updateConveyorBags(this.bagsInConveyorBelt.size(), false);
         } catch (NullPointerException e) {
-            System.err.print("[StoreRoom] Porter has no bag, reseting porter");
+            System.err.print("[STOREROOM] Porter has no bag, reseting porter");
             // resetting porter
             porter.planeHasBags(false);
             porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
@@ -80,7 +79,6 @@ public class BaggageCollectionPoint{
         porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
         this.collectedAllBags=true;
         this.logger.updatePorterState(porter.getPorterState(), false);
-        System.out.println("All Luggage collected");
     }
 
     /**
@@ -90,7 +88,6 @@ public class BaggageCollectionPoint{
         Passenger passenger = (Passenger) Thread.currentThread();
         
         // updates passenger state if needed
-        System.out.printf("callbags %s\n", this.collectedAllBags);
         if (passenger.getCurrentState()!=PassengerState.AT_LUGGAGE_COLLECTION) {
             passenger.setCurrentState(PassengerState.AT_LUGGAGE_COLLECTION);
             this.logger.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), false);
@@ -109,7 +106,6 @@ public class BaggageCollectionPoint{
         // if stack is empty && collection has finished 
         if (this.bagsInConveyorBelt.isEmpty() && this.collectedAllBags) {
             if (bag == null){
-                System.out.printf("ERROR2: P%d | L: %s\n", passenger.getPassengerId(), bag==null ? "null" : bag.toString());
                 passenger.lostBags(true);
                 return;
             }
@@ -117,13 +113,11 @@ public class BaggageCollectionPoint{
         // if stack is NOT empty && collection has finished
         else if (!this.bagsInConveyorBelt.isEmpty() && this.collectedAllBags) {
             if (bag == null){
-                System.out.printf("ERROR2: P%d | L: %s\n", passenger.getPassengerId(), bag==null ? "null" : bag.toString());
                 passenger.lostBags(true);
                 return;
             }
         }
 
-        System.out.printf("NO ERROR: P%d | L: %s | StSz %d \n", passenger.getPassengerId(), bag==null ? "null" : bag.toString(), this.bagsInConveyorBelt.size() );
         if (bag != null) {
             passenger.setCurrentBags(passenger.getCurrentBags()+1);
             // log updates
