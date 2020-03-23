@@ -65,7 +65,7 @@ public class Lounge {
 		while(this.passengersDisembarked < this.passengersPerFlight) {
 			try {
 				wait();
-				System.out.printf(ANSI_WHITE+"[LOUNGE---] Passenger disembarked\n");
+				System.out.printf(ANSI_WHITE+"[LOUNGE---] Passenger disembarked | PD: %d\n", this.passengersDisembarked);
 			} catch (InterruptedException e) {
 				System.err.print("[LOUNGE---] Porter interrupted, check log\n");
 				System.exit(3);
@@ -84,7 +84,7 @@ public class Lounge {
 		passenger.setCurrentState(PassengerState.AT_DISEMBARKING_ZONE);
 		this.logger.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
 		this.logger.addPassengerToFlight(passenger.getPassengerId(), false);
-		System.out.printf(ANSI_WHITE+"[LOUNGE---] P%d waiting for others\n", passenger.getPassengerId());
+		System.out.printf(ANSI_WHITE+"[LOUNGE---] P%d waiting for others | PD: %d\n", passenger.getPassengerId(), this.passengersDisembarked);
 
 		// disembarks passenger
 		this.passengersDisembarked++;
@@ -93,6 +93,7 @@ public class Lounge {
 		while (this.passengersDisembarked<this.passengersPerFlight) {
 			try {
 				wait();
+				System.out.printf(ANSI_WHITE+"[LOUNGE---] P%d waiting for others | PD: %d\n", passenger.getPassengerId(), this.passengersDisembarked);
 			} catch (InterruptedException e) {
 				System.err.println(ANSI_WHITE+"[LOUNGE---] Passenger interrupted for some reason");
 				System.exit(3);

@@ -3,79 +3,107 @@ PLANE	PORTER		DRIVER
 FN BN Stat CB SR	Stat Q1 S1 S2 S3
 						PASSENGERS
 St1 Si1 NR1 NA1 
- 1  1 WPTL  0  0 null -- -- -- -- 
+ 1  2 WPTL  0  0 null -- -- -- -- 
 --- --- --- --- 
- 1  1 WPTL  0  0 null -- -- -- -- 
-DEZ TRT   1   0 
- 1  1 WPTL  0  0 null -- -- -- -- 
-EAT TRT   1   0 
- 1  1 ATPH  0  0 null -- -- -- -- 
-EAT TRT   1   0 
- 1  0 ATSR  0  1 null -- -- -- -- 
-EAT TRT   1   0 
- 1  0 ATPH  0  1 null -- -- -- -- 
-EAT TRT   1   0 
- 1  0 WPTL  0  1 null -- -- -- -- 
-EAT TRT   1   0 
- 2  2 WPTL  0  1 null -- -- -- -- 
---- --- --- --- 
- 2  2 WPTL  0  1 null -- -- -- -- 
+ 1  2 WPTL  0  0 null -- -- -- -- 
 DEZ FDT   2   0 
- 2  2 ATPH  0  1 null -- -- -- -- 
+ 1  2 ATPH  0  0 null -- -- -- -- 
 DEZ FDT   2   0 
- 2  1 ATCB  1  1 null -- -- -- -- 
+ 1  1 ATCB  1  0 null -- -- -- -- 
 DEZ FDT   2   0 
- 2  1 ATCB  1  1 null -- -- -- -- 
+ 1  1 ATPH  1  0 null -- -- -- -- 
+DEZ FDT   2   0 
+ 1  0 ATPH  1  0 null -- -- -- -- 
 LGC FDT   2   0 
- 2  1 ATPH  1  1 null -- -- -- -- 
-LGC FDT   2   0 
- 2  0 ATPH  0  1 null -- -- -- -- 
+ 1  0 ATPH  0  0 null -- -- -- -- 
 LGC FDT   2   1 
- 2  0 ATCB  1  1 null -- -- -- -- 
+ 1  0 ATCB  1  0 null -- -- -- -- 
 LGC FDT   2   1 
- 2  0 ATPH  1  1 null -- -- -- -- 
+ 1  0 ATPH  1  0 null -- -- -- -- 
 LGC FDT   2   1 
- 2  0 WPTL  1  1 null -- -- -- -- 
-LGC FDT   2   1 
- 2  0 WPTL  0  1 null -- -- -- -- 
+ 1  0 ATPH  0  0 null -- -- -- -- 
 LGC FDT   2   2 
- 2  0 WPTL  0  1 null -- -- -- -- 
+ 1  0 WPTL  0  0 null -- -- -- -- 
+LGC FDT   2   2 
+ 1  0 WPTL  0  0 null -- -- -- -- 
 EAT FDT   2   2 
- 3  0 WPTL  0  1 null -- -- -- -- 
+ 2  2 WPTL  0  0 null -- -- -- -- 
 --- --- --- --- 
- 3  0 WPTL  0  1 null -- -- -- -- 
-DEZ TRT   0   0 
- 3  0 ATPH  0  1 null -- -- -- -- 
-DEZ TRT   0   0 
- 3  0 WPTL  0  1 null -- -- -- -- 
-DEZ TRT   0   0 
- 3  0 WPTL  0  1 null -- -- -- -- 
-EAT TRT   0   0 
- 4  0 ATPH  0  1 null -- -- -- -- 
---- --- --- --- 
- 4  0 WPTL  0  1 null -- -- -- -- 
---- --- --- --- 
- 4  2 WPTL  0  1 null -- -- -- -- 
---- --- --- --- 
- 4  2 WPTL  0  1 null -- -- -- -- 
+ 2  2 WPTL  0  0 null -- -- -- -- 
 DEZ TRT   2   0 
- 4  2 WPTL  0  1 null -- -- -- -- 
+ 2  2 ATPH  0  0 null -- -- -- -- 
+DEZ TRT   2   0 
+ 2  1 ATSR  0  1 null -- -- -- -- 
+DEZ TRT   2   0 
+ 2  1 ATPH  0  1 null -- -- -- -- 
+DEZ TRT   2   0 
+ 2  0 ATSR  0  2 null -- -- -- -- 
+DEZ TRT   2   0 
+ 2  0 ATPH  0  2 null -- -- -- -- 
+DEZ TRT   2   0 
+ 2  0 WPTL  0  2 null -- -- -- -- 
+DEZ TRT   2   0 
+ 2  0 WPTL  0  2 null -- -- -- -- 
 EAT TRT   2   0 
- 5  2 ATPH  0  1 null -- -- -- -- 
+ 3  1 WPTL  0  2 null -- -- -- -- 
 --- --- --- --- 
- 5  1 ATSR  0  2 null -- -- -- -- 
+ 3  1 WPTL  0  2 null -- -- -- -- 
+DEZ FDT   1   0 
+ 3  1 WPTL  0  2 null -- -- -- -- 
+LGC FDT   1   0 
+ 3  1 ATPH  0  2 null -- -- -- -- 
+LGC FDT   1   0 
+ 3  0 ATCB  1  2 null -- -- -- -- 
+LGC FDT   1   0 
+ 3  0 ATPH  1  2 null -- -- -- -- 
+LGC FDT   1   0 
+ 3  0 WPTL  1  2 null -- -- -- -- 
+LGC FDT   1   0 
+ 3  0 WPTL  0  2 null -- -- -- -- 
+LGC FDT   1   1 
+ 3  0 WPTL  0  2 null -- -- -- -- 
+EAT FDT   1   1 
+ 4  0 WPTL  0  2 null -- -- -- -- 
 --- --- --- --- 
- 5  1 ATPH  0  2 null -- -- -- -- 
+ 4  0 WPTL  0  2 null -- -- -- -- 
+DEZ FDT   1   0 
+ 4  0 WPTL  0  2 null -- -- -- -- 
+LGC FDT   1   0 
+ 4  0 ATPH  0  2 null -- -- -- -- 
+LGC FDT   1   0 
+ 4  0 WPTL  0  2 null -- -- -- -- 
+LGC FDT   1   0 
+ 4  0 WPTL  0  2 null -- -- -- -- 
+LGR FDT   1   0 
+ 4  0 WPTL  0  2 null -- -- -- -- 
+EAT FDT   1   0 
+ 5  2 WPTL  0  2 null -- -- -- -- 
 --- --- --- --- 
- 5  0 ATSR  0  3 null -- -- -- -- 
---- --- --- --- 
- 5  0 ATPH  0  3 null -- -- -- -- 
---- --- --- --- 
- 5  0 WPTL  0  3 null -- -- -- -- 
---- --- --- --- 
+ 5  2 WPTL  0  2 null -- -- -- -- 
+DEZ FDT   2   0 
+ 5  2 WPTL  0  2 null -- -- -- -- 
+LGC FDT   2   0 
+ 5  2 ATPH  0  2 null -- -- -- -- 
+LGC FDT   2   0 
+ 5  1 ATCB  1  2 null -- -- -- -- 
+LGC FDT   2   0 
+ 5  1 ATPH  1  2 null -- -- -- -- 
+LGC FDT   2   0 
+ 5  0 ATCB  2  2 null -- -- -- -- 
+LGC FDT   2   0 
+ 5  0 ATPH  2  2 null -- -- -- -- 
+LGC FDT   2   0 
+ 5  0 WPTL  2  2 null -- -- -- -- 
+LGC FDT   2   0 
+ 5  0 WPTL  1  2 null -- -- -- -- 
+LGC FDT   2   1 
+ 5  0 WPTL  0  2 null -- -- -- -- 
+LGC FDT   2   2 
+ 5  0 WPTL  0  2 null -- -- -- -- 
+EAT FDT   2   2 
 Final report
-N. of passengers which have this airport as their final destination = 4
+N. of passengers which have this airport as their final destination = 5
 N. of passengers in transit = 0
-N. of bags that should have been transported in the planes hold = 5
-N. of bags that were lost = 0
+N. of bags that should have been transported in the planes hold = 8
+N. of bags that were lost = 1
 
