@@ -36,7 +36,7 @@ public class Airport {
 	/**
 	 * Number of Passengers arriving in each plane
 	 */
-	public static final int N = 1;
+	public static final int N = 6;
 
 	/**
 	 * Number of maximum baggages
