@@ -3,359 +3,357 @@ PLANE	PORTER		DRIVER
 FN BN Stat CB SR	Stat Q1 Q2 Q3 Q4 Q5 Q6 S1 S2 S3
 						PASSENGERS
 St1 Si1 NR1 NA1 St2 Si2 NR2 NA2 St3 Si3 NR3 NA3 St4 Si4 NR4 NA4 St5 Si5 NR5 NA5 St6 Si6 NR6 NA6 
- 1  0 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
+ 1  1 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 1  0 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
  1  1 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 1  1 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 1  1 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 1  1 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 1  1 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 DEZ TRT   0   0 --- --- --- --- --- --- --- --- --- --- --- --- 
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
  1  2 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 DEZ TRT   0   0 --- --- --- --- --- --- --- --- --- --- --- --- 
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
  1  3 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 DEZ TRT   0   0 --- --- --- --- --- --- --- --- --- --- --- --- 
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
  1  3 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 DEZ TRT   0   0 DEZ TRT   0   0 --- --- --- --- --- --- --- --- 
- 1  3 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 DEZ TRT   0   0 DEZ TRT   0   0 DEZ TRT   1   0 --- --- --- --- 
- 1  3 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 DEZ TRT   0   0 DEZ TRT   0   0 DEZ TRT   1   0 DEZ TRT   1   0 
- 1  3 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 DEZ TRT   0   0 DEZ TRT   0   0 DEZ TRT   1   0 EAT TRT   1   0 
- 1  3 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 DEZ TRT   0   0 DEZ TRT   0   0 EAT TRT   1   0 EAT TRT   1   0 
- 1  3 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 DEZ TRT   0   0 EAT TRT   0   0 EAT TRT   1   0 EAT TRT   1   0 
- 1  3 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 EAT TRT   0   0 EAT TRT   0   0 EAT TRT   1   0 EAT TRT   1   0 
- 1  3 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 EAT TRT   1   0 EAT TRT   0   0 EAT TRT   0   0 EAT TRT   1   0 EAT TRT   1   0 
- 1  3 ATPH  0  0 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 EAT TRT   1   0 EAT TRT   0   0 EAT TRT   0   0 EAT TRT   1   0 EAT TRT   1   0 
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 1  4 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 1  4 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 1  4 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   1   0 DEZ FDT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 1  4 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   1   0 DEZ FDT   1   0 DEZ TRT   0   0 --- --- --- --- --- --- --- --- --- --- --- --- 
+ 1  4 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   1   0 DEZ FDT   1   0 DEZ TRT   0   0 DEZ FDT   1   0 --- --- --- --- --- --- --- --- 
+ 1  4 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   1   0 DEZ FDT   1   0 DEZ TRT   0   0 DEZ FDT   1   0 DEZ TRT   1   0 --- --- --- --- 
+ 1  4 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   1   0 DEZ FDT   1   0 DEZ TRT   0   0 DEZ FDT   1   0 DEZ TRT   1   0 DEZ TRT   0   0 
+ 1  4 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   1   0 DEZ FDT   1   0 DEZ TRT   0   0 DEZ FDT   1   0 DEZ TRT   1   0 EAT TRT   0   0 
+ 1  4 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   1   0 DEZ FDT   1   0 DEZ TRT   0   0 LGC FDT   1   0 DEZ TRT   1   0 EAT TRT   0   0 
+ 1  4 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   1   0 DEZ FDT   1   0 DEZ TRT   0   0 LGC FDT   1   0 EAT TRT   1   0 EAT TRT   0   0 
+ 1  4 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   1   0 DEZ FDT   1   0 EAT TRT   0   0 LGC FDT   1   0 EAT TRT   1   0 EAT TRT   0   0 
+ 1  4 WPTL  0  0 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   1   0 DEZ FDT   1   0 EAT TRT   0   0 LGC FDT   1   0 EAT TRT   1   0 EAT TRT   0   0 
+ 1  4 ATPH  0  0 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   1   0 DEZ FDT   1   0 EAT TRT   0   0 LGC FDT   1   0 EAT TRT   1   0 EAT TRT   0   0 
+ 1  3 ATCB  1  0 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   1   0 DEZ FDT   1   0 EAT TRT   0   0 LGC FDT   1   0 EAT TRT   1   0 EAT TRT   0   0 
+ 1  3 ATCB  1  0 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   1   0 EAT TRT   1   0 EAT TRT   0   0 
+ 1  3 ATPH  1  0 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   1   0 EAT TRT   1   0 EAT TRT   0   0 
+ 1  2 ATSR  1  1 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   1   0 EAT TRT   1   0 EAT TRT   0   0 
  1  2 ATSR  0  1 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 EAT TRT   1   0 EAT TRT   0   0 EAT TRT   0   0 EAT TRT   1   0 EAT TRT   1   0 
+EAT TRT   1   0 LGC FDT   1   1 EAT TRT   0   0 LGC FDT   1   0 EAT TRT   1   0 EAT TRT   0   0 
  1  2 ATPH  0  1 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 EAT TRT   1   0 EAT TRT   0   0 EAT TRT   0   0 EAT TRT   1   0 EAT TRT   1   0 
- 1  1 ATSR  0  2 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 EAT TRT   1   0 EAT TRT   0   0 EAT TRT   0   0 EAT TRT   1   0 EAT TRT   1   0 
- 1  1 ATPH  0  2 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 EAT TRT   1   0 EAT TRT   0   0 EAT TRT   0   0 EAT TRT   1   0 EAT TRT   1   0 
- 1  0 ATSR  0  3 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 EAT TRT   1   0 EAT TRT   0   0 EAT TRT   0   0 EAT TRT   1   0 EAT TRT   1   0 
- 1  0 ATPH  0  3 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 EAT TRT   1   0 EAT TRT   0   0 EAT TRT   0   0 EAT TRT   1   0 EAT TRT   1   0 
- 1  0 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 EAT TRT   1   0 EAT TRT   0   0 EAT TRT   0   0 EAT TRT   1   0 EAT TRT   1   0 
- 1  0 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   0   0 EAT TRT   1   0 EAT TRT   0   0 EAT TRT   0   0 EAT TRT   1   0 EAT TRT   1   0 
- 2  0 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   1   0 LGC FDT   1   1 EAT TRT   0   0 LGC FDT   1   0 EAT TRT   1   0 EAT TRT   0   0 
+ 1  1 ATCB  1  1 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   1   0 LGC FDT   1   1 EAT TRT   0   0 LGC FDT   1   0 EAT TRT   1   0 EAT TRT   0   0 
+ 1  1 ATPH  1  1 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   1   0 LGC FDT   1   1 EAT TRT   0   0 LGC FDT   1   0 EAT TRT   1   0 EAT TRT   0   0 
+ 1  0 ATSR  1  2 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   1   0 LGC FDT   1   1 EAT TRT   0   0 LGC FDT   1   0 EAT TRT   1   0 EAT TRT   0   0 
+ 1  0 ATPH  1  2 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   1   0 LGC FDT   1   1 EAT TRT   0   0 LGC FDT   1   0 EAT TRT   1   0 EAT TRT   0   0 
+ 1  0 WPTL  1  2 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   1   0 LGC FDT   1   1 EAT TRT   0   0 LGC FDT   1   0 EAT TRT   1   0 EAT TRT   0   0 
+ 1  0 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   1   0 LGC FDT   1   1 EAT TRT   0   0 LGC FDT   1   1 EAT TRT   1   0 EAT TRT   0   0 
+ 1  0 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   1   0 LGC FDT   1   1 EAT TRT   0   0 EAT FDT   1   1 EAT TRT   1   0 EAT TRT   0   0 
+ 1  0 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   1   0 EAT FDT   1   1 EAT TRT   0   0 EAT FDT   1   1 EAT TRT   1   0 EAT TRT   0   0 
+ 2  0 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 2  1 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
+ 2  2 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 2  1 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
+ 2  2 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 2  1 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 2  1 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 2  1 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 2  1 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 2  1 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 DEZ FDT   0   0 --- --- --- --- --- --- --- --- --- --- --- --- 
- 2  3 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 DEZ FDT   0   0 --- --- --- --- --- --- --- --- --- --- --- --- 
- 2  3 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 DEZ FDT   0   0 DEZ FDT   2   0 --- --- --- --- --- --- --- --- 
- 2  3 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 DEZ FDT   0   0 DEZ FDT   2   0 DEZ TRT   0   0 --- --- --- --- 
- 2  3 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 DEZ FDT   0   0 DEZ FDT   2   0 DEZ TRT   0   0 DEZ TRT   0   0 
- 2  3 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 DEZ FDT   0   0 DEZ FDT   2   0 DEZ TRT   0   0 EAT TRT   0   0 
- 2  3 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 DEZ FDT   0   0 DEZ FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
- 2  3 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   0   0 DEZ TRT   1   0 EAT FDT   0   0 DEZ FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
- 2  3 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   0   0 DEZ TRT   1   0 EAT FDT   0   0 DEZ FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
- 2  3 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   0   0 EAT TRT   1   0 EAT FDT   0   0 DEZ FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
- 2  3 WPTL  0  3 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   0   0 EAT TRT   1   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
- 2  3 ATPH  0  3 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   0   0 EAT TRT   1   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
- 2  2 ATCB  1  3 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   0   0 EAT TRT   1   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
- 2  2 ATPH  1  3 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   0   0 EAT TRT   1   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
- 2  1 ATCB  2  3 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   0   0 EAT TRT   1   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
- 2  1 ATPH  2  3 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   0   0 EAT TRT   1   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
- 2  0 ATSR  2  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   0   0 EAT TRT   1   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
- 2  0 ATPH  2  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   0   0 EAT TRT   1   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
- 2  0 WPTL  2  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   0   0 EAT TRT   1   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
- 2  0 WPTL  1  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   0   0 EAT TRT   1   0 EAT FDT   0   0 LGC FDT   2   1 EAT TRT   0   0 EAT TRT   0   0 
- 2  0 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   0   0 EAT TRT   1   0 EAT FDT   0   0 LGC FDT   2   2 EAT TRT   0   0 EAT TRT   0   0 
- 2  0 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   0   0 EAT TRT   1   0 EAT FDT   0   0 EAT FDT   2   2 EAT TRT   0   0 EAT TRT   0   0 
- 3  2 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
+ 2  2 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 3  2 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
+ 2  3 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 3  3 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
+ 2  5 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 3  3 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 3  5 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 3  5 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   1   0 DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 3  6 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   1   0 DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 3  6 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   1   0 DEZ FDT   2   0 DEZ FDT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- 
- 3  7 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   1   0 DEZ FDT   2   0 DEZ FDT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- 
- 3  7 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   1   0 DEZ FDT   2   0 DEZ FDT   1   0 DEZ FDT   1   0 --- --- --- --- --- --- --- --- 
- 3  7 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   1   0 DEZ FDT   2   0 DEZ FDT   1   0 DEZ FDT   1   0 DEZ TRT   0   0 --- --- --- --- 
- 3  7 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   1   0 DEZ FDT   2   0 DEZ FDT   1   0 DEZ FDT   1   0 DEZ TRT   0   0 DEZ FDT   2   0 
- 3  7 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   1   0 DEZ FDT   2   0 DEZ FDT   1   0 DEZ FDT   1   0 DEZ TRT   0   0 LGC FDT   2   0 
- 3  7 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   1   0 DEZ FDT   2   0 DEZ FDT   1   0 DEZ FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  7 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   1   0 DEZ FDT   2   0 LGC FDT   1   0 DEZ FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  7 WPTL  0  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 DEZ FDT   2   0 LGC FDT   1   0 DEZ FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  7 ATPH  0  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 DEZ FDT   2   0 LGC FDT   1   0 DEZ FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  6 ATPH  0  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 DEZ FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  6 ATCB  1  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 DEZ FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  6 ATPH  1  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 DEZ FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  5 ATCB  2  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 DEZ FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  5 ATCB  2  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  5 ATPH  2  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  4 ATCB  3  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  4 ATPH  3  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  3 ATCB  4  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  3 ATPH  4  4 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  2 ATSR  4  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  2 ATPH  4  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  1 ATCB  5  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  1 ATPH  5  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  0 ATCB  6  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  0 ATPH  6  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  0 WPTL  6  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  0 WPTL  5  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 LGC FDT   2   1 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  0 WPTL  4  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 LGC FDT   2   2 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  0 WPTL  4  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 EAT FDT   2   2 LGC FDT   1   0 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  0 WPTL  3  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 EAT FDT   2   2 LGC FDT   1   1 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   0 
- 3  0 WPTL  2  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 EAT FDT   2   2 LGC FDT   1   1 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   1 
- 3  0 WPTL  1  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 EAT FDT   2   2 LGC FDT   1   1 LGC FDT   1   0 EAT TRT   0   0 LGC FDT   2   2 
- 3  0 WPTL  1  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 EAT FDT   2   2 LGC FDT   1   1 LGC FDT   1   0 EAT TRT   0   0 EAT FDT   2   2 
- 3  0 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 EAT FDT   2   2 LGC FDT   1   1 LGC FDT   1   1 EAT TRT   0   0 EAT FDT   2   2 
- 3  0 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 EAT FDT   2   2 LGC FDT   1   1 EAT FDT   1   1 EAT TRT   0   0 EAT FDT   2   2 
- 3  0 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   1   0 EAT FDT   2   2 EAT FDT   1   1 EAT FDT   1   1 EAT TRT   0   0 EAT FDT   2   2 
- 4  0 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
---- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 4  0 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-DEZ FDT   0   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 4  1 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-DEZ FDT   0   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 4  1 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-DEZ FDT   0   0 DEZ TRT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 4  2 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-DEZ FDT   0   0 DEZ TRT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 4  2 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-DEZ FDT   0   0 DEZ TRT   2   0 DEZ TRT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- 
- 4  2 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-DEZ FDT   0   0 DEZ TRT   2   0 DEZ TRT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- 
- 4  3 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-DEZ FDT   0   0 DEZ TRT   2   0 DEZ TRT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- 
- 4  4 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-DEZ FDT   0   0 DEZ TRT   2   0 DEZ TRT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- 
- 4  4 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-DEZ FDT   0   0 DEZ TRT   2   0 DEZ TRT   1   0 DEZ TRT   0   0 --- --- --- --- --- --- --- --- 
- 4  4 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-DEZ FDT   0   0 DEZ TRT   2   0 DEZ TRT   1   0 DEZ TRT   0   0 DEZ FDT   1   0 --- --- --- --- 
- 4  4 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-DEZ FDT   0   0 DEZ TRT   2   0 DEZ TRT   1   0 DEZ TRT   0   0 DEZ FDT   1   0 DEZ FDT   1   0 
- 4  4 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-DEZ FDT   0   0 DEZ TRT   2   0 DEZ TRT   1   0 DEZ TRT   0   0 DEZ FDT   1   0 LGC FDT   1   0 
- 4  4 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-DEZ FDT   0   0 DEZ TRT   2   0 DEZ TRT   1   0 EAT TRT   0   0 DEZ FDT   1   0 LGC FDT   1   0 
- 4  4 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-DEZ FDT   0   0 DEZ TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 DEZ FDT   1   0 LGC FDT   1   0 
- 4  4 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-DEZ FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 DEZ FDT   1   0 LGC FDT   1   0 
- 4  4 WPTL  0  5 null -- -- -- -- -- -- -- -- -- 
-EAT FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 DEZ FDT   1   0 LGC FDT   1   0 
- 4  4 ATPH  0  5 null -- -- -- -- -- -- -- -- -- 
-EAT FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 DEZ FDT   1   0 LGC FDT   1   0 
- 4  3 ATCB  1  5 null -- -- -- -- -- -- -- -- -- 
-EAT FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 DEZ FDT   1   0 LGC FDT   1   0 
- 4  3 ATPH  1  5 null -- -- -- -- -- -- -- -- -- 
-EAT FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 DEZ FDT   1   0 LGC FDT   1   0 
- 4  2 ATCB  2  5 null -- -- -- -- -- -- -- -- -- 
-EAT FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 DEZ FDT   1   0 LGC FDT   1   0 
- 4  2 ATCB  2  5 null -- -- -- -- -- -- -- -- -- 
-EAT FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 LGC FDT   1   0 LGC FDT   1   0 
- 4  2 ATCB  1  5 null -- -- -- -- -- -- -- -- -- 
-EAT FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 LGC FDT   1   1 LGC FDT   1   0 
- 4  2 ATCB  1  5 null -- -- -- -- -- -- -- -- -- 
-EAT FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   1   1 LGC FDT   1   0 
- 4  2 ATPH  1  5 null -- -- -- -- -- -- -- -- -- 
-EAT FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   1   1 LGC FDT   1   0 
- 4  1 ATPH  0  5 null -- -- -- -- -- -- -- -- -- 
-EAT FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   1   1 LGC FDT   1   1 
- 4  1 ATPH  0  5 null -- -- -- -- -- -- -- -- -- 
-EAT FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   1   1 EAT FDT   1   1 
- 4  1 ATSR  0  6 null -- -- -- -- -- -- -- -- -- 
-EAT FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   1   1 EAT FDT   1   1 
- 4  1 ATPH  0  6 null -- -- -- -- -- -- -- -- -- 
-EAT FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   1   1 EAT FDT   1   1 
- 4  0 ATSR  0  7 null -- -- -- -- -- -- -- -- -- 
-EAT FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   1   1 EAT FDT   1   1 
- 4  0 ATPH  0  7 null -- -- -- -- -- -- -- -- -- 
-EAT FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   1   1 EAT FDT   1   1 
- 4  0 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
-EAT FDT   0   0 EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   1   1 EAT FDT   1   1 
- 5  1 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
---- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 5  1 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+ 2  5 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
 DEZ TRT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 5  2 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+ 2  5 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 2  5 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 DEZ TRT   0   0 --- --- --- --- --- --- --- --- --- --- --- --- 
+ 2  5 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 DEZ TRT   0   0 DEZ FDT   0   0 --- --- --- --- --- --- --- --- 
+ 2  5 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 DEZ TRT   0   0 DEZ FDT   0   0 DEZ TRT   0   0 --- --- --- --- 
+ 2  5 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 DEZ TRT   0   0 DEZ FDT   0   0 DEZ TRT   0   0 DEZ TRT   2   0 
+ 2  5 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 DEZ TRT   0   0 DEZ FDT   0   0 DEZ TRT   0   0 EAT TRT   2   0 
+ 2  5 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 DEZ TRT   0   0 DEZ FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 2  5 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 DEZ TRT   0   0 EAT FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 2  5 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 EAT TRT   0   0 EAT FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 2  5 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 2  5 WPTL  0  2 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 2  5 ATPH  0  2 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 2  4 ATSR  0  3 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 2  4 ATPH  0  3 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 2  3 ATSR  0  4 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 2  3 ATPH  0  4 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 2  2 ATSR  0  5 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 2  2 ATPH  0  5 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 2  1 ATSR  0  6 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 2  1 ATPH  0  6 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 2  0 ATSR  0  7 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 2  0 ATPH  0  7 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 2  0 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 EAT TRT   0   0 EAT FDT   0   0 EAT TRT   0   0 EAT TRT   2   0 
+ 3  2 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 3  2 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 3  2 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 3  4 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 3  5 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 3  5 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 3  5 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 3  7 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 3  7 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 DEZ TRT   0   0 --- --- --- --- --- --- --- --- --- --- --- --- 
+ 3  7 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 DEZ TRT   0   0 DEZ TRT   2   0 --- --- --- --- --- --- --- --- 
+ 3  7 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 DEZ TRT   0   0 DEZ TRT   2   0 DEZ TRT   0   0 --- --- --- --- 
+ 3  7 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 DEZ TRT   0   0 DEZ TRT   2   0 DEZ TRT   0   0 DEZ FDT   1   0 
+ 3  7 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 DEZ TRT   0   0 DEZ TRT   2   0 DEZ TRT   0   0 LGC FDT   1   0 
+ 3  7 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 DEZ TRT   0   0 DEZ TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  7 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 DEZ TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  7 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  7 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  7 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  7 ATPH  0  7 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  6 ATSR  0  8 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  6 ATPH  0  8 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  5 ATSR  0  9 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  5 ATPH  0  9 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  4 ATCB  1  9 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  4 ATPH  1  9 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  3 ATSR  1 10 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  3 ATPH  1 10 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  2 ATSR  1 11 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  2 ATPH  1 11 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  1 ATCB  2 11 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  1 ATPH  2 11 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  0 ATCB  3 11 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  0 ATPH  3 11 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  0 WPTL  3 11 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  0 WPTL  2 11 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   1 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   0 
+ 3  0 WPTL  1 11 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   1 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   1 
+ 3  0 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   2 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   1 
+ 3  0 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+EAT FDT   2   2 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 LGC FDT   1   1 
+ 3  0 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+EAT FDT   2   2 EAT TRT   2   0 EAT TRT   0   0 EAT TRT   2   0 EAT TRT   0   0 EAT FDT   1   1 
+ 4  2 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 4  3 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 4  3 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 4  3 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 4  3 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 4  5 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 4  5 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
 DEZ TRT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 5  2 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   2   0 DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 5  3 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   2   0 DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 5  4 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   2   0 DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 5  6 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   2   0 DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 5  6 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   2   0 DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
- 5  6 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   2   0 DEZ FDT   2   0 DEZ FDT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- 
- 5  6 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   2   0 DEZ FDT   2   0 DEZ FDT   1   0 DEZ FDT   2   0 --- --- --- --- --- --- --- --- 
- 5  6 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   2   0 DEZ FDT   2   0 DEZ FDT   1   0 DEZ FDT   2   0 DEZ FDT   2   0 --- --- --- --- 
- 5  6 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   2   0 DEZ FDT   2   0 DEZ FDT   1   0 DEZ FDT   2   0 DEZ FDT   2   0 DEZ FDT   1   0 
- 5  6 WPTL  0  7 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   2   0 DEZ FDT   2   0 DEZ FDT   1   0 DEZ FDT   2   0 DEZ FDT   2   0 LGC FDT   1   0 
- 5  6 ATPH  0  7 null -- -- -- -- -- -- -- -- -- 
-DEZ TRT   2   0 DEZ FDT   2   0 DEZ FDT   1   0 DEZ FDT   2   0 DEZ FDT   2   0 LGC FDT   1   0 
- 5  5 ATPH  0  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 DEZ FDT   2   0 DEZ FDT   1   0 DEZ FDT   2   0 DEZ FDT   2   0 LGC FDT   1   0 
- 5  5 ATPH  0  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 DEZ FDT   2   0 DEZ FDT   1   0 DEZ FDT   2   0 LGC FDT   2   0 LGC FDT   1   0 
- 5  5 ATPH  0  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 DEZ FDT   1   0 DEZ FDT   2   0 LGC FDT   2   0 LGC FDT   1   0 
- 5  5 ATCB  1  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 DEZ FDT   1   0 DEZ FDT   2   0 LGC FDT   2   0 LGC FDT   1   0 
- 5  5 ATCB  1  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 LGC FDT   1   0 DEZ FDT   2   0 LGC FDT   2   0 LGC FDT   1   0 
- 5  5 ATPH  1  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 LGC FDT   1   0 DEZ FDT   2   0 LGC FDT   2   0 LGC FDT   1   0 
- 5  4 ATPH  1  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   2   0 LGC FDT   2   0 LGC FDT   1   0 
- 5  4 ATCB  2  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   2   0 LGC FDT   2   0 LGC FDT   1   0 
- 5  4 ATPH  2  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   2   0 LGC FDT   2   0 LGC FDT   1   0 
- 5  3 ATPH  1  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   2   0 LGC FDT   2   1 LGC FDT   1   0 
- 5  3 ATPH  0  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   2   0 LGC FDT   2   2 LGC FDT   1   0 
- 5  3 ATPH  0  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   2   0 EAT FDT   2   2 LGC FDT   1   0 
- 5  3 ATCB  1  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   2   0 EAT FDT   2   2 LGC FDT   1   0 
- 5  3 ATPH  1  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   2   0 EAT FDT   2   2 LGC FDT   1   0 
- 5  2 ATCB  2  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   2   0 EAT FDT   2   2 LGC FDT   1   0 
- 5  2 ATPH  2  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 LGC FDT   1   0 LGC FDT   2   0 EAT FDT   2   2 LGC FDT   1   0 
- 5  2 ATPH  1  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 LGC FDT   1   1 LGC FDT   2   0 EAT FDT   2   2 LGC FDT   1   0 
- 5  1 ATPH  1  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 EAT FDT   1   1 LGC FDT   2   0 EAT FDT   2   2 LGC FDT   1   0 
- 5  1 ATCB  2  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 EAT FDT   1   1 LGC FDT   2   0 EAT FDT   2   2 LGC FDT   1   0 
- 5  1 ATPH  2  7 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 EAT FDT   1   1 LGC FDT   2   0 EAT FDT   2   2 LGC FDT   1   0 
- 5  0 ATSR  2  8 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 EAT FDT   1   1 LGC FDT   2   0 EAT FDT   2   2 LGC FDT   1   0 
- 5  0 ATPH  2  8 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 EAT FDT   1   1 LGC FDT   2   0 EAT FDT   2   2 LGC FDT   1   0 
- 5  0 WPTL  2  8 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 EAT FDT   1   1 LGC FDT   2   0 EAT FDT   2   2 LGC FDT   1   0 
- 5  0 WPTL  2  8 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 EAT FDT   1   1 LGR FDT   2   0 EAT FDT   2   2 LGC FDT   1   0 
- 5  0 WPTL  2  8 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   0 EAT FDT   1   1 EAT FDT   2   0 EAT FDT   2   2 LGC FDT   1   0 
- 5  0 WPTL  1  8 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   1 EAT FDT   1   1 EAT FDT   2   0 EAT FDT   2   2 LGC FDT   1   0 
- 5  0 WPTL  0  8 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   1 EAT FDT   1   1 EAT FDT   2   0 EAT FDT   2   2 LGC FDT   1   1 
- 5  0 WPTL  0  8 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGC FDT   2   1 EAT FDT   1   1 EAT FDT   2   0 EAT FDT   2   2 EAT FDT   1   1 
- 5  0 WPTL  0  8 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 LGR FDT   2   1 EAT FDT   1   1 EAT FDT   2   0 EAT FDT   2   2 EAT FDT   1   1 
- 5  0 WPTL  0  8 null -- -- -- -- -- -- -- -- -- 
-EAT TRT   2   0 EAT FDT   2   1 EAT FDT   1   1 EAT FDT   2   0 EAT FDT   2   2 EAT FDT   1   1 
+ 4  5 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 4  5 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- 
+ 4  5 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 DEZ FDT   2   0 DEZ TRT   1   0 --- --- --- --- --- --- --- --- 
+ 4  5 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 DEZ FDT   2   0 DEZ TRT   1   0 DEZ FDT   1   0 --- --- --- --- 
+ 4  5 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 DEZ FDT   2   0 DEZ TRT   1   0 DEZ FDT   1   0 DEZ FDT   0   0 
+ 4  5 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 DEZ FDT   2   0 DEZ TRT   1   0 DEZ FDT   1   0 EAT FDT   0   0 
+ 4  5 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 DEZ FDT   2   0 DEZ TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  5 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 DEZ TRT   1   0 DEZ FDT   2   0 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  5 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 EAT TRT   1   0 DEZ FDT   2   0 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  5 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+DEZ TRT   2   0 EAT TRT   1   0 LGC FDT   2   0 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  5 WPTL  0 11 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 LGC FDT   2   0 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  5 ATPH  0 11 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 LGC FDT   2   0 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  4 ATSR  0 12 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 LGC FDT   2   0 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  4 ATPH  0 12 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 LGC FDT   2   0 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  3 ATSR  0 13 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 LGC FDT   2   0 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  3 ATPH  0 13 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 LGC FDT   2   0 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  2 ATSR  0 14 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 LGC FDT   2   0 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  2 ATPH  0 14 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 LGC FDT   2   0 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  1 ATCB  1 14 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 LGC FDT   2   0 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  1 ATPH  1 14 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 LGC FDT   2   0 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  0 ATCB  2 14 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 LGC FDT   2   0 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  0 ATPH  2 14 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 LGC FDT   2   0 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  0 WPTL  2 14 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 LGC FDT   2   0 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  0 WPTL  1 14 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 LGC FDT   2   1 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  0 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 LGC FDT   2   2 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  0 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 EAT FDT   2   2 EAT TRT   1   0 LGC FDT   1   0 EAT FDT   0   0 
+ 4  0 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 EAT FDT   2   2 EAT TRT   1   0 LGR FDT   1   0 EAT FDT   0   0 
+ 4  0 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+EAT TRT   2   0 EAT TRT   1   0 EAT FDT   2   2 EAT TRT   1   0 EAT FDT   1   0 EAT FDT   0   0 
+ 5  2 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 5  2 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 5  4 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 5  4 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 5  6 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 5  6 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 5  6 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 5  6 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+ 5  6 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 DEZ FDT   0   0 --- --- --- --- --- --- --- --- --- --- --- --- 
+ 5  6 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 DEZ FDT   0   0 DEZ FDT   2   0 --- --- --- --- --- --- --- --- 
+ 5  6 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 DEZ FDT   0   0 DEZ FDT   2   0 DEZ TRT   0   0 --- --- --- --- 
+ 5  6 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 DEZ FDT   0   0 DEZ FDT   2   0 DEZ TRT   0   0 DEZ TRT   0   0 
+ 5  6 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 DEZ FDT   0   0 DEZ FDT   2   0 DEZ TRT   0   0 EAT TRT   0   0 
+ 5  6 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 DEZ FDT   0   0 DEZ FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  6 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  6 WPTL  0 14 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  6 ATPH  0 14 null -- -- -- -- -- -- -- -- -- 
+DEZ FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  6 ATPH  0 14 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  5 ATCB  1 14 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  5 ATPH  1 14 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  4 ATCB  2 14 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  4 ATPH  2 14 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  3 ATSR  2 15 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  3 ATPH  2 15 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  2 ATSR  2 16 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  2 ATPH  2 16 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  1 ATCB  3 16 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  1 ATPH  3 16 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  0 ATCB  4 16 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  0 ATPH  4 16 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  0 WPTL  4 16 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 DEZ TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  0 WPTL  4 16 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   0 EAT TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  0 WPTL  3 16 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   1 EAT TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  0 WPTL  2 16 null -- -- -- -- -- -- -- -- -- 
+LGC FDT   2   2 EAT TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  0 WPTL  2 16 null -- -- -- -- -- -- -- -- -- 
+EAT FDT   2   2 EAT TRT   2   0 EAT FDT   0   0 LGC FDT   2   0 EAT TRT   0   0 EAT TRT   0   0 
+ 5  0 WPTL  1 16 null -- -- -- -- -- -- -- -- -- 
+EAT FDT   2   2 EAT TRT   2   0 EAT FDT   0   0 LGC FDT   2   1 EAT TRT   0   0 EAT TRT   0   0 
+ 5  0 WPTL  0 16 null -- -- -- -- -- -- -- -- -- 
+EAT FDT   2   2 EAT TRT   2   0 EAT FDT   0   0 LGC FDT   2   2 EAT TRT   0   0 EAT TRT   0   0 
+ 5  0 WPTL  0 16 null -- -- -- -- -- -- -- -- -- 
+EAT FDT   2   2 EAT TRT   2   0 EAT FDT   0   0 EAT FDT   2   2 EAT TRT   0   0 EAT TRT   0   0 
 Final report
 N. of passengers which have this airport as their final destination = 30
 N. of passengers in transit = 0
-N. of bags that should have been transported in the planes hold = 28
-N. of bags that were lost = 3
+N. of bags that should have been transported in the planes hold = 29
+N. of bags that were lost = 1
 

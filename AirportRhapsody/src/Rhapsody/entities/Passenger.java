@@ -314,16 +314,16 @@ public class Passenger extends Thread {
 				if (this.startingBags != 0) {
 					// get bags
 					while (!this.lostBags && this.currentBags != this.startingBags) {
-						//try {
+						try {
 							this.baggageCollectionPoint.goCollectABag();
-						//	long sleepTime = (long) (Math.random() * this.lookAtCellPhone);
-						//	System.out.printf(ANSI_GREEN + "[PASSENGER] P%d | BAGS: %d | Sleep: %d \n", this.id,
-						//			this.currentBags, sleepTime);
-						//	Thread.sleep(sleepTime);
-						//} catch (InterruptedException e) {
-						//	System.err.println("[PASSENGER] Interrupted while trying to get a bag");
-						//	System.exit(4);
-						//}
+							long sleepTime = (long) (Math.random() * this.lookAtCellPhone);
+							System.out.printf(ANSI_GREEN + "[PASSENGER] P%d | BAGS: %d | Sleep: %d \n", this.id,
+									this.currentBags, sleepTime);
+							Thread.sleep(sleepTime);
+						} catch (InterruptedException e) {
+							System.err.println("[PASSENGER] Interrupted while trying to get a bag");
+							System.exit(4);
+						}
 
 					}
 					if (this.lostBags) {
