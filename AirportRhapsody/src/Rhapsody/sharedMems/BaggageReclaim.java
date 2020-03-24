@@ -2,7 +2,6 @@ package Rhapsody.sharedMems;
 
 import Rhapsody.entities.Passenger;
 import Rhapsody.entities.states.PassengerState;
-import Rhapsody.utils.Logger;
 
 /**
  * Luggage reclaim office shared memory entity
@@ -13,23 +12,27 @@ import Rhapsody.utils.Logger;
 public class BaggageReclaim {
 
 	/**
-	 * Logger for debugging
+	 * GeneralRepository for debugging
 	 */
-	private Logger logger;
+	private GeneralRepository generalRepository;
 
 	/**
 	 * BaggageReclaim constructor
-	 * @param logger
+	 * @param generalRepository
 	 */
-	public BaggageReclaim(Logger logger) {
-		this.logger=logger;
+	public BaggageReclaim(GeneralRepository generalRepository) {
+		this.generalRepository=generalRepository;
 	}
 
-	public synchronized void reportMissingBags() {
+	/**
+	 * Method to client register his complaint about any lost luggage
+	 * @param lostBags
+	 */
+	public synchronized void reportMissingBags(int lostBags) {
 		Passenger passenger = (Passenger) Thread.currentThread();
 		passenger.setCurrentState(PassengerState.AT_LUGGAGE_RECLAIM);
-		this.logger.updateLostbags(passenger.getStartingBags()-passenger.getCurrentBags(), true);
-		this.logger.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), false);
+		this.generalRepository.updateLostbags(lostBags, true);
+		this.generalRepository.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), false);
 	}
 	
 }

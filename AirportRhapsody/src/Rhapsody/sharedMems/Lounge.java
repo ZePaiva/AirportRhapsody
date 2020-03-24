@@ -1,12 +1,13 @@
 package Rhapsody.sharedMems;
 
-import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
 
 import Rhapsody.entities.Passenger;
 import Rhapsody.entities.Porter;
 import Rhapsody.entities.states.PassengerState;
 import Rhapsody.entities.states.PorterState;
-import Rhapsody.utils.Logger;
+import Rhapsody.utils.Luggage;
 
 /**
  * Lounge datatype implements the Arrival Lounge shared memory region.
@@ -19,9 +20,9 @@ import Rhapsody.utils.Logger;
 public class Lounge {
 
 	/**
-	 * Logger for debugging and pontuation purposes
+	 * GeneralRepository for debugging and pontuation purposes
 	 */
-	private Logger logger;
+	private GeneralRepository generalRepository;
 
 	/**
 	 * Information about amount of passengers of each flight. <p/>
@@ -34,35 +35,56 @@ public class Lounge {
 	 */
 	private int passengersDisembarked;
 
+	/**
+	 * has simulation ended
+	 */
+	private boolean simulationEnded;
+
+	/**
+	 * Luggage list for the simulation, first index is the flight
+	 */
+	private Stack<Luggage>[] planeHoldLuggage;
+
+	/**
+	 * Signlas the flight id
+	 */
+	private int currentFlight;
+
 	public static final String ANSI_WHITE = "\u001B[37m";
 
 	/**
 	 * Contructor method for the Lounge class
 	 * 
-	 * @param logger
+	 * @param generalRepository
 	 * @param maxPassengerAmount
+	 * @param planeHoldLuggage
 	 */
-	public Lounge(Logger logger, int maxPassengerAmount) {
-		this.logger=logger;
+	public Lounge(GeneralRepository generalRepository, int maxPassengerAmount, 
+					Stack<Luggage>[] planeHoldLuggage) {
+		this.generalRepository=generalRepository;
 		this.passengersPerFlight=maxPassengerAmount;
+		this.planeHoldLuggage=planeHoldLuggage;
+		this.currentFlight=0;
 		this.passengersDisembarked=0;
+		this.simulationEnded=false;
 	}
 
 	/**
 	 * Puts porter in {@link Rhapsody.entities.states.PorterState#WAITING_FOR_PLANE_TO_LAND} state
-	 * @param flightId
 	 */
-	public synchronized void takeARest() {
+	public synchronized boolean takeARest() {
 		// get porter thread
 		Porter porter = (Porter) Thread.currentThread();
 
 		// update porter
 		porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
-		this.logger.updatePorterState(porter.getPorterState(), true);
+		this.generalRepository.updateBagsInPlane(planeHoldLuggage[currentFlight].size(), true);
+		this.generalRepository.updatePorterState(porter.getPorterState(), false);
 		
 		System.out.printf(ANSI_WHITE+"[LOUNGE---] Porter waiting for passengers | CP: %d\n", this.passengersDisembarked);
 		// waits for all passengers to arrive
-		while(this.passengersDisembarked < this.passengersPerFlight) {
+		System.out.println(this.passengersDisembarked < this.passengersPerFlight && !this.simulationEnded);
+		while(this.passengersDisembarked < this.passengersPerFlight && !this.simulationEnded) {
 			try {
 				wait();
 				System.out.printf(ANSI_WHITE+"[LOUNGE---] Passenger disembarked | PD: %d\n", this.passengersDisembarked);
@@ -71,6 +93,8 @@ public class Lounge {
 				System.exit(3);
 			}
 		}
+
+		return !this.simulationEnded;
 	}
 
 	/**
@@ -82,8 +106,12 @@ public class Lounge {
 
 		// updates state
 		passenger.setCurrentState(PassengerState.AT_DISEMBARKING_ZONE);
-		this.logger.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
-		this.logger.addPassengerToFlight(passenger.getPassengerId(), false);
+		this.generalRepository.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
+		this.generalRepository.addPassengerToFlight(passenger.getPassengerId(), true); 
+		this.generalRepository.updatePlaneHoldBags(passenger.getStartingBags()[this.currentFlight], true);
+        this.generalRepository.updateSituation(passenger.getPassengerId(), passenger.getPassengerSituation()[this.currentFlight], true);
+        this.generalRepository.updateStartingBags(passenger.getPassengerId(), passenger.getStartingBags()[this.currentFlight], true);
+        this.generalRepository.updateCurrentBags(passenger.getPassengerId(), 0, false);
 		System.out.printf(ANSI_WHITE+"[LOUNGE---] P%d waiting for others | PD: %d\n", passenger.getPassengerId(), this.passengersDisembarked);
 
 		// disembarks passenger
@@ -103,10 +131,31 @@ public class Lounge {
 	}
 
 	/**
-	 * Signals passenger life-cylce has terminated
+	 * Porter method to try to collect a bag or fail and exit the bag collection loop <p/>
+     * <b>DOES NOT ALTER BAGS IN PLANE'S HOLD OR STOREROOM<b/>  
+	 * @return planeHasBags of type boolean
 	 */
-	public synchronized void resetFlight() {
-		this.passengersDisembarked--;
+	public synchronized boolean tryToCollectABag() {
+		Porter porter = (Porter) Thread.currentThread();
+		porter.setPorterState(PorterState.AT_THE_PLANES_HOLD);
+
+		if (this.planeHoldLuggage[this.currentFlight].isEmpty()) {
+			this.generalRepository.updatePorterState(porter.getPorterState(), false);
+			return false;
+		}
+
+		porter.setCurrentLuggage(this.planeHoldLuggage[this.currentFlight].pop());
+		this.generalRepository.updatePorterState(porter.getPorterState(), true);
+		this.generalRepository.updateBagsInPlane(this.planeHoldLuggage[this.currentFlight].size(), false);
+		return true;
+
+	}
+
+	/**
+	 * Method to signal Porter that the simulation has ended
+	 */
+	public synchronized void endOfWork() {
+		this.simulationEnded=true;
 		notifyAll();
 	}
 }

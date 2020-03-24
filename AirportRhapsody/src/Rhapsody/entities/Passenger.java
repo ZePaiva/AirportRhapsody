@@ -9,7 +9,6 @@ import Rhapsody.sharedMems.DepartureTerminalEntrance;
 import Rhapsody.sharedMems.DepartureTerminalTransfer;
 import Rhapsody.sharedMems.GeneralRepository;
 import Rhapsody.sharedMems.Lounge;
-import Rhapsody.utils.Logger;
 
 /**
  * Passenger Thread Implements the life-cycle of the passenger and stores it's
@@ -57,9 +56,20 @@ public class Passenger extends Thread {
 	private final int id;
 
 	/**
-	 * Logger
+	 * Amount of flights (loops)
 	 */
-	private Logger logger;
+	private final int flights;
+
+	/**
+	 * Amount of bags the passenger has for each flight  <p/>
+	 * 
+	 */
+	private int[] startingBags;
+
+	/**
+	 * Situation of the passenger for each flight
+	 */
+	private final String[] situation;
 
 	/**
 	 * Arrival lounge variable
@@ -102,11 +112,6 @@ public class Passenger extends Thread {
 	private GeneralRepository generalRepository;
 
 	/**
-	 * Amount of bags the passenger has started
-	 */
-	private int startingBags;
-
-	/**
 	 * State for the Passenger thread
 	 */
 	private PassengerState currentState;
@@ -121,31 +126,15 @@ public class Passenger extends Thread {
 	 */
 	private boolean lostBags;
 
-	/**
-	 * Type of passenger
-	 * <p/>
-	 * Can be TRT or FDT
-	 */
-	private String type;
-
-	/**
-	 * Boolean to check if the airport has closed
-	 */
-	private boolean canFly;
-
-	/**
-	 * Max time a passenger can look at cellphone while waiting for their luggage
-	 * (sleep time)
-	 */
-	private int lookAtCellPhone;
-
 	public static final String ANSI_GREEN = "\u001B[32m";
+
 
 	/**
 	 * Passenger constructor method
-	 * 
 	 * @param id
-	 * @param logger
+	 * @param flights
+	 * @param startingBags
+	 * @param type
 	 * @param lookAtCellPhone
 	 * @param arrivalLounge
 	 * @param baggageCollectionPoint
@@ -154,15 +143,19 @@ public class Passenger extends Thread {
 	 * @param arrivalTerminalTransfer
 	 * @param departureTerminalTransfer
 	 * @param departureTerminalEntrance
-	 * @param currentState
+	 * @param generalRepository
 	 */
-	public Passenger(int id, Logger logger, int lookAtCellPhone, Lounge arrivalLounge,
-			BaggageCollectionPoint baggageCollectionPoint, BaggageReclaim baggageReclaim,
-			ArrivalTerminalExit arrivalTerminalExit, ArrivalTerminalTransfer arrivalTerminalTransfer,
-			DepartureTerminalTransfer departureTerminalTransfer, DepartureTerminalEntrance departureTerminalEntrance,
-			GeneralRepository generalRepository) {
+	public Passenger(int id, int flights, int[] startingBags, String[] type, Lounge arrivalLounge, 
+						BaggageCollectionPoint baggageCollectionPoint, BaggageReclaim baggageReclaim, 
+						ArrivalTerminalExit arrivalTerminalExit, 
+						ArrivalTerminalTransfer arrivalTerminalTransfer, 
+						DepartureTerminalTransfer departureTerminalTransfer, 
+						DepartureTerminalEntrance departureTerminalEntrance,
+						GeneralRepository generalRepository) {
 		this.id = id;
-		this.logger = logger;
+		this.flights=flights;
+		this.startingBags = startingBags;
+		this.situation=type;
 		this.arrivalLounge = arrivalLounge;
 		this.baggageCollectionPoint = baggageCollectionPoint;
 		this.baggageReclaim = baggageReclaim;
@@ -174,9 +167,7 @@ public class Passenger extends Thread {
 		this.lostBags = false;
 		this.currentBags = 0;
 		this.currentState = PassengerState.AT_DISEMBARKING_ZONE;
-		this.startingBags = 0;
-		this.canFly = true;
-		this.lookAtCellPhone = lookAtCellPhone;
+		this.startingBags = startingBags;
 	}
 
 	/**
@@ -186,15 +177,6 @@ public class Passenger extends Thread {
 	 */
 	public void setCurrentState(PassengerState state) {
 		this.currentState = state;
-	}
-
-	/**
-	 * Set the starting amount of bags for this passenger
-	 * 
-	 * @param startingBags
-	 */
-	public void setStartingBags(int startingBags) {
-		this.startingBags = startingBags;
 	}
 
 	/**
@@ -216,12 +198,19 @@ public class Passenger extends Thread {
 	}
 
 	/**
-	 * Return's passenger starting bags
-	 * 
-	 * @return passenger starting bags of type int
+	 * Get passenger starting bags for all flights
+	 * @return starting Bags of type int[]
 	 */
-	public int getStartingBags() {
+	public int[] getStartingBags() {
 		return this.startingBags;
+	}
+
+	/**
+	 * Get passenger situation for all flights
+	 * @return situation of type String[]
+	 */
+	public String[] getPassengerSituation() {
+		return this.situation;
 	}
 
 	/**
@@ -241,37 +230,12 @@ public class Passenger extends Thread {
 	}
 
 	/**
-	 * Returns passenger type
-	 * 
-	 * @return passenger type of type String
-	 */
-	public String getPassengerType() {
-		return this.type;
-	}
-
-	/**
-	 * Sets passenger type
-	 * 
-	 * @param type
-	 */
-	public void setPassengerType(String type) {
-		this.type = type;
-	}
-
-	/**
 	 * Sets if passenger has lsot at least 1 bag, unsets otherwise
 	 * 
 	 * @param lost
 	 */
 	public void lostBags(boolean lost) {
 		this.lostBags = lost;
-	}
-
-	/**
-	 * Sets if airport is open or not
-	 */
-	public void canFly(boolean canFly) {
-		this.canFly = canFly;
 	}
 
 	/**
@@ -300,61 +264,61 @@ public class Passenger extends Thread {
 	 */
 	public void run() {
 		// run
-		/** 
-		 */
-		while (this.canFly) {
-			generalRepository.generatePassenger();
-			System.out.printf(ANSI_GREEN + "[PASSENGER] P%d started | SB: %d | Sit %s\n", this.id, this.startingBags,
-					this.type);
+		for (int flight = 0; flight < this.flights; flight++){
+			this.lostBags=false;
 			arrivalLounge.whatShouldIDo();
-			System.out.printf(ANSI_GREEN + "[PASSENGER] P%d disembarked\n", this.id);
+			System.out.printf(ANSI_GREEN + "[PASSENGER] P%d disembarked from flight %d\n", this.id, flight);
+			
+			System.out.println(this.situation);
+			for (String s: this.situation) {
+				System.out.println(s);
+			}
+			
+			// Transit passengers life-cycle
+			if ( this.situation[flight].equals("TRT") ){
+				// transit passenger, goes to arrival transfer quay 
+				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d will go to bus stop\n", this.id);
+			
+				// goes to arrrival terminal transfer quay and waits until it can board
+				arrivalTerminalTransfer.takeABus();
 
-			if (this.type.equals("FDT")) { // in case this passenger is of Final Destination type
-				// check if it has bags
-				if (this.startingBags != 0) {
-					// get bags
-					while (!this.lostBags && this.currentBags != this.startingBags) {
-						try {
-							this.baggageCollectionPoint.goCollectABag();
-							long sleepTime = (long) (Math.random() * this.lookAtCellPhone);
-							System.out.printf(ANSI_GREEN + "[PASSENGER] P%d | BAGS: %d | Sleep: %d \n", this.id,
-									this.currentBags, sleepTime);
-							Thread.sleep(sleepTime);
-						} catch (InterruptedException e) {
-							System.err.println("[PASSENGER] Interrupted while trying to get a bag");
-							System.exit(4);
-						}
+				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is trying to enter the bus\n", this.id);
+				// enter the bus to go to the departure terminal transfer quay
+				arrivalTerminalTransfer.enterTheBus();
 
-					}
-					if (this.lostBags) {
-						// reclaim bag
-						this.baggageReclaim.reportMissingBags();
-						System.out.printf(ANSI_GREEN + "[PASSENGER] P%d lost %d bags\n", this.id,
-								this.startingBags - this.currentBags);
-					}
+				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d entered the bus\n", this.id);
+				// goes from departure terminal transfer quay to the departure termianl transfer
+				departureTerminalTransfer.leaveTheBus();
+
+				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is preparing next leg of journey\n", this.id);
+				// blocking state that will make passenger wait until all other passengers are ready
+				departureTerminalEntrance.prepareNextLeg(flight==this.flights-1);
+
+			// Final Destination passengers life-cycle
+			} else if ( this.situation[flight].equals("FDT")) {
+				// final destination passenger, goes to luggage collection point
+				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d will terminate it's journey here\n", this.id);
+				// tries to collect all bags until it collects them all or it knows it lost it's bags
+				while( this.startingBags[flight] != this.currentBags && !this.lostBags ) {
+					baggageCollectionPoint.goCollectABag();
+					//System.out.printf(ANSI_GREEN + "[PASSENGER] P%d tried to collect a bag | CB %d | SB %d | LB %s\n", 
+					//					this.id, this.currentBags, this.startingBags[flight], this.lostBags);
 				}
-				this.arrivalTerminalExit.goHome();
-				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d going home\n", this.id);
-			} else if (this.type.equals("TRT")) { // in case it's a transit type passenger
-				// go take a bus
-				this.arrivalTerminalExit.goHome();
-				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d going to next flight\n", this.id);
-			} else { // in case it failed upon starting
+
+				// if lost any luggage
+				if ( this.lostBags ){
+					baggageReclaim.reportMissingBags(this.startingBags[flight]-this.currentBags);
+					System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is reclaiming bags\n", this.id);
+				}
+
+				// blocking goHome method, must 
+				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is going home, waiting until all other passengers\n", this.id);
+				arrivalTerminalExit.goHome(flight==this.flights-1);
+
+			} else {
 				System.err.printf(ANSI_GREEN + "[PASSENGER] Passenger %d had wrong start", this.id);
 				System.exit(5);
 			}
-			try {
-				Thread.sleep(100L);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			this.arrivalLounge.resetFlight();
-			System.out.printf(ANSI_GREEN+"[PASSENGER] P%d flight reset\n", this.id);
-			this.generalRepository.passengerTerminated();
-			System.out.printf(ANSI_GREEN+"[PASSENGER] P%d terminated\n", this.id);
-			this.generalRepository.willFlyMore();
-			System.out.printf(ANSI_GREEN+"[PASSENGER] P%d will fly again? %s\n", this.id, this.canFly);
 		}
 		System.out.printf(ANSI_GREEN+"[PASSENGER] P%d exiting run(), joining...\n", this.id);
 	}

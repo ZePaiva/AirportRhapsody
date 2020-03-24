@@ -7,7 +7,6 @@ import Rhapsody.entities.Passenger;
 import Rhapsody.entities.Porter;
 import Rhapsody.entities.states.PassengerState;
 import Rhapsody.entities.states.PorterState;
-import Rhapsody.utils.Logger;
 import Rhapsody.utils.Luggage;
 
 /**
@@ -19,9 +18,9 @@ import Rhapsody.utils.Luggage;
 public class StoreRoom {
 
     /**
-     * Logger for debugging purposes
+     * GeneralRepository for debugging purposes
      */
-    private Logger logger;
+    private GeneralRepository generalRepository;
 
     /**
      * Luggage currently present in the storeroom
@@ -31,10 +30,10 @@ public class StoreRoom {
 
     /**
      * Contructor method for the StoreRoom 
-     * @param logger
+     * @param generalRepository
      */
-    public StoreRoom(Logger logger) {
-        this.logger=logger;
+    public StoreRoom(GeneralRepository generalRepository) {
+        this.generalRepository=generalRepository;
         this.bagsInStoreRoom=new ArrayList<>();
     }
 
@@ -45,21 +44,21 @@ public class StoreRoom {
     public synchronized void carryItToAppropriateStore() {
         Porter porter = (Porter) Thread.currentThread();
         porter.setPorterState(PorterState.AT_THE_STOREROOM);
-        this.logger.updatePorterState(porter.getPorterState(), true);
+        this.generalRepository.updatePorterState(porter.getPorterState(), true);
         try {
             this.bagsInStoreRoom.add(porter.getCurrentLuggage());
             porter.setCurrentLuggage(null);
-            this.logger.updateStoreRoomBags(this.bagsInStoreRoom.size(), false);
+            this.generalRepository.updateStoreRoomBags(this.bagsInStoreRoom.size(), false);
         } catch (NullPointerException e) {
             System.err.print("[StoreRoom] Porter has no bag, reseting porter");
             // resetting porter
             porter.planeHasBags(false);
             porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
             porter.setCurrentLuggage(null);
-            this.logger.updatePorterState(porter.getPorterState(), true);
+            this.generalRepository.updatePorterState(porter.getPorterState(), true);
             // resetting luggage on storeroom
             this.bagsInStoreRoom=new ArrayList<>();
-            this.logger.updateStoreRoomBags(0, false);
+            this.generalRepository.updateStoreRoomBags(0, false);
         }
     }
     

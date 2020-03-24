@@ -7,7 +7,6 @@ import Rhapsody.entities.Passenger;
 import Rhapsody.entities.Porter;
 import Rhapsody.entities.states.PassengerState;
 import Rhapsody.entities.states.PorterState;
-import Rhapsody.utils.Logger;
 import Rhapsody.utils.Luggage;
 
 /**
@@ -19,9 +18,9 @@ import Rhapsody.utils.Luggage;
 public class BaggageCollectionPoint{
 
     /**
-     * Logger for debugging purposes
+     * GeneralRepository for debugging purposes
      */
-    private Logger logger;
+    private GeneralRepository generalRepository;
 
     /**
      * Amount of bags in the conveyor belt
@@ -37,10 +36,10 @@ public class BaggageCollectionPoint{
 
     /**
      * Constructor of Baggage collection point
-     * @param logger
+     * @param generalRepository
      */
-    public BaggageCollectionPoint(Logger logger) {
-        this.logger = logger;
+    public BaggageCollectionPoint(GeneralRepository generalRepository) {
+        this.generalRepository = generalRepository;
         this.bagsInConveyorBelt = new ArrayList<>();
         this.collectedAllBags = false;
     }
@@ -52,23 +51,24 @@ public class BaggageCollectionPoint{
     public synchronized void carryItToAppropriateStore() {
         Porter porter = (Porter) Thread.currentThread();
         porter.setPorterState(PorterState.AT_THE_LUGGAGE_BELT_CONVEYOR);
-        this.logger.updatePorterState(porter.getPorterState(), true);
+        this.generalRepository.updatePorterState(porter.getPorterState(), true);
 
         try {
             // adds luggage to conveyor belt and logs it
             this.bagsInConveyorBelt.add(porter.getCurrentLuggage());
             porter.setCurrentLuggage(null);
-            this.logger.updateConveyorBags(this.bagsInConveyorBelt.size(), false);
+            this.generalRepository.updateConveyorBags(this.bagsInConveyorBelt.size(), false);
+       
         } catch (NullPointerException e) {
             System.err.print("[STOREROOM] Porter has no bag, reseting porter");
             // resetting porter
             porter.planeHasBags(false);
             porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
             porter.setCurrentLuggage(null);
-            this.logger.updatePorterState(porter.getPorterState(), true);
+            this.generalRepository.updatePorterState(porter.getPorterState(), true);
             // resetting luggage on storeroom
             this.bagsInConveyorBelt=new ArrayList<>();
-            this.logger.updateStoreRoomBags(0, false);
+            this.generalRepository.updateStoreRoomBags(0, false);
         }
     }
 
@@ -79,7 +79,7 @@ public class BaggageCollectionPoint{
         Porter porter = (Porter) Thread.currentThread();
         porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
         this.collectedAllBags=true;
-        this.logger.updatePorterState(porter.getPorterState(), false);
+        this.generalRepository.updatePorterState(porter.getPorterState(), false);
     }
 
     /**
@@ -91,7 +91,7 @@ public class BaggageCollectionPoint{
         // updates passenger state if needed
         if (passenger.getCurrentState()!=PassengerState.AT_LUGGAGE_COLLECTION) {
             passenger.setCurrentState(PassengerState.AT_LUGGAGE_COLLECTION);
-            this.logger.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), false);
+            this.generalRepository.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), false);
         }
 
         // if there are bags try to find one of the current passenger and removes it
@@ -104,7 +104,7 @@ public class BaggageCollectionPoint{
                 })
                 .orElse(null);
 
-        System.out.printf("Stiff: %s %s\n", this.bagsInConveyorBelt.isEmpty(), this.collectedAllBags);
+        //System.out.printf("Stiff: %s %s\n", this.bagsInConveyorBelt.isEmpty(), this.collectedAllBags);
         // if stack is empty && collection has finished 
         if (this.bagsInConveyorBelt.isEmpty() && this.collectedAllBags) {
             if (bag == null){
@@ -124,8 +124,8 @@ public class BaggageCollectionPoint{
             passenger.setCurrentBags(passenger.getCurrentBags()+1);
             System.out.printf(ANSI_WHITE+"[BAGCOLLPT] Passenger %d has one more bag | CB: %d\n", passenger.getPassengerId(), passenger.getCurrentBags());
             // log updates
-            this.logger.updateConveyorBags(this.bagsInConveyorBelt.size(), true);
-            this.logger.updateCurrentBags(passenger.getPassengerId(), passenger.getCurrentBags(), false);
+            this.generalRepository.updateConveyorBags(this.bagsInConveyorBelt.size(), true);
+            this.generalRepository.updateCurrentBags(passenger.getPassengerId(), passenger.getCurrentBags(), false);
         } else {
             return;
         }

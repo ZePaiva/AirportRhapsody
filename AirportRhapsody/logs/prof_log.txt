@@ -1,0 +1,169 @@
+// P2 arrives
+ 2  6  WPTL  0  5   PKAT   -  -  -  -  -  -   -  -  -
+--- ---  -   -  WSD TRF  1   0  --- ---  -   -  --- ---  -   -  --- ---  -   -  --- ---  -   -
+ 
+// P2 go to TQ
+2  6  WPTL  0  5   PKAT   1  -  -  -  -  -   -  -  -
+--- ---  -   -  ATT TRF  1   0  --- ---  -   -  --- ---  -   -  --- ---  -   -  --- ---  -   -
+
+// P1 arrives
+ 2  6  WPTL  0  5   PKAT   1  -  -  -  -  -   -  -  -
+WSD FDT  0   0  ATT TRF  1   0  --- ---  -   -  --- ---  -   -  --- ---  -   -  --- ---  -   -
+
+// P5 arrives
+ 2  6  WPTL  0  5   PKAT   1  -  -  -  -  -   -  -  -
+WSD FDT  0   0  ATT TRF  1   0  --- ---  -   -  --- ---  -   -  WSD FDT  2   0  --- ---  -   -
+
+// P5 go to LCP
+ 2  6  WPTL  0  5   PKAT   1  -  -  -  -  -   -  -  -
+WSD FDT  0   0  ATT TRF  1   0  --- ---  -   -  --- ---  -   -  LCP FDT  2   0  --- ---  -   -
+
+// P1 leaves
+ 2  6  WPTL  0  5   PKAT   1  -  -  -  -  -   -  -  -
+EAT FDT  0   0  ATT TRF  1   0  --- ---  -   -  --- ---  -   -  LCP FDT  2   0  --- ---  -   -
+
+// P3 arrives
+ 2  6  WPTL  0  5   PKAT   1  -  -  -  -  -   -  -  -
+EAT FDT  0   0  ATT TRF  1   0  WSD TRF  1   0  --- ---  -   -  LCP FDT  2   0  --- ---  -   -
+
+// P3 go to TQ 
+ 2  6  WPTL  0  5   PKAT   1  2  -  -  -  -   -  -  -
+EAT FDT  0   0  ATT TRF  1   0  ATT TRF  1   0  --- ---  -   -  LCP FDT  2   0  --- ---  -   -
+
+// P6 arrives
+ 2  6  WPTL  0  5   PKAT   1  2  -  -  -  -   -  -  -
+EAT FDT  0   0  ATT TRF  1   0  ATT TRF  1   0  --- ---  -   -  LCP FDT  2   0  WSD TRF  2   0
+
+// P6 go to TQ
+ 2  6  WPTL  0  5   PKAT   1  2  5  -  -  -   -  -  -
+EAT FDT  0   0  ATT TRF  1   0  ATT TRF  1   0  --- ---  -   -  LCP FDT  2   0  ATT TRF  2   0
+
+// P4 arrives
+ 2  6  WPTL  0  5   PKAT   1  2  5  -  -  -   -  -  -
+EAT FDT  0   0  ATT TRF  1   0  ATT TRF  1   0  WSD TRF  2   0  LCP FDT  2   0  ATT TRF  2   0
+
+// P2 go to seat
+ 2  6  WPTL  0  5   PKAT   2  5  -  -  -  -   1  -  -
+EAT FDT  0   0  TRT TRF  1   0  ATT TRF  1   0  WSD TRF  2   0  LCP FDT  2   0  ATT TRF  2   0
+
+// P3 go to seat
+ 2  6  WPTL  0  5   PKAT   5  -  -  -  -  -   1  2  -
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  WSD TRF  2   0  LCP FDT  2   0  ATT TRF  2   0
+
+// 1 bag out of PH
+ 2  5  APLH  0  5   PKAT   5  -  -  -  -  -   1  2  -
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  WSD TRF  2   0  LCP FDT  2   0  ATT TRF  2   0
+
+// 1 bag to SR
+ 2  5  ASTR  0  6   PKAT   5  -  -  -  -  -   1  2  -
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  WSD TRF  2   0  LCP FDT  2   0  ATT TRF  2   0
+
+// 1 bag out of PH
+ 2  4  APLH  0  6   PKAT   5  -  -  -  -  -   1  2  -
+EAT FDT  0   0  TRT TRF  1   1  TRT TRF  1   0  WSD TRF  2   0  LCP FDT  2   0  ATT TRF  2   0
+
+// 1 bag to SR
+ 2  4  ASTR  0  7   PKAT   5  -  -  -  -  -   1  2  -
+EAT FDT  0   0  TRT TRF  1   1  TRT TRF  1   1  WSD TRF  2   0  LCP FDT  2   0  ATT TRF  2   0
+
+// P6 go to seat
+ 2  4  ASTR  0  7   PKAT   -  -  -  -  -  -   1  2  5
+EAT FDT  0   0  TRT TRF  1   1  TRT TRF  1   1  WSD TRF  2   0  LCP FDT  2   0  TRT TRF  2   0
+
+// 1 bag out of PH
+ 2  3  APLH  0  7   PKAT   -  -  -  -  -  -   1  2  5
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  WSD TRF  2   0  LCP FDT  2   0  TRT TRF  2   0
+
+// P4 go to TQ
+ 2  3  APLH  0  7   PKAT   3  -  -  -  -  -   1  2  5
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  LCP FDT  2   0  TRT TRF  2   0
+
+// BD go to DT
+ 2  3  APLH  0  7   DRFW   3  -  -  -  -  -   1  2  5
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  LCP FDT  2   0  TRT TRF  2   0
+
+// 1 bag to CB
+ 2  3  ALCB  1  7   DRFW   3  -  -  -  -  -   1  2  5
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  LCP FDT  2   0  TRT TRF  2   0
+
+// BD arrives to DT
+ 2  3  ALCB  1  7   PKDT   3  -  -  -  -  -   1  2  5
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  LCP FDT  2   0  TRT TRF  2   0
+
+// P5 gets a bag
+ 2  3  ALCB  0  7   PKDT   3  -  -  -  -  -   1  2  5
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  LCP FDT  2   1  TRT TRF  2   0
+ 2  3  ALCB  0  7   PKDT   3  -  -  -  -  -   1  2  5
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  LCP FDT  2   1  TRT TRF  2   0
+
+// 1 bag out of PH
+ 2  2  APLH  0  7   PKDT   3  -  -  -  -  -   1  2  5
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  LCP FDT  2   1  TRT TRF  2   1
+
+// 1 bag to SR
+ 2  2  ASTR  0  8   PKDT   3  -  -  -  -  -   1  2  5
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  LCP FDT  2   1  TRT TRF  2   0
+
+// 1 bag out of PH
+ 2  1  APLH  0  8   PKDT   3  -  -  -  -  -   1  2  5
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  LCP FDT  2   1  TRT TRF  2   0
+
+// 1 bag to SR
+ 2  1  ASTR  0  9   PKDT   3  -  -  -  -  -   1  2  5
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  LCP FDT  2   1  TRT TRF  2   0
+
+// 1 bag out of PH
+ 2  0  APLH  0  9   PKDT   3  -  -  -  -  -   1  2  5
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  LCP FDT  2   1  TRT TRF  2   0
+
+// 1 bag to SR
+ 2  0  ASTR  0 10   PKDT   3  -  -  -  -  -   1  2  5
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  LCP FDT  2   1  TRT TRF  2   0
+
+// no more bags
+ 2  0  APLH  0 10   PKDT   3  -  -  -  -  -   1  2  5
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  LCP FDT  2   1  TRT TRF  2   0
+
+// porter go to sleep
+ 2  0  WPTL  0 10   PKDT   3  -  -  -  -  -   1  2  5
+EAT FDT  0   0  TRT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  LCP FDT  2   1  TRT TRF  2   0
+
+// P2 go to DT
+ 2  0  WPTL  0 10   PKDT   3  -  -  -  -  -   -  2  5
+EAT FDT  0   0  DTT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  LCP FDT  2   1  TRT TRF  2   0
+
+// P5 go to complaint
+ 2  0  WPTL  0 10   PKDT   3  -  -  -  -  -   -  2  5
+EAT FDT  0   0  DTT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  BRO FDT  2   1  TRT TRF  2   0
+
+// P5 leaves
+ 2  0  WPTL  0 10   PKDT   3  -  -  -  -  -   -  2  5
+EAT FDT  0   0  DTT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  EAT FDT  2   1  TRT TRF  2   0
+ 2  0  WPTL  0 10   PKDT   3  -  -  -  -  -   -  2  5
+EAT FDT  0   0  EDT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  EAT FDT  2   1  TRT TRF  2   0
+ 2  0  WPTL  0 10   PKDT   3  -  -  -  -  -   -  2  -
+EAT FDT  0   0  EDT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  EAT FDT  2   1  DTT TRF  2   0
+ 2  0  WPTL  0 10   PKDT   3  -  -  -  -  -   -  2  -
+EAT FDT  0   0  EDT TRF  1   0  TRT TRF  1   0  ATT TRF  2   0  EAT FDT  2   1  EDT TRF  2   0
+ 2  0  WPTL  0 10   PKDT   3  -  -  -  -  -   -  -  -
+EAT FDT  0   0  EDT TRF  1   0  DTT TRF  1   0  ATT TRF  2   0  EAT FDT  2   1  EDT TRF  2   0
+ 2  0  WPTL  0 10   PKDT   3  -  -  -  -  -   -  -  -
+EAT FDT  0   0  EDT TRF  1   0  EDT TRF  1   0  ATT TRF  2   0  EAT FDT  2   1  EDT TRF  2   0
+ 2  0  WPTL  0 10   DRBW   3  -  -  -  -  -   -  -  -
+EAT FDT  0   0  EDT TRF  1   0  EDT TRF  1   0  ATT TRF  2   0  EAT FDT  2   1  EDT TRF  2   0
+ 2  0  WPTL  0 10   PKAT   3  -  -  -  -  -   -  -  -
+EAT FDT  0   0  EDT TRF  1   0  EDT TRF  1   0  ATT TRF  2   0  EAT FDT  2   1  EDT TRF  2   0
+ 2  0  WPTL  0 10   PKAT   -  -  -  -  -  -   3  -  -
+EAT FDT  0   0  EDT TRF  1   0  EDT TRF  1   0  TRT TRF  2   0  EAT FDT  2   1  EDT TRF  2   0
+ 2  0  WPTL  0 10   DRFW   -  -  -  -  -  -   3  -  -
+EAT FDT  0   0  EDT TRF  1   0  EDT TRF  1   0  TRT TRF  2   0  EAT FDT  2   1  EDT TRF  2   0
+ 2  0  WPTL  0 10   PKDT   -  -  -  -  -  -   3  -  -
+EAT FDT  0   0  EDT TRF  1   0  EDT TRF  1   0  TRT TRF  2   0  EAT FDT  2   1  EDT TRF  2   0
+ 2  0  WPTL  0 10   PKDT   -  -  -  -  -  -   -  -  -
+EAT FDT  0   0  EDT TRF  1   0  EDT TRF  1   0  DTT TRF  2   0  EAT FDT  2   1  EDT TRF  2   0
+ 2  0  WPTL  0 10   PKDT   -  -  -  -  -  -   -  -  -
+EAT FDT  0   0  EDT TRF  1   0  EDT TRF  1   0  EDT TRF  2   0  EAT FDT  2   1  EDT TRF  2   0
+ 2  0  WPTL  0 10   DRBW   -  -  -  -  -  -   -  -  -
+EAT FDT  0   0  EDT TRF  1   0  EDT TRF  1   0  EDT TRF  2   0  EAT FDT  2   1  EDT TRF  2   0
+ 2  0  WPTL  0 10   PKAT   -  -  -  -  -  -   -  -  -
+EAT FDT  0   0  EDT TRF  1   0  EDT TRF  1   0  EDT TRF  2   0  EAT FDT  2   1  EDT TRF  2   0
