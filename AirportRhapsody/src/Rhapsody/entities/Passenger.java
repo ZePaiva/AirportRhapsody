@@ -267,12 +267,7 @@ public class Passenger extends Thread {
 		for (int flight = 0; flight < this.flights; flight++){
 			this.lostBags=false;
 			arrivalLounge.whatShouldIDo();
-			System.out.printf(ANSI_GREEN + "[PASSENGER] P%d disembarked from flight %d\n", this.id, flight);
-			
-			System.out.println(this.situation);
-			for (String s: this.situation) {
-				System.out.println(s);
-			}
+			System.out.printf(ANSI_GREEN + "[PASSENGER] P%d disembarked from flight %d | SB %d\n", this.id, flight, this.startingBags[flight]);
 			
 			// Transit passengers life-cycle
 			if ( this.situation[flight].equals("TRT") ){
@@ -299,10 +294,10 @@ public class Passenger extends Thread {
 				// final destination passenger, goes to luggage collection point
 				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d will terminate it's journey here\n", this.id);
 				// tries to collect all bags until it collects them all or it knows it lost it's bags
-				while( this.startingBags[flight] != this.currentBags && !this.lostBags ) {
-					baggageCollectionPoint.goCollectABag();
-					//System.out.printf(ANSI_GREEN + "[PASSENGER] P%d tried to collect a bag | CB %d | SB %d | LB %s\n", 
-					//					this.id, this.currentBags, this.startingBags[flight], this.lostBags);
+				if (this.startingBags[flight]!=0) {
+					baggageCollectionPoint.goCollectABag(flight);
+					System.out.printf(ANSI_GREEN + "[PASSENGER] P%d tried to collect a bag | CB %d | SB %d | LB %s\n", 
+										this.id, this.currentBags, this.startingBags[flight], this.lostBags);	
 				}
 
 				// if lost any luggage

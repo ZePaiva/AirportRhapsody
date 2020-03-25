@@ -67,7 +67,7 @@ public class DepartureTerminalEntrance {
 	 */
 	public synchronized void prepareNextLeg(boolean lastFlight) {
 		Passenger passenger = (Passenger) Thread.currentThread();
-		passenger.setCurrentState(PassengerState.EXIT_ARRIVAL_TERMINAL);
+		passenger.setCurrentState(PassengerState.DEPARTING);
 		this.generalRepository.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
 		this.generalRepository.updateFDTPassengers(1, false);
 		this.passengersTerminated++;

@@ -84,8 +84,8 @@ public class Airport {
 		for (int flights=0; flights < K; flights++) {
 			for (int passengers=0; passengers < N; passengers++) {
 				int randBags = random.nextInt(M+1);
-				//String situation = random.nextBoolean() ? "TRT" : "FDT";
-				String situation = "FDT";
+				String situation = random.nextBoolean() ? "TRT" : "FDT";
+				//String situation = "FDT";
 				luggageForPassengers[passengers][flights] = randBags;
 				passengersSituation[passengers][flights] = situation;
 				planeHoldLuggage[flights] = new Stack<>();
@@ -97,14 +97,6 @@ public class Airport {
 
 			}
 		}
-
-		for (String[] s: passengersSituation) {
-			System.out.println("1->");
-			for (String s2: s) {
-				System.out.println(s2);
-			}
-		}
-		System.out.println(passengersSituation[0]);
 
 		// create empty arrays
 		int[] flightPassengers = new int[N];
@@ -139,21 +131,18 @@ public class Airport {
 		DepartureTerminalEntrance departureTerminalEntrance = new DepartureTerminalEntrance(generalRepository, arrivalTerminalExit, lounge, arrivalTerminalTransfer, 0);
 		arrivalTerminalExit.setArrivalTerminalTransfer(arrivalTerminalTransfer);
 		arrivalTerminalExit.setDepartureTerminalEntrance(departureTerminalEntrance);
+		
 		// Generate porter
 		Porter porter = new Porter(generalRepository, storeRoom, lounge, baggageCollectionPoint);
 		porter.start();
-		Thread.sleep(100);
+
 		// Generate bus driver
 		BusDriver busDriver = new BusDriver();
 		busDriver.start();
-		Thread.sleep(100);
 
 		// Generate passengers
 		Passenger[] passengers = new Passenger[N];
 		for (int i=0; i<passengers.length; i++) {
-		
-			System.out.println("aa "+i + " " +passengersSituation[i]);
-			System.out.println(passengersSituation[0]);
 			passengers[i]= new Passenger(i, K, luggageForPassengers[i], passengersSituation[i], lounge, 
 											baggageCollectionPoint, baggageReclaim, 
 											arrivalTerminalExit, arrivalTerminalTransfer, 

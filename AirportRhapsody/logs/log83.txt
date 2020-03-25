@@ -3,21 +3,17 @@ PLANE	PORTER		DRIVER
 FN BN Stat CB SR	Stat Q1 S1 S2 S3
 						PASSENGERS
 St1 Si1 NR1 NA1 
- 1  1 WPTL  0  0 null -- -- -- -- 
+ 1  0 WPTL  0  0 null -- -- -- -- 
 --- --- --- --- 
- 1  1 WPTL  0  0 null -- -- -- -- 
+ 1  0 WPTL  0  0 null -- -- -- -- 
 DEZ TRT   1   0 
- 1  1 WPTL  0  0 null -- -- -- -- 
+ 1  0 WPTL  0  0 null -- -- -- -- 
 DEP TRT   1   0 
  1  0 ATPH  0  0 null -- -- -- -- 
 DEP TRT   1   0 
- 1  0 ATSR  0  1 null -- -- -- -- 
+ 1  0 WPTL  0  0 null -- -- -- -- 
 DEP TRT   1   0 
- 1  0 ATPH  0  1 null -- -- -- -- 
-DEP TRT   1   0 
- 1  0 WPTL  0  1 null -- -- -- -- 
-DEP TRT   1   0 
- 1  0 WPTL  0  1 null -- -- -- -- 
+ 1  0 WPTL  0  0 null -- -- -- -- 
 DEP TRT   1   0 
 Final report
 N. of passengers which have this airport as their final destination = 1

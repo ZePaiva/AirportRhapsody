@@ -116,15 +116,20 @@ public class Porter extends Thread{
 	@Override
 	public void run() {
 		while ( this.lounge.takeARest() ) {
-			System.out.println(ANSI_CYAN+"[PORTER---] Ready to accept passengers from FLIGHT ");
+			System.out.println(ANSI_CYAN+"[PORTER---] Ready to accept passengers");
 			while( this.lounge.tryToCollectABag() ) {
+				System.out.println(ANSI_CYAN+"[PORTER---] Getting a Bag");
 				if ( this.currentBag.getLuggageType().equals("TRT") ) {
+					System.out.println(ANSI_CYAN+"[PORTER---] Storing bags in StoreRoom");
 					this.storeRoom.carryItToAppropriateStore();
 				} else if ( this.currentBag.getLuggageType().equals("FDT") ) {
 					this.baggageCollectionPoint.carryItToAppropriateStore();
+					System.out.println(ANSI_CYAN+"[PORTER---] Storing bags in BCP");
 				}
 			}
+			System.out.println(ANSI_CYAN+"[PORTER---] No more bags to collect");
 			this.baggageCollectionPoint.noMoreBagsToCollect();
 		}
+		System.out.printf(ANSI_CYAN+"[PORTER---] Porter exiting run(), joining...\n");
 	}
 }

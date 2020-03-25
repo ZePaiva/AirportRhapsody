@@ -1,6 +1,7 @@
 package Rhapsody.sharedMems;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Stack;
 
 import Rhapsody.entities.Passenger;
@@ -76,14 +77,16 @@ public class Lounge {
 		// get porter thread
 		Porter porter = (Porter) Thread.currentThread();
 
+		// reset passengerxs disembarked
+		this.passengersDisembarked=0;
+
 		// update porter
 		porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
 		this.generalRepository.updateBagsInPlane(planeHoldLuggage[currentFlight].size(), true);
 		this.generalRepository.updatePorterState(porter.getPorterState(), false);
 		
-		System.out.printf(ANSI_WHITE+"[LOUNGE---] Porter waiting for passengers | CP: %d\n", this.passengersDisembarked);
+		System.out.printf(ANSI_WHITE+"[LOUNGE---] Porter waiting for passengers | CP: %d | Sim %s\n", this.passengersDisembarked, this.simulationEnded);
 		// waits for all passengers to arrive
-		System.out.println(this.passengersDisembarked < this.passengersPerFlight && !this.simulationEnded);
 		while(this.passengersDisembarked < this.passengersPerFlight && !this.simulationEnded) {
 			try {
 				wait();
@@ -104,6 +107,11 @@ public class Lounge {
 	public synchronized void whatShouldIDo() {
 		Passenger passenger = (Passenger) Thread.currentThread();
 
+		// delay to allow porter and bus to setup
+		//try {
+		//	Passenger.sleep((long) (new Random().nextInt(100)));
+		//} catch (InterruptedException e) {}
+		
 		// updates state
 		passenger.setCurrentState(PassengerState.AT_DISEMBARKING_ZONE);
 		this.generalRepository.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
@@ -112,21 +120,9 @@ public class Lounge {
         this.generalRepository.updateSituation(passenger.getPassengerId(), passenger.getPassengerSituation()[this.currentFlight], true);
         this.generalRepository.updateStartingBags(passenger.getPassengerId(), passenger.getStartingBags()[this.currentFlight], true);
         this.generalRepository.updateCurrentBags(passenger.getPassengerId(), 0, false);
-		System.out.printf(ANSI_WHITE+"[LOUNGE---] P%d waiting for others | PD: %d\n", passenger.getPassengerId(), this.passengersDisembarked);
-
+		
 		// disembarks passenger
 		this.passengersDisembarked++;
-
-		// waits until all passengers disembarked
-		while (this.passengersDisembarked<this.passengersPerFlight) {
-			try {
-				wait();
-				System.out.printf(ANSI_WHITE+"[LOUNGE---] P%d waiting for others | PD: %d\n", passenger.getPassengerId(), this.passengersDisembarked);
-			} catch (InterruptedException e) {
-				System.err.println(ANSI_WHITE+"[LOUNGE---] Passenger interrupted for some reason");
-				System.exit(3);
-			}
-		}
 		notifyAll();
 	}
 
