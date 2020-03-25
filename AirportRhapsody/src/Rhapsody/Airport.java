@@ -2,6 +2,7 @@ package Rhapsody;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Stack;
 import java.util.List;
@@ -36,12 +37,12 @@ public class Airport {
 	/**
 	 * Number of planes landing
 	 */
-	public static final int K = 1;
+	public static final int K = 5;
 
 	/**
 	 * Number of Passengers arriving in each plane
 	 */
-	public static final int N = 1;
+	public static final int N = 6;
 
 	/**
 	 * Number of maximum baggages
@@ -77,7 +78,7 @@ public class Airport {
 	public static void main(String args[]) throws InterruptedException {
 
 		// Generate bags and where to store as well as passengers situation for each flight   
-		Stack<Luggage>[] planeHoldLuggage = new Stack[K];
+		Queue<Luggage>[] planeHoldLuggage = new Queue[K];
 		int[][] luggageForPassengers = new int[N][K];
 		String[][] passengersSituation = new String[N][K];
 
@@ -88,15 +89,27 @@ public class Airport {
 				//String situation = "FDT";
 				luggageForPassengers[passengers][flights] = randBags;
 				passengersSituation[passengers][flights] = situation;
-				planeHoldLuggage[flights] = new Stack<>();
+				planeHoldLuggage[flights] = new LinkedList<>();
 				for (int i = 0; i < randBags; i++) {
 					if (random.nextInt(101) <= 90) {
-						planeHoldLuggage[flights].push(new Luggage(passengers, situation));
+						planeHoldLuggage[flights].add(new Luggage(passengers, situation));
 					}
 				}
 
 			}
 		}
+
+		System.out.println("Starting variables:\nPlane  Hold Luggagge");
+		Arrays.asList(planeHoldLuggage).stream().forEach(p-> {
+			p.stream().forEach(l -> System.out.printf("%s ", l.toString()));
+			System.out.println("Faux pass");
+		});
+		System.out.println("Passenger Luggage:");
+		Arrays.asList(luggageForPassengers).stream().forEach(p -> {
+			System.out.println("New pass");
+			for (int i= 0; i < p.length; i++) { System.out.printf("%d ", p[i]);}
+		});
+		System.out.println();
 
 		// create empty arrays
 		int[] flightPassengers = new int[N];
@@ -121,14 +134,14 @@ public class Airport {
 																	bags, bags.clone());
 
 
-		Lounge lounge = new Lounge(generalRepository, N, planeHoldLuggage);
 		BaggageCollectionPoint baggageCollectionPoint = new BaggageCollectionPoint(generalRepository);
+		Lounge lounge = new Lounge(generalRepository, baggageCollectionPoint, N, planeHoldLuggage);
 		StoreRoom storeRoom = new StoreRoom(generalRepository);
 		BaggageReclaim baggageReclaim = new BaggageReclaim(generalRepository);
-		ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(generalRepository, 0, null, lounge, null);
+		ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(generalRepository, N, null, lounge, null);
 		ArrivalTerminalTransfer arrivalTerminalTransfer = new ArrivalTerminalTransfer(generalRepository);
 		DepartureTerminalTransfer departureTerminalTransfer = new DepartureTerminalTransfer();
-		DepartureTerminalEntrance departureTerminalEntrance = new DepartureTerminalEntrance(generalRepository, arrivalTerminalExit, lounge, arrivalTerminalTransfer, 0);
+		DepartureTerminalEntrance departureTerminalEntrance = new DepartureTerminalEntrance(generalRepository, arrivalTerminalExit, lounge, arrivalTerminalTransfer, N);
 		arrivalTerminalExit.setArrivalTerminalTransfer(arrivalTerminalTransfer);
 		arrivalTerminalExit.setDepartureTerminalEntrance(departureTerminalEntrance);
 		

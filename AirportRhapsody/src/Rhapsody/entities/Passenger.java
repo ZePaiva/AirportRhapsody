@@ -264,9 +264,11 @@ public class Passenger extends Thread {
 	 */
 	public void run() {
 		// run
+		System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is up\n", this.id);
 		for (int flight = 0; flight < this.flights; flight++){
 			this.lostBags=false;
-			arrivalLounge.whatShouldIDo();
+			this.currentBags=0;
+			arrivalLounge.whatShouldIDo(flight);
 			System.out.printf(ANSI_GREEN + "[PASSENGER] P%d disembarked from flight %d | SB %d\n", this.id, flight, this.startingBags[flight]);
 			
 			// Transit passengers life-cycle
@@ -307,13 +309,15 @@ public class Passenger extends Thread {
 				}
 
 				// blocking goHome method, must 
-				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is going home, waiting until all other passengers\n", this.id);
+				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is going home\n", this.id);
 				arrivalTerminalExit.goHome(flight==this.flights-1);
 
 			} else {
 				System.err.printf(ANSI_GREEN + "[PASSENGER] Passenger %d had wrong start", this.id);
 				System.exit(5);
 			}
+			arrivalTerminalExit.resetTerminations();
+			departureTerminalEntrance.resetTerminations();
 		}
 		System.out.printf(ANSI_GREEN+"[PASSENGER] P%d exiting run(), joining...\n", this.id);
 	}

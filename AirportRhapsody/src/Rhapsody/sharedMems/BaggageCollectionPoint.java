@@ -57,12 +57,12 @@ public class BaggageCollectionPoint{
             // adds luggage to conveyor belt, notifies the passenger and logs it
             this.bagsInConveyorBelt.add(porter.getCurrentLuggage());
             porter.setCurrentLuggage(null);
-            System.out.printf("[BAGCOLLPT] Porter stored bag in BCP\n");
+            System.out.printf(ANSI_WHITE+"[BAGCOLLPT] Porter stored bag in BCP\n");
             notifyAll();
             this.generalRepository.updateConveyorBags(this.bagsInConveyorBelt.size(), false);
        
         } catch (NullPointerException e) {
-            System.err.println("[BAGCOLLPT] Porter has no bag, reseting porter");
+            System.err.println(ANSI_WHITE+"[BAGCOLLPT] Porter has no bag, reseting porter");
             // resetting porter
             porter.planeHasBags(false);
             porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
@@ -97,17 +97,10 @@ public class BaggageCollectionPoint{
             this.generalRepository.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), false);
         }
 
-        Luggage bag=null;
-
-
-        //System.out.println(this.lastPassBagId!=passenger.getPassengerId() && !this.collectedAllBags && !this.bagsInConveyorBelt.isEmpty() || passenger.getStartingBags()[flight]==passenger.getCurrentBags());
-        //System.out.println(this.lastPassBagId!=passenger.getPassengerId());
-        //System.out.println(!this.bagsInConveyorBelt.isEmpty());
-        //System.out.println(!this.collectedAllBags);
-
-        // if the last bag it got 
+        // if there are still bags or the porter has not collected them all
         while (!this.collectedAllBags || !this.bagsInConveyorBelt.isEmpty()) {
             try {
+                System.out.printf(ANSI_WHITE+"[BAGCOLLPT] P%d will try to get his bags | CB %d\n", passenger.getPassengerId(), passenger.getCurrentBags());
                 if (!this.collectedAllBags) {
                     System.out.printf(ANSI_WHITE+"[BAGCOLLPT] P%d will sleep | CB %d\n", passenger.getPassengerId(), passenger.getCurrentBags());
                     wait();
@@ -115,7 +108,7 @@ public class BaggageCollectionPoint{
                 System.out.printf(ANSI_WHITE+"[BAGCOLLPT] P%d awakened | CB %d\n", passenger.getPassengerId(), passenger.getCurrentBags());
                 // if there are bags try to find one of the current passenger and removes it
                 this.bagsInConveyorBelt.stream().forEach(System.out::println);
-                bag = this.bagsInConveyorBelt.stream()
+                Luggage bag = this.bagsInConveyorBelt.stream()
                     .filter(p -> p.getPassengerId()==passenger.getPassengerId())
                     .findFirst()
                     .map(p -> {
@@ -123,42 +116,37 @@ public class BaggageCollectionPoint{
                         return p;
                     })
                     .orElse(null);
+                this.bagsInConveyorBelt.stream().forEach(System.out::println);
                 if (bag != null) {
                     passenger.setCurrentBags(passenger.getCurrentBags()+1);
                     System.out.printf(ANSI_WHITE+"[BAGCOLLPT] Passenger %d has one more bag | CB: %d\n", passenger.getPassengerId(), passenger.getCurrentBags());
                     // log updates
                     this.generalRepository.updateConveyorBags(this.bagsInConveyorBelt.size(), true);
                     this.generalRepository.updateCurrentBags(passenger.getPassengerId(), passenger.getCurrentBags(), false);
+                } else if (bag==null && this.bagsInConveyorBelt.isEmpty() && this.collectedAllBags) {
+                    System.out.printf(ANSI_WHITE+"[BAGCOLLPT] Passenger %d found no bag & collection has ended & CB is empty \n", passenger.getPassengerId());
+                    passenger.lostBags(true);
+                    this.collectedAllBags=false;
+                    return;
+                
+                } else if (bag==null && this.collectedAllBags) {
+                    System.out.printf(ANSI_WHITE+"[BAGCOLLPT] Passenger %d found no bag & collection has ended \n", passenger.getPassengerId());
+                    passenger.lostBags(true);
+                    return;
                 }
                 if ( passenger.getStartingBags()[flight]==passenger.getCurrentBags() ) {
+                    if(this.bagsInConveyorBelt.isEmpty()) {
+                        this.collectedAllBags=false;
+                    }
                     return;
                 }
             } catch (InterruptedException e) {}
         }
-
-        
-        
-        //System.out.printf("Stiff: %s %s\n", this.bagsInConveyorBelt.isEmpty(), this.collectedAllBags);
-        // if stack is empty && collection has finished 
-        if (this.bagsInConveyorBelt.isEmpty() && this.collectedAllBags) {
-            if (bag == null){
-                passenger.lostBags(true);
-                return;
-            }
-        }
-        // if stack is NOT empty && collection has finished
-        else if (!this.bagsInConveyorBelt.isEmpty() && this.collectedAllBags) {
-            if (bag == null){
-                passenger.lostBags(true);
-                return;
-            }
-        }
+        // if there are no more bags and porter collected the mall
+        passenger.lostBags(true);
     }
 
-    /**
-     * Method used to restar baggage collection
-     */
-    public synchronized void clearFlight() {
+    public synchronized void newFlight(){
         this.collectedAllBags=false;
     }
 }

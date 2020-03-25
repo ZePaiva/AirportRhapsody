@@ -7,9 +7,9 @@ moreBad() {
 	let "var+=1"
 }
 
-trap 'moreBad' SIGINT
+#trap 'moreBad' SIGINT
 
-#trap 'exit' SIGINT
+trap 'exit' SIGINT
 
 start=`date +%s`
 

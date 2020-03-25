@@ -1,6 +1,7 @@
 package Rhapsody.sharedMems;
 
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Stack;
 
@@ -25,6 +26,9 @@ public class Lounge {
 	 */
 	private GeneralRepository generalRepository;
 
+	private BaggageCollectionPoint baggageCollectionPoint;
+
+
 	/**
 	 * Information about amount of passengers of each flight. <p/>
 	 * Starts with -1 in all, 0 means all passengers disembarked.
@@ -44,12 +48,16 @@ public class Lounge {
 	/**
 	 * Luggage list for the simulation, first index is the flight
 	 */
-	private Stack<Luggage>[] planeHoldLuggage;
+	private Queue<Luggage>[] planeHoldLuggage;
 
 	/**
-	 * Signlas the flight id
+	 * Signals the flight id
 	 */
 	private int currentFlight;
+
+	private boolean airportOpen;
+
+	private boolean passengersTerminated;
 
 	public static final String ANSI_WHITE = "\u001B[37m";
 
@@ -60,14 +68,17 @@ public class Lounge {
 	 * @param maxPassengerAmount
 	 * @param planeHoldLuggage
 	 */
-	public Lounge(GeneralRepository generalRepository, int maxPassengerAmount, 
-					Stack<Luggage>[] planeHoldLuggage) {
+	public Lounge(GeneralRepository generalRepository, BaggageCollectionPoint baggageCollectionPoint,
+					 int maxPassengerAmount, Queue<Luggage>[] planeHoldLuggage) {
 		this.generalRepository=generalRepository;
 		this.passengersPerFlight=maxPassengerAmount;
 		this.planeHoldLuggage=planeHoldLuggage;
+		this.baggageCollectionPoint=baggageCollectionPoint;
 		this.currentFlight=0;
 		this.passengersDisembarked=0;
 		this.simulationEnded=false;
+		this.airportOpen=false;
+		this.passengersTerminated=true;
 	}
 
 	/**
@@ -77,9 +88,25 @@ public class Lounge {
 		// get porter thread
 		Porter porter = (Porter) Thread.currentThread();
 
+		while(!this.passengersTerminated) {
+			try {
+				wait();
+			} catch (InterruptedException e) {}
+		}
+		if (this.simulationEnded) {
+			return !this.simulationEnded;
+		}
+		System.out.println(ANSI_WHITE+"[LOUNGE---] Flight cleared");
+		this.generalRepository.clearFlight(true);
+		this.baggageCollectionPoint.newFlight();
+
 		// reset passengerxs disembarked
 		this.passengersDisembarked=0;
-
+		this.airportOpen=true;
+		
+		System.out.printf(ANSI_WHITE+"[LOUNGE---] Flight updated | NF %d\n", this.currentFlight);
+		this.generalRepository.updateFlight(this.currentFlight, true);
+		notifyAll(); 
 		// update porter
 		porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
 		this.generalRepository.updateBagsInPlane(planeHoldLuggage[currentFlight].size(), true);
@@ -96,6 +123,8 @@ public class Lounge {
 				System.exit(3);
 			}
 		}
+		this.passengersTerminated=false;
+		this.airportOpen=false;
 
 		return !this.simulationEnded;
 	}
@@ -104,13 +133,17 @@ public class Lounge {
 	 * Puts passenger in {@link Rhapsody.entities.states.PassengerState#AT_DISEMBARKING_ZONE} state. <p/>
 	 * Disembarks passenger and notifies all other passengers
 	 */
-	public synchronized void whatShouldIDo() {
+	public synchronized void whatShouldIDo(int flightId) {
 		Passenger passenger = (Passenger) Thread.currentThread();
 
 		// delay to allow porter and bus to setup
-		//try {
-		//	Passenger.sleep((long) (new Random().nextInt(100)));
-		//} catch (InterruptedException e) {}
+		while (!this.airportOpen){
+			try {
+				System.out.printf(ANSI_WHITE+"[LOUNGE---] Porter not ready yet\n");
+				wait();
+			} catch (InterruptedException e) {}
+		}
+		
 		
 		// updates state
 		passenger.setCurrentState(PassengerState.AT_DISEMBARKING_ZONE);
@@ -124,6 +157,7 @@ public class Lounge {
 		// disembarks passenger
 		this.passengersDisembarked++;
 		notifyAll();
+		return;
 	}
 
 	/**
@@ -135,12 +169,23 @@ public class Lounge {
 		Porter porter = (Porter) Thread.currentThread();
 		porter.setPorterState(PorterState.AT_THE_PLANES_HOLD);
 
-		if (this.planeHoldLuggage[this.currentFlight].isEmpty()) {
-			this.generalRepository.updatePorterState(porter.getPorterState(), false);
-			return false;
+		try {
+			if (this.planeHoldLuggage[this.currentFlight].isEmpty()) {
+				System.out.printf(ANSI_WHITE+"[LOUNGE---] Porter got 0 bags\n");
+				this.generalRepository.updatePorterState(porter.getPorterState(), false);
+				return false;
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			this.currentFlight=this.planeHoldLuggage.length-1;
+			if (this.planeHoldLuggage[this.currentFlight].isEmpty()) {
+				System.out.printf(ANSI_WHITE+"[LOUNGE---] Porter got 0 bags\n");
+				this.generalRepository.updatePorterState(porter.getPorterState(), false);
+				return false;
+			}
 		}
 
-		porter.setCurrentLuggage(this.planeHoldLuggage[this.currentFlight].pop());
+		System.out.printf(ANSI_WHITE+"[LOUNGE---] Porter got bags\n");
+		porter.setCurrentLuggage(this.planeHoldLuggage[this.currentFlight].poll());
 		this.generalRepository.updatePorterState(porter.getPorterState(), true);
 		this.generalRepository.updateBagsInPlane(this.planeHoldLuggage[this.currentFlight].size(), false);
 		return true;
@@ -152,6 +197,16 @@ public class Lounge {
 	 */
 	public synchronized void endOfWork() {
 		this.simulationEnded=true;
+		notifyAll();
+	}
+
+	public synchronized boolean passTerm() {
+		return this.passengersTerminated;
+	}
+
+	public synchronized void resetPassengersTerminated() {
+		this.passengersTerminated=true;
+		this.currentFlight++;
 		notifyAll();
 	}
 }

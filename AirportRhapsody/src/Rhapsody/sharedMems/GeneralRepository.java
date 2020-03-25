@@ -162,7 +162,7 @@ public class GeneralRepository {
 	 * <p/>
 	 * Must always close buffers before exiting method
 	 */
-	private synchronized void init() {
+	private void init() {
 		try {
 			FileWriter fileWriter = new FileWriter(logFilePath);
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -199,7 +199,7 @@ public class GeneralRepository {
 	 * <p/>
 	 * Must always close buffers before exiting method
 	 */
-	public synchronized void finish() {
+	public void finish() {
 		try {
 			FileWriter fileWriter = new FileWriter(logFilePath, true);
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -246,7 +246,7 @@ public class GeneralRepository {
 	 * <p/>
 	 * Used always when something is updated
 	 */
-	private synchronized void updateFileLog() {
+	private void updateFileLog() {
 		try {
 			FileWriter fileWriter = new FileWriter(logFilePath, true);
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);

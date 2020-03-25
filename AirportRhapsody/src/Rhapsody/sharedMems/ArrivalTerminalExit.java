@@ -40,6 +40,8 @@ public class ArrivalTerminalExit {
 	 */
 	private int passengersTerminated;
 
+	public static final String ANSI_YELLOW = "\u001B[33m";
+
 	/**
 	 * Constructor for arrival terminal exit entity
 	 * 
@@ -70,16 +72,20 @@ public class ArrivalTerminalExit {
 		this.generalRepository.updateFDTPassengers(1, false);
 		this.passengersTerminated++;
 		this.departureTerminalEntrance.incrementTerminatedPassengers();
+		System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d terminated | PT %d | P %d\n", passenger.getPassengerId(), this.passengersTerminated, this.passengers);
 		while(this.passengersTerminated < this.passengers) {
 			try {
 				wait();
+				System.out.printf(ANSI_YELLOW+"[ARRTERMEX] Other passenger terminated | PT %d | P %d\n", passenger.getPassengerId(), this.passengersTerminated, this.passengers);
 			} catch (InterruptedException e) {}
 		}
+		notifyAll();
 		// in case it is the last flight
 		if ( lastFlight ) {
+			System.out.printf(ANSI_YELLOW+"[ARRTERMEX] Simulation ended\n");
 			arrivalTerminalTransfer.endOfWork();
 			arrivalLounge.endOfWork();
-		}		
+		}
 	}
 
 	/**
@@ -104,6 +110,16 @@ public class ArrivalTerminalExit {
 	 */
 	public void setDepartureTerminalEntrance(DepartureTerminalEntrance departureTerminalEntrance) {
 		this.departureTerminalEntrance = departureTerminalEntrance;
+	}
+
+	/**
+	 * Method to reset simulations
+	 */
+	public synchronized void resetTerminations(){
+		this.passengersTerminated=0;
+		if (!arrivalLounge.passTerm()) {
+			arrivalLounge.resetPassengersTerminated();
+		}
 	}
 	
 }

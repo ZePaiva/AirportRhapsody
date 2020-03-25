@@ -41,6 +41,8 @@ public class DepartureTerminalEntrance {
 	 */
 	private int passengersTerminated;
 
+	public static final String ANSI_RED = "\u001B[31m";
+
 	/**
 	 * Constructor for DepartureTerminalEntrance
 	 * 
@@ -69,16 +71,22 @@ public class DepartureTerminalEntrance {
 		Passenger passenger = (Passenger) Thread.currentThread();
 		passenger.setCurrentState(PassengerState.DEPARTING);
 		this.generalRepository.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
-		this.generalRepository.updateFDTPassengers(1, false);
+		this.generalRepository.updateTRTPassengers(1, false);
+		// increment own terminated passengers
 		this.passengersTerminated++;
+		// warn ATE that one passenger is ready to exit Airport
 		this.arrivalTerminalExit.incrementTerminatedPassengers();
+		System.out.printf(ANSI_RED+"[DEPTERMEN] P%d terminated | PT %d | P %d\n", passenger.getPassengerId(), this.passengersTerminated, this.passengers);
 		while(this.passengersTerminated < this.passengers) {
 			try {
 				wait();
+				System.out.printf(ANSI_RED+"[DEPTERMEN] Other passenger terminated | PT %d | P %d\n", this.passengersTerminated, this.passengers);
 			} catch (InterruptedException e) {}
 		}
+		notifyAll();
 		// in case it is the last flight
 		if ( lastFlight ) {
+			System.out.printf(ANSI_RED+"[DEPTERMEN] Simulation ended\n");
 			arrivalTerminalTransfer.endOfWork();
 			arrivalLounge.endOfWork();
 		}
@@ -90,6 +98,15 @@ public class DepartureTerminalEntrance {
 	public synchronized void incrementTerminatedPassengers() {
 		this.passengersTerminated++;
 		notifyAll();
+	}
 
+	/**
+	 * Method to reset simulations
+	 */
+	public synchronized void resetTerminations(){
+		this.passengersTerminated=0;
+		if (!arrivalLounge.passTerm()) {
+			arrivalLounge.resetPassengersTerminated();
+		}
 	}
 }
