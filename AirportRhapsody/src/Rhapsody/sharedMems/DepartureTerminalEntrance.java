@@ -67,24 +67,21 @@ public class DepartureTerminalEntrance {
 	 * Blocking method that signals a passenger is ready to leave the airport. <p/>
 	 * Internally will communicate with ArrivalTerminalExit to coordinate passengers exiting the airport.
 	 */
-	public synchronized void prepareNextLeg(boolean lastFlight) {
+	public synchronized void prepareNextLeg(boolean lastFlight, int exited) {
 		Passenger passenger = (Passenger) Thread.currentThread();
 		passenger.setCurrentState(PassengerState.DEPARTING);
 		this.generalRepository.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
 		this.generalRepository.updateTRTPassengers(1, false);
 		// increment own terminated passengers
 		this.passengersTerminated++;
-		// warn ATE that one passenger is ready to exit Airport
-		this.arrivalTerminalExit.incrementTerminatedPassengers();
-		System.out.printf(ANSI_RED+"[DEPTERMEN] P%d terminated | PT %d | P %d\n", passenger.getPassengerId(), this.passengersTerminated, this.passengers);
-		while(this.passengersTerminated < this.passengers && this.passengersTerminated!=0) {
+		System.out.printf(ANSI_RED+"[DEPTERMEN] P%d terminating... | PT %d | P %d\n", passenger.getPassengerId(), this.passengersTerminated+exited, this.passengers);
+		if (!(exited+this.passengersTerminated==this.passengers)) {
+			System.out.printf(ANSI_RED+"[DEPTERMEN] P%d blocking \n", passenger.getPassengerId());
 			try {
 				wait();
-				System.out.printf(ANSI_RED+"[DEPTERMEN] Other passenger terminated | PT %d | P %d\n", this.passengersTerminated, this.passengers);
-			} catch (InterruptedException e) {}
+				System.out.printf(ANSI_RED+"[DEPTERMEN] P%d woke \n", passenger.getPassengerId());
+			} catch (InterruptedException e) {}	
 		}
-		this.passengersTerminated=0;
-		notifyAll();
 		// in case it is the last flight
 		if ( lastFlight ) {
 			System.out.printf(ANSI_RED+"[DEPTERMEN] Simulation ended\n");
@@ -93,12 +90,14 @@ public class DepartureTerminalEntrance {
 		}
 	}
 
-	/**
-	 * Method to allow Arrival Termina Exit to alert when a passenger termianted
-	 */
-	public synchronized void incrementTerminatedPassengers() {
-		this.passengersTerminated++;
-		if (this.passengersTerminated==this.passengers) {this.passengersTerminated=0;}
+	public synchronized int currentBlockedPassengers() {
+		return this.passengersTerminated;
+	}
+
+	public synchronized void wakeCurrentBlockedPassengers(){
+		Passenger passenger = (Passenger) Thread.currentThread();
+		System.out.printf(ANSI_RED+"[DEPTERMEN] P%d waking others\n", passenger.getPassengerId());
+		this.passengersTerminated=0;
 		notifyAll();
 	}
 }

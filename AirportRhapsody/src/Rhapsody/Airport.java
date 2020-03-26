@@ -87,6 +87,7 @@ public class Airport {
 		for (int flights=0; flights < K; flights++) {
 			for (int passengers=0; passengers < N; passengers++) {
 				int randBags = random.nextInt(M+1);
+				//int randBags=0;
 				String situation = random.nextBoolean() ? "TRT" : "FDT";
 				//String situation = "FDT";
 				luggageForPassengers[passengers][flights] = randBags;
@@ -97,7 +98,6 @@ public class Airport {
 						planeHoldLuggage[flights].add(new Luggage(passengers, situation));
 					}
 				}
-
 			}
 		}
 
@@ -167,7 +167,7 @@ public class Airport {
 		// Generate passengers
 		Passenger[] passengers = new Passenger[N];
 		for (int i=0; i<passengers.length; i++) {
-			passengers[i]= new Passenger(i, K, luggageForPassengers[i], passengersSituation[i], lounge, 
+			passengers[i]= new Passenger(i, K, N, luggageForPassengers[i], passengersSituation[i], lounge, 
 											baggageCollectionPoint, baggageReclaim, 
 											arrivalTerminalExit, arrivalTerminalTransfer, 
 											departureTerminalTransfer, departureTerminalEntrance, 

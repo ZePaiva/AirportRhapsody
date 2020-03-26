@@ -147,6 +147,7 @@ public class Lounge {
 		// delay to allow porter and bus to setup
 		if (this.passengersDisembarked>0 && this.limit) {
 			this.passengersDisembarked--;
+			System.out.printf(ANSI_WHITE+"[LOUNGE---] P%d terminated | PD %d\n", passenger.getPassengerId(), this.passengersDisembarked);
 			notifyAll();
 		}
 		while (!this.airportOpen || (this.passengersDisembarked>0 && this.limit)) {

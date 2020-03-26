@@ -65,37 +65,26 @@ public class ArrivalTerminalExit {
 	/**
 	 * GoHome method to signal a passenger his rhapsody has ended
 	 */
-	public synchronized void goHome(boolean lastFlight) {
+	public synchronized void goHome(boolean lastFlight, int departed) {
 		Passenger passenger = (Passenger) Thread.currentThread();
 		passenger.setCurrentState(PassengerState.EXIT_ARRIVAL_TERMINAL);
 		this.generalRepository.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
 		this.generalRepository.updateFDTPassengers(1, false);
 		this.passengersTerminated++;
-		this.departureTerminalEntrance.incrementTerminatedPassengers();
-		System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d terminated | PT %d | P %d\n", passenger.getPassengerId(), this.passengersTerminated, this.passengers);
-		while(this.passengersTerminated < this.passengers && this.passengersTerminated!=0) {
+		System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d terminating... | PT %d | P %d\n", passenger.getPassengerId(), this.passengersTerminated+departed, this.passengers);
+		if (!(this.passengersTerminated+departed==this.passengers)) {
+			System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d blocking \n", passenger.getPassengerId());
 			try {
 				wait();
-				System.out.printf(ANSI_YELLOW+"[ARRTERMEX] Other passenger terminated | PT %d | P %d\n", passenger.getPassengerId(), this.passengersTerminated, this.passengers);
+				System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d woke \n", passenger.getPassengerId());
 			} catch (InterruptedException e) {}
 		}
-		this.passengersTerminated=0;
-		notifyAll();
 		// in case it is the last flight
 		if ( lastFlight ) {
 			System.out.printf(ANSI_YELLOW+"[ARRTERMEX] Simulation ended\n");
 			arrivalTerminalTransfer.endOfWork();
 			arrivalLounge.endOfWork();
 		}
-	}
-
-	/**
-	 * Method to allow Departure Terminal entrance to alert when a passenger terminates
-	 */
-	public synchronized void incrementTerminatedPassengers() {
-		this.passengersTerminated++;
-		if (this.passengersTerminated==this.passengers) {this.passengersTerminated=0;}
-		notifyAll();
 	}
 
 	/**
@@ -112,5 +101,16 @@ public class ArrivalTerminalExit {
 	 */
 	public void setDepartureTerminalEntrance(DepartureTerminalEntrance departureTerminalEntrance) {
 		this.departureTerminalEntrance = departureTerminalEntrance;
+	}
+
+	public synchronized int currentBlockedPassengers() {
+		return this.passengersTerminated;
+	}
+
+	public synchronized void wakeCurrentBlockedPassengers(){
+		Passenger passenger = (Passenger) Thread.currentThread();
+		System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d waking others \n", passenger.getPassengerId());
+		this.passengersTerminated=0;
+		notifyAll();
 	}
 }

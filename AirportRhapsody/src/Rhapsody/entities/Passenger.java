@@ -126,6 +126,8 @@ public class Passenger extends Thread {
 	 */
 	private boolean lostBags;
 
+	private int passengers;
+
 	public static final String ANSI_GREEN = "\u001B[32m";
 
 
@@ -145,7 +147,7 @@ public class Passenger extends Thread {
 	 * @param departureTerminalEntrance
 	 * @param generalRepository
 	 */
-	public Passenger(int id, int flights, int[] startingBags, String[] type, Lounge arrivalLounge, 
+	public Passenger(int id, int flights, int passengers, int[] startingBags, String[] type, Lounge arrivalLounge, 
 						BaggageCollectionPoint baggageCollectionPoint, BaggageReclaim baggageReclaim, 
 						ArrivalTerminalExit arrivalTerminalExit, 
 						ArrivalTerminalTransfer arrivalTerminalTransfer, 
@@ -154,6 +156,7 @@ public class Passenger extends Thread {
 						GeneralRepository generalRepository) {
 		this.id = id;
 		this.flights=flights;
+		this.passengers=passengers;
 		this.startingBags = startingBags;
 		this.situation=type;
 		this.arrivalLounge = arrivalLounge;
@@ -289,7 +292,12 @@ public class Passenger extends Thread {
 
 				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is preparing next leg of journey\n", this.id);
 				// blocking state that will make passenger wait until all other passengers are ready
-				departureTerminalEntrance.prepareNextLeg(flight==this.flights-1);
+				int exited=arrivalTerminalExit.currentBlockedPassengers();
+				departureTerminalEntrance.prepareNextLeg(flight==this.flights-1, arrivalTerminalExit.currentBlockedPassengers());
+				int departed=departureTerminalEntrance.currentBlockedPassengers();
+				System.out.printf("[PASSENGER] P%d exiting | PT %d\n", this.id, departed+exited);
+				departureTerminalEntrance.wakeCurrentBlockedPassengers();
+				arrivalTerminalExit.wakeCurrentBlockedPassengers();
 
 			// Final Destination passengers life-cycle
 			} else if ( this.situation[flight].equals("FDT")) {
@@ -310,8 +318,12 @@ public class Passenger extends Thread {
 
 				// blocking goHome method, must 
 				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is going home\n", this.id);
-				arrivalTerminalExit.goHome(flight==this.flights-1);
-
+				int departed=departureTerminalEntrance.currentBlockedPassengers();
+				arrivalTerminalExit.goHome(flight==this.flights-1, departureTerminalEntrance.currentBlockedPassengers());
+				int exited=arrivalTerminalExit.currentBlockedPassengers();
+				System.out.printf("[PASSENGER] P%d exiting | PT %d\n", this.id, departed+exited);
+				departureTerminalEntrance.wakeCurrentBlockedPassengers();
+				arrivalTerminalExit.wakeCurrentBlockedPassengers();
 			} else {
 				System.err.printf(ANSI_GREEN + "[PASSENGER] Passenger %d had wrong start", this.id);
 				System.exit(5);
