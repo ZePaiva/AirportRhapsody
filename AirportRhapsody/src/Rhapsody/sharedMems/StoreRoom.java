@@ -40,14 +40,14 @@ public class StoreRoom {
     /**
      * Method to deposit a bag in storeroom. <p/>
      * <b>DOES NOT ALTER BAGS IN PLANE'S HOLD OR CONVEYOR BELT<b/>  
+     * @param luggage
      */
-    public synchronized void carryItToAppropriateStore() {
+    public synchronized void carryItToAppropriateStore(Luggage luggage) {
         Porter porter = (Porter) Thread.currentThread();
         porter.setPorterState(PorterState.AT_THE_STOREROOM);
         this.generalRepository.updatePorterState(porter.getPorterState(), true);
         try {
-            this.bagsInStoreRoom.add(porter.getCurrentLuggage());
-            porter.setCurrentLuggage(null);
+            this.bagsInStoreRoom.add(luggage);
             this.generalRepository.updateStoreRoomBags(this.bagsInStoreRoom.size(), false);
         } catch (NullPointerException e) {
             System.err.print("[StoreRoom] Porter has no bag, reseting porter");

@@ -177,7 +177,7 @@ public class Lounge {
      * <b>DOES NOT ALTER BAGS IN PLANE'S HOLD OR STOREROOM<b/>  
 	 * @return planeHasBags of type boolean
 	 */
-	public synchronized boolean tryToCollectABag() {
+	public synchronized Luggage tryToCollectABag() {
 		Porter porter = (Porter) Thread.currentThread();
 		porter.setPorterState(PorterState.AT_THE_PLANES_HOLD);
 
@@ -185,22 +185,22 @@ public class Lounge {
 			if (this.planeHoldLuggage[this.currentFlight].isEmpty()) {
 				System.out.printf(ANSI_WHITE+"[LOUNGE---] Porter got 0 bags\n");
 				this.generalRepository.updatePorterState(porter.getPorterState(), false);
-				return false;
+				return null;
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
 			this.currentFlight=this.planeHoldLuggage.length-1;
 			if (this.planeHoldLuggage[this.currentFlight].isEmpty()) {
 				System.out.printf(ANSI_WHITE+"[LOUNGE---] Porter got 0 bags\n");
 				this.generalRepository.updatePorterState(porter.getPorterState(), false);
-				return false;
+				return null;
 			}
 		}
 
 		System.out.printf(ANSI_WHITE+"[LOUNGE---] Porter got bags\n");
-		porter.setCurrentLuggage(this.planeHoldLuggage[this.currentFlight].poll());
+		Luggage bagToReturn = this.planeHoldLuggage[this.currentFlight].poll();
 		this.generalRepository.updatePorterState(porter.getPorterState(), true);
 		this.generalRepository.updateBagsInPlane(this.planeHoldLuggage[this.currentFlight].size(), false);
-		return true;
+		return bagToReturn;
 
 	}
 

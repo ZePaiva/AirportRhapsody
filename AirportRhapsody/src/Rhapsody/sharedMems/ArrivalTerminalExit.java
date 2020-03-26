@@ -64,6 +64,8 @@ public class ArrivalTerminalExit {
 
 	/**
 	 * GoHome method to signal a passenger his rhapsody has ended
+	 * @param lastFlight
+	 * @param departed
 	 */
 	public synchronized void goHome(boolean lastFlight, int departed) {
 		Passenger passenger = (Passenger) Thread.currentThread();
@@ -103,10 +105,17 @@ public class ArrivalTerminalExit {
 		this.departureTerminalEntrance = departureTerminalEntrance;
 	}
 
+	/**
+	 * Getter method to obtain currentBlocked threads
+	 * @return number of waiting threads in object
+	 */
 	public synchronized int currentBlockedPassengers() {
 		return this.passengersTerminated;
 	}
 
+	/**
+	 * Method to wake all threads in object monitor
+	 */
 	public synchronized void wakeCurrentBlockedPassengers(){
 		Passenger passenger = (Passenger) Thread.currentThread();
 		System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d waking others \n", passenger.getPassengerId());

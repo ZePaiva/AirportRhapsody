@@ -47,16 +47,16 @@ public class BaggageCollectionPoint{
     /**
      * Method to deposit a bag in the conveyor belt <p/>
      * <b>DOES NOT ALTER BAGS IN PLANE'S HOLD OR STOREROOM<b/>  
+     * @param luggage
      */
-    public synchronized void carryItToAppropriateStore() {
+    public synchronized void carryItToAppropriateStore(Luggage luggage) {
         Porter porter = (Porter) Thread.currentThread();
         porter.setPorterState(PorterState.AT_THE_LUGGAGE_BELT_CONVEYOR);
         this.generalRepository.updatePorterState(porter.getPorterState(), true);
 
         try {
             // adds luggage to conveyor belt, notifies the passenger and logs it
-            this.bagsInConveyorBelt.add(porter.getCurrentLuggage());
-            porter.setCurrentLuggage(null);
+            this.bagsInConveyorBelt.add(luggage);
             System.out.printf(ANSI_WHITE+"[BAGCOLLPT] Porter stored bag in BCP\n");
             this.collectedAllBags=false;
             notifyAll();
@@ -76,7 +76,7 @@ public class BaggageCollectionPoint{
     }
 
     /**
-     * Method to call all passengers waiting for luggage 
+     * Method to signal all passengers that luggage collection has ended 
      */
     public synchronized void noMoreBagsToCollect() {
         Porter porter = (Porter) Thread.currentThread();
@@ -143,6 +143,9 @@ public class BaggageCollectionPoint{
         passenger.lostBags(true);
     }
 
+    /**
+     * Mehtod to reset baggage collection variable by the porter thread
+     */
     public synchronized void newFlight(){
         this.collectedAllBags=false;
     }

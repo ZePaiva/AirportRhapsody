@@ -66,6 +66,8 @@ public class DepartureTerminalEntrance {
 	/**
 	 * Blocking method that signals a passenger is ready to leave the airport. <p/>
 	 * Internally will communicate with ArrivalTerminalExit to coordinate passengers exiting the airport.
+	 * @param lastFlight
+	 * @param exited
 	 */
 	public synchronized void prepareNextLeg(boolean lastFlight, int exited) {
 		Passenger passenger = (Passenger) Thread.currentThread();
@@ -90,10 +92,17 @@ public class DepartureTerminalEntrance {
 		}
 	}
 
+	/**
+	 * Method to get all waiting threads in this object monitor
+	 * @return waitingThreads
+	 */
 	public synchronized int currentBlockedPassengers() {
 		return this.passengersTerminated;
 	}
 
+	/**
+	 * Method to wake all waiting threads in this object monitor
+	 */
 	public synchronized void wakeCurrentBlockedPassengers(){
 		Passenger passenger = (Passenger) Thread.currentThread();
 		System.out.printf(ANSI_RED+"[DEPTERMEN] P%d waking others\n", passenger.getPassengerId());
