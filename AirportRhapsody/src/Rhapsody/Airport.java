@@ -69,6 +69,8 @@ public class Airport {
 	 */
 	public static final Random random = new Random();
 
+	public static final String ANSI_RESET = "\u001B[0m";
+
 	/**
 	 * Main method
 	 * 
@@ -91,7 +93,7 @@ public class Airport {
 				passengersSituation[passengers][flights] = situation;
 				planeHoldLuggage[flights] = new LinkedList<>();
 				for (int i = 0; i < randBags; i++) {
-					if (random.nextInt(101) <= 90) {
+					if (random.nextInt(101) <= 99) {
 						planeHoldLuggage[flights].add(new Luggage(passengers, situation));
 					}
 				}
@@ -99,16 +101,25 @@ public class Airport {
 			}
 		}
 
-		System.out.println("Starting variables:\nPlane  Hold Luggagge");
+		System.out.println(ANSI_RESET+"Starting variables:\nPlane  Hold Luggagge");
 		Arrays.asList(planeHoldLuggage).stream().forEach(p-> {
 			p.stream().forEach(l -> System.out.printf("%s ", l.toString()));
 			System.out.println("Faux pass");
 		});
-		System.out.println("Passenger Luggage:");
-		Arrays.asList(luggageForPassengers).stream().forEach(p -> {
-			System.out.println("New pass");
-			for (int i= 0; i < p.length; i++) { System.out.printf("%d ", p[i]);}
-		});
+		System.out.print("Passenger Luggage:");
+		for (int a=0; a < luggageForPassengers.length; a++) {
+			System.out.printf("\nP%d: ", a);
+			for (int b=0; b < luggageForPassengers[a].length; b++) {
+				System.out.printf("%d ", luggageForPassengers[a][b]);
+			}
+		}
+		System.out.print("\nPassenger situation:");
+		for (int a=0; a < passengersSituation.length; a++) {
+			System.out.printf("\nP%d: ", a);
+			for (int b=0; b < passengersSituation[a].length; b++) {
+				System.out.printf("%s ", passengersSituation[a][b]);
+			}
+		}
 		System.out.println();
 
 		// create empty arrays

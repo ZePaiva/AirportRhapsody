@@ -56,8 +56,8 @@ public class Lounge {
 	private int currentFlight;
 
 	private boolean airportOpen;
-
-	private boolean passengersTerminated;
+	private boolean init;
+	private boolean limit;
 
 	public static final String ANSI_WHITE = "\u001B[37m";
 
@@ -74,13 +74,14 @@ public class Lounge {
 		this.passengersPerFlight=maxPassengerAmount;
 		this.planeHoldLuggage=planeHoldLuggage;
 		this.baggageCollectionPoint=baggageCollectionPoint;
-		this.currentFlight=0;
+		this.currentFlight=-1;
 		this.passengersDisembarked=0;
 		this.simulationEnded=false;
 		this.airportOpen=false;
-		this.passengersTerminated=true;
+		this.init=true;
+		this.limit=false;
 	}
-
+	
 	/**
 	 * Puts porter in {@link Rhapsody.entities.states.PorterState#WAITING_FOR_PLANE_TO_LAND} state
 	 */
@@ -88,28 +89,35 @@ public class Lounge {
 		// get porter thread
 		Porter porter = (Porter) Thread.currentThread();
 
-		while(!this.passengersTerminated) {
+		//System.out.println("Barks+"+(this.passengersDisembarked>0 && !this.init));
+		//System.out.println("Sim+"+this.simulationEnded);
+		
+		while (this.passengersDisembarked>0 && !this.init || this.simulationEnded) {
 			try {
+				if (this.simulationEnded) {
+					return !this.simulationEnded;
+				}
 				wait();
+				//System.out.println("Porter+"+this.passengersDisembarked);
 			} catch (InterruptedException e) {}
 		}
-		if (this.simulationEnded) {
-			return !this.simulationEnded;
-		}
+		this.currentFlight++;
 		System.out.println(ANSI_WHITE+"[LOUNGE---] Flight cleared");
 		this.generalRepository.clearFlight(true);
+		this.generalRepository.updateFlight(this.currentFlight, true);
 		this.baggageCollectionPoint.newFlight();
 
 		// reset passengerxs disembarked
-		this.passengersDisembarked=0;
-		this.airportOpen=true;
-		
+		this.init=false;
+		this.airportOpen=true;	
+		this.limit=false;	
 		System.out.printf(ANSI_WHITE+"[LOUNGE---] Flight updated | NF %d\n", this.currentFlight);
 		this.generalRepository.updateFlight(this.currentFlight, true);
 		notifyAll(); 
+
 		// update porter
 		porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
-		this.generalRepository.updateBagsInPlane(planeHoldLuggage[currentFlight].size(), true);
+		this.generalRepository.updateBagsInPlane(planeHoldLuggage[this.currentFlight].size(), true);
 		this.generalRepository.updatePorterState(porter.getPorterState(), false);
 		
 		System.out.printf(ANSI_WHITE+"[LOUNGE---] Porter waiting for passengers | CP: %d | Sim %s\n", this.passengersDisembarked, this.simulationEnded);
@@ -123,8 +131,8 @@ public class Lounge {
 				System.exit(3);
 			}
 		}
-		this.passengersTerminated=false;
 		this.airportOpen=false;
+		this.limit=true;
 
 		return !this.simulationEnded;
 	}
@@ -137,13 +145,16 @@ public class Lounge {
 		Passenger passenger = (Passenger) Thread.currentThread();
 
 		// delay to allow porter and bus to setup
-		while (!this.airportOpen){
+		if (this.passengersDisembarked>0 && this.limit) {
+			this.passengersDisembarked--;
+			notifyAll();
+		}
+		while (!this.airportOpen || (this.passengersDisembarked>0 && this.limit)) {
 			try {
-				System.out.printf(ANSI_WHITE+"[LOUNGE---] Porter not ready yet\n");
+				System.out.printf(ANSI_WHITE+"[LOUNGE---] P%d | Porter not ready yet\n", passenger.getPassengerId());
 				wait();
 			} catch (InterruptedException e) {}
 		}
-		
 		
 		// updates state
 		passenger.setCurrentState(PassengerState.AT_DISEMBARKING_ZONE);
@@ -197,16 +208,6 @@ public class Lounge {
 	 */
 	public synchronized void endOfWork() {
 		this.simulationEnded=true;
-		notifyAll();
-	}
-
-	public synchronized boolean passTerm() {
-		return this.passengersTerminated;
-	}
-
-	public synchronized void resetPassengersTerminated() {
-		this.passengersTerminated=true;
-		this.currentFlight++;
 		notifyAll();
 	}
 }

@@ -316,8 +316,6 @@ public class Passenger extends Thread {
 				System.err.printf(ANSI_GREEN + "[PASSENGER] Passenger %d had wrong start", this.id);
 				System.exit(5);
 			}
-			arrivalTerminalExit.resetTerminations();
-			departureTerminalEntrance.resetTerminations();
 		}
 		System.out.printf(ANSI_GREEN+"[PASSENGER] P%d exiting run(), joining...\n", this.id);
 	}

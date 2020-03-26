@@ -77,12 +77,13 @@ public class DepartureTerminalEntrance {
 		// warn ATE that one passenger is ready to exit Airport
 		this.arrivalTerminalExit.incrementTerminatedPassengers();
 		System.out.printf(ANSI_RED+"[DEPTERMEN] P%d terminated | PT %d | P %d\n", passenger.getPassengerId(), this.passengersTerminated, this.passengers);
-		while(this.passengersTerminated < this.passengers) {
+		while(this.passengersTerminated < this.passengers && this.passengersTerminated!=0) {
 			try {
 				wait();
 				System.out.printf(ANSI_RED+"[DEPTERMEN] Other passenger terminated | PT %d | P %d\n", this.passengersTerminated, this.passengers);
 			} catch (InterruptedException e) {}
 		}
+		this.passengersTerminated=0;
 		notifyAll();
 		// in case it is the last flight
 		if ( lastFlight ) {
@@ -97,16 +98,7 @@ public class DepartureTerminalEntrance {
 	 */
 	public synchronized void incrementTerminatedPassengers() {
 		this.passengersTerminated++;
+		if (this.passengersTerminated==this.passengers) {this.passengersTerminated=0;}
 		notifyAll();
-	}
-
-	/**
-	 * Method to reset simulations
-	 */
-	public synchronized void resetTerminations(){
-		this.passengersTerminated=0;
-		if (!arrivalLounge.passTerm()) {
-			arrivalLounge.resetPassengersTerminated();
-		}
 	}
 }

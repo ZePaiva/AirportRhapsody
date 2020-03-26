@@ -73,12 +73,13 @@ public class ArrivalTerminalExit {
 		this.passengersTerminated++;
 		this.departureTerminalEntrance.incrementTerminatedPassengers();
 		System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d terminated | PT %d | P %d\n", passenger.getPassengerId(), this.passengersTerminated, this.passengers);
-		while(this.passengersTerminated < this.passengers) {
+		while(this.passengersTerminated < this.passengers && this.passengersTerminated!=0) {
 			try {
 				wait();
 				System.out.printf(ANSI_YELLOW+"[ARRTERMEX] Other passenger terminated | PT %d | P %d\n", passenger.getPassengerId(), this.passengersTerminated, this.passengers);
 			} catch (InterruptedException e) {}
 		}
+		this.passengersTerminated=0;
 		notifyAll();
 		// in case it is the last flight
 		if ( lastFlight ) {
@@ -93,6 +94,7 @@ public class ArrivalTerminalExit {
 	 */
 	public synchronized void incrementTerminatedPassengers() {
 		this.passengersTerminated++;
+		if (this.passengersTerminated==this.passengers) {this.passengersTerminated=0;}
 		notifyAll();
 	}
 
@@ -111,15 +113,4 @@ public class ArrivalTerminalExit {
 	public void setDepartureTerminalEntrance(DepartureTerminalEntrance departureTerminalEntrance) {
 		this.departureTerminalEntrance = departureTerminalEntrance;
 	}
-
-	/**
-	 * Method to reset simulations
-	 */
-	public synchronized void resetTerminations(){
-		this.passengersTerminated=0;
-		if (!arrivalLounge.passTerm()) {
-			arrivalLounge.resetPassengersTerminated();
-		}
-	}
-	
 }

@@ -58,6 +58,7 @@ public class BaggageCollectionPoint{
             this.bagsInConveyorBelt.add(porter.getCurrentLuggage());
             porter.setCurrentLuggage(null);
             System.out.printf(ANSI_WHITE+"[BAGCOLLPT] Porter stored bag in BCP\n");
+            this.collectedAllBags=false;
             notifyAll();
             this.generalRepository.updateConveyorBags(this.bagsInConveyorBelt.size(), false);
        
@@ -126,7 +127,6 @@ public class BaggageCollectionPoint{
                 } else if (bag==null && this.bagsInConveyorBelt.isEmpty() && this.collectedAllBags) {
                     System.out.printf(ANSI_WHITE+"[BAGCOLLPT] Passenger %d found no bag & collection has ended & CB is empty \n", passenger.getPassengerId());
                     passenger.lostBags(true);
-                    this.collectedAllBags=false;
                     return;
                 
                 } else if (bag==null && this.collectedAllBags) {
@@ -135,9 +135,6 @@ public class BaggageCollectionPoint{
                     return;
                 }
                 if ( passenger.getStartingBags()[flight]==passenger.getCurrentBags() ) {
-                    if(this.bagsInConveyorBelt.isEmpty()) {
-                        this.collectedAllBags=false;
-                    }
                     return;
                 }
             } catch (InterruptedException e) {}
