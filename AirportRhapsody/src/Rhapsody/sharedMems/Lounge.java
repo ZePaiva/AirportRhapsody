@@ -84,6 +84,7 @@ public class Lounge {
 	
 	/**
 	 * Puts porter in {@link Rhapsody.entities.states.PorterState#WAITING_FOR_PLANE_TO_LAND} state
+	 * @return simulationContinue
 	 */
 	public synchronized boolean takeARest() {
 		// get porter thread
@@ -140,6 +141,7 @@ public class Lounge {
 	/**
 	 * Puts passenger in {@link Rhapsody.entities.states.PassengerState#AT_DISEMBARKING_ZONE} state. <p/>
 	 * Disembarks passenger and notifies all other passengers
+	 * @param flightId
 	 */
 	public synchronized void whatShouldIDo(int flightId) {
 		Passenger passenger = (Passenger) Thread.currentThread();

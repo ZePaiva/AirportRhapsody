@@ -88,8 +88,9 @@ public class BaggageCollectionPoint{
 
     /**
      * Method for a passenger to try to collect a bag
+     * 
      */
-    public synchronized void goCollectABag(int flight){
+    public synchronized int goCollectABag(int startingBags){
         Passenger passenger = (Passenger) Thread.currentThread();
         
         // updates passenger state if needed
@@ -98,15 +99,17 @@ public class BaggageCollectionPoint{
             this.generalRepository.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), false);
         }
 
+        int bagsCollected=0;
+
         // if there are still bags or the porter has not collected them all
         while (!this.collectedAllBags || !this.bagsInConveyorBelt.isEmpty()) {
             try {
-                System.out.printf(ANSI_WHITE+"[BAGCOLLPT] P%d will try to get his bags | CB %d\n", passenger.getPassengerId(), passenger.getCurrentBags());
+                System.out.printf(ANSI_WHITE+"[BAGCOLLPT] P%d will try to get his bags | CB %d\n", passenger.getPassengerId(), bagsCollected);
                 if (!this.collectedAllBags) {
-                    System.out.printf(ANSI_WHITE+"[BAGCOLLPT] P%d will sleep | CB %d\n", passenger.getPassengerId(), passenger.getCurrentBags());
+                    System.out.printf(ANSI_WHITE+"[BAGCOLLPT] P%d will sleep | CB %d\n", passenger.getPassengerId(), bagsCollected);
                     wait();
                 }
-                System.out.printf(ANSI_WHITE+"[BAGCOLLPT] P%d awakened | CB %d\n", passenger.getPassengerId(), passenger.getCurrentBags());
+                System.out.printf(ANSI_WHITE+"[BAGCOLLPT] P%d awakened | CB %d\n", passenger.getPassengerId(), bagsCollected);
                 // if there are bags try to find one of the current passenger and removes it
                 this.bagsInConveyorBelt.stream().forEach(System.out::println);
                 Luggage bag = this.bagsInConveyorBelt.stream()
@@ -119,28 +122,30 @@ public class BaggageCollectionPoint{
                     .orElse(null);
                 this.bagsInConveyorBelt.stream().forEach(System.out::println);
                 if (bag != null) {
-                    passenger.setCurrentBags(passenger.getCurrentBags()+1);
-                    System.out.printf(ANSI_WHITE+"[BAGCOLLPT] Passenger %d has one more bag | CB: %d\n", passenger.getPassengerId(), passenger.getCurrentBags());
+                    //passenger.setCurrentBags(passenger.getCurrentBags()+1);
+                    bagsCollected++;
+                    System.out.printf(ANSI_WHITE+"[BAGCOLLPT] Passenger %d has one more bag | CB: %d\n", passenger.getPassengerId(), bagsCollected);
                     // log updates
                     this.generalRepository.updateConveyorBags(this.bagsInConveyorBelt.size(), true);
-                    this.generalRepository.updateCurrentBags(passenger.getPassengerId(), passenger.getCurrentBags(), false);
+                    this.generalRepository.updateCurrentBags(passenger.getPassengerId(), bagsCollected, false);
                 } else if (bag==null && this.bagsInConveyorBelt.isEmpty() && this.collectedAllBags) {
                     System.out.printf(ANSI_WHITE+"[BAGCOLLPT] Passenger %d found no bag & collection has ended & CB is empty \n", passenger.getPassengerId());
-                    passenger.lostBags(true);
-                    return;
+                    //passenger.lostBags(true);
+                    return bagsCollected;
                 
                 } else if (bag==null && this.collectedAllBags) {
                     System.out.printf(ANSI_WHITE+"[BAGCOLLPT] Passenger %d found no bag & collection has ended \n", passenger.getPassengerId());
-                    passenger.lostBags(true);
-                    return;
+                    //passenger.lostBags(true);
+                    return bagsCollected;
                 }
-                if ( passenger.getStartingBags()[flight]==passenger.getCurrentBags() ) {
-                    return;
+                if ( startingBags==bagsCollected ) {
+                    return bagsCollected;
                 }
             } catch (InterruptedException e) {}
         }
         // if there are no more bags and porter collected the mall
-        passenger.lostBags(true);
+        //passenger.lostBags(true);
+        return bagsCollected;
     }
 
     /**

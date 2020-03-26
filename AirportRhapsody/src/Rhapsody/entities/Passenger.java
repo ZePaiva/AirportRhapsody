@@ -122,10 +122,8 @@ public class Passenger extends Thread {
 	private int currentBags;
 
 	/**
-	 * Amount of lost bags
+	 * Total passengers on flight
 	 */
-	private boolean lostBags;
-
 	private int passengers;
 
 	public static final String ANSI_GREEN = "\u001B[32m";
@@ -167,7 +165,6 @@ public class Passenger extends Thread {
 		this.departureTerminalTransfer = departureTerminalTransfer;
 		this.departureTerminalEntrance = departureTerminalEntrance;
 		this.generalRepository = generalRepository;
-		this.lostBags = false;
 		this.currentBags = 0;
 		this.currentState = PassengerState.AT_DISEMBARKING_ZONE;
 		this.startingBags = startingBags;
@@ -233,15 +230,6 @@ public class Passenger extends Thread {
 	}
 
 	/**
-	 * Sets if passenger has lsot at least 1 bag, unsets otherwise
-	 * 
-	 * @param lost
-	 */
-	public void lostBags(boolean lost) {
-		this.lostBags = lost;
-	}
-
-	/**
 	 * Passenger life-cycle Passenger arrives and informs of it's arival to the
 	 * lounge [Lounge.java] {AT_DISEMBARKING_ZONE} The Lounge puts the passenger on
 	 * hold until it can go to the baggage collection point (porter might be busy
@@ -269,7 +257,6 @@ public class Passenger extends Thread {
 		// run
 		System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is up\n", this.id);
 		for (int flight = 0; flight < this.flights; flight++){
-			this.lostBags=false;
 			this.currentBags=0;
 			arrivalLounge.whatShouldIDo(flight);
 			System.out.printf(ANSI_GREEN + "[PASSENGER] P%d disembarked from flight %d | SB %d\n", this.id, flight, this.startingBags[flight]);
@@ -305,13 +292,13 @@ public class Passenger extends Thread {
 				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d will terminate it's journey here\n", this.id);
 				// tries to collect all bags until it collects them all or it knows it lost it's bags
 				if (this.startingBags[flight]!=0) {
-					baggageCollectionPoint.goCollectABag(flight);
+					this.currentBags= baggageCollectionPoint.goCollectABag(this.startingBags[flight]);
 					System.out.printf(ANSI_GREEN + "[PASSENGER] P%d tried to collect a bag | CB %d | SB %d | LB %s\n", 
-										this.id, this.currentBags, this.startingBags[flight], this.lostBags);	
+										this.id, this.currentBags, this.startingBags[flight], this.startingBags[flight]==this.currentBags);	
 				}
 
 				// if lost any luggage
-				if ( this.lostBags ){
+				if ( this.currentBags!= this.startingBags[flight]) {
 					baggageReclaim.reportMissingBags(this.startingBags[flight]-this.currentBags);
 					System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is reclaiming bags\n", this.id);
 				}
