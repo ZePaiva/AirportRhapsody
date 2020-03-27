@@ -46,7 +46,7 @@ public class BaggageCollectionPoint{
 
     /**
      * Method to deposit a bag in the conveyor belt <p/>
-     * <b>DOES NOT ALTER BAGS IN PLANE'S HOLD OR STOREROOM<b/>  
+     * <b>DOES NOT ALTER BAGS IN PLANE'S HOLD OR STOREROOM</b>  
      * @param luggage
      */
     public synchronized void carryItToAppropriateStore(Luggage luggage) {

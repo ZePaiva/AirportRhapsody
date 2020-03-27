@@ -37,7 +37,7 @@ public class StoreRoom {
 
     /**
      * Method to deposit a bag in storeroom. <p/>
-     * <b>DOES NOT ALTER BAGS IN PLANE'S HOLD OR CONVEYOR BELT<b/>  
+     * <b>DOES NOT ALTER BAGS IN PLANE'S HOLD OR CONVEYOR BELT</b>  
      * @param luggage
      */
     public synchronized void carryItToAppropriateStore(Luggage luggage) {

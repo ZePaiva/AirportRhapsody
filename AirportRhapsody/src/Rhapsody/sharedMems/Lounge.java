@@ -173,7 +173,7 @@ public class Lounge {
 
 	/**
 	 * Porter method to try to collect a bag or fail and exit the bag collection loop <p/>
-     * <b>DOES NOT ALTER BAGS IN PLANE'S HOLD OR STOREROOM<b/>  
+     * <b>DOES NOT ALTER BAGS IN PLANE'S HOLD OR STOREROOM</b>  
 	 * @return planeHasBags of type boolean
 	 */
 	public synchronized Luggage tryToCollectABag() {
