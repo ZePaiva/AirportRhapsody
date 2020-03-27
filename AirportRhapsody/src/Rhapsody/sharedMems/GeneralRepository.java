@@ -378,6 +378,7 @@ public class GeneralRepository {
 		for (int i = 0; i < this.waitingQueue.length-1; i++) {
 			this.waitingQueue[i]=this.waitingQueue[i+1];
 		}
+		this.waitingQueue[this.waitingQueue.length-1]=-1;
 		if (!noLog){
 			this.updateFileLog();
 		}
@@ -411,6 +412,7 @@ public class GeneralRepository {
 		for (int i = 0; i < this.busSeats.length-1; i++) {
 			this.busSeats[i]=this.busSeats[i+1];
 		}
+		this.busSeats[this.busSeats.length-1]=-1;
 		if (!noLog){
 			this.updateFileLog();
 		}

@@ -87,6 +87,7 @@ public class Airport {
 				//int randBags=0;
 				String situation = random.nextBoolean() ? "TRT" : "FDT";
 				//String situation = "FDT";
+				//String situation = "TRT";
 				luggageForPassengers[passengers][flights] = randBags;
 				passengersSituation[passengers][flights] = situation;
 				planeHoldLuggage[flights] = new LinkedList<>();

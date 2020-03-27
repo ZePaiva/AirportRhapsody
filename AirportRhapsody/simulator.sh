@@ -13,7 +13,7 @@ trap 'exit' SIGINT
 
 start=`date +%s`
 
-for i in $(seq 1 1000)
+for i in $(seq 1 100)
 do
 	echo -e "\nRun n." $i
 	java -cp bin/ Rhapsody.Airport

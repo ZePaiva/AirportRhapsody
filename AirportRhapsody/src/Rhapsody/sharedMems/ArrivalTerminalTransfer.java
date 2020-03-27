@@ -63,6 +63,11 @@ public class ArrivalTerminalTransfer {
 	 */
 	private boolean announcingBoarding;
 
+	/**
+	 * Used to signal that
+	 */
+	private boolean fullQueue;
+
 	public static final String ANSI_BLUE = "\u001B[0m\u001B[34m";
 
 	/**
@@ -104,8 +109,9 @@ public class ArrivalTerminalTransfer {
 		this.transferQuay.add(passenger.getPassengerId());
 		this.generalRepository.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
 		this.generalRepository.addToWaitingQueue(passenger.getPassengerId(), false);
-		if (!this.passengerArrived) {
-			this.passengerArrived=true;
+		if (this.transferQuay.size()==this.maxBusSeats) {
+			notifyAll();
+		} else if (this.transferQuay.size()==1) {
 			notifyAll();
 		}
 	}
@@ -120,9 +126,11 @@ public class ArrivalTerminalTransfer {
 		// if this passenger is not the head of waiting line queue it must wait until it
 		//System.out.println(this.transferQuay.toString());
 		//System.out.println(this.transferQuay.peek());
-		if (this.transferQuay.peek() != passenger.getPassengerId() || !this.announcingBoarding
-				|| this.busSeats.size() == this.maxBusSeats) {
-			return false;
+		while (!this.announcingBoarding || this.transferQuay.peek()!=passenger.getPassengerId() ||
+				this.busSeats.size() == this.maxBusSeats) {
+			try {
+				wait();
+			} catch (InterruptedException e) {}
 		}
 		
 
@@ -132,9 +140,7 @@ public class ArrivalTerminalTransfer {
 		this.generalRepository.removeFromWaitingQueue(true);
 		this.generalRepository.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
 		this.generalRepository.addToBusSeat(passenger.getPassengerId(), false);
-		if (this.busSeats.size() == this.maxBusSeats) {
-			notifyAll();
-		}
+		notifyAll();
 		return true;
 	}
 
@@ -159,11 +165,20 @@ public class ArrivalTerminalTransfer {
 		this.generalRepository.updateBusDriverState(busDriver.getBusDriverState(), false);
 		this.availableBus = true;
 		notifyAll();
-		System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver is starting to carrry passengers\n");
-		while (!this.dayFinished && !this.passengerArrived) {
+		System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver is waiting passengers or sim to end\n");
+		while (!this.dayFinished && this.transferQuay.size()==0) {
 			try {
 				wait();
-				System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver woke | Sim %s | PA %s\n", this.dayFinished, this.passengerArrived);
+				System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver woke | Sim %s | PA %s\n", this.dayFinished, this.transferQuay.size()!=0);
+				System.out.println(!this.dayFinished && this.transferQuay.size()==0);
+				System.out.println(this.transferQuay.toString());
+			} catch (InterruptedException e) {
+			}
+		}
+		if (!this.dayFinished) {
+			System.out.printf(ANSI_BLUE+"[ARRTERTRA] First passenger arrived to ATT\n");
+			try {
+				wait(this.busSchedule);
 			} catch (InterruptedException e) {
 			}
 		}
@@ -176,10 +191,13 @@ public class ArrivalTerminalTransfer {
 	public synchronized void announcingBusBoarding() {
 		this.announcingBoarding = true;
 		System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver announcing boarding\n");
-		try {
-			wait(this.busSchedule);
-		} catch (InterruptedException e) {
+		notifyAll();
+		while (!this.transferQuay.isEmpty() && this.busSeats.size()!=this.maxBusSeats) {
+			try {
+				wait();
+			} catch (InterruptedException e) {}
 		}
+		System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver boarded all passengers\n");
 	}
 
 	/**
@@ -202,6 +220,7 @@ public class ArrivalTerminalTransfer {
 		busDriver.setBusDriverState(BusDriverState.DRIVING_FORWARD);
 		this.generalRepository.updateBusDriverState(busDriver.getBusDriverState(), false);
 		this.availableBus = false;
+		this.announcingBoarding=false;
 		System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver is starting FORWARD voyage\n");
 		try {
 			Thread.sleep(this.busSchedule);
