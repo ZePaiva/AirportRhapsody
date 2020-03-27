@@ -3,9 +3,7 @@ package Rhapsody.sharedMems;
 import java.util.ArrayList;
 import java.util.List;
 
-import Rhapsody.entities.Passenger;
 import Rhapsody.entities.Porter;
-import Rhapsody.entities.states.PassengerState;
 import Rhapsody.entities.states.PorterState;
 import Rhapsody.utils.Luggage;
 
@@ -51,8 +49,6 @@ public class StoreRoom {
             this.generalRepository.updateStoreRoomBags(this.bagsInStoreRoom.size(), false);
         } catch (NullPointerException e) {
             System.err.print("[StoreRoom] Porter has no bag, reseting porter");
-            // resetting porter
-            porter.planeHasBags(false);
             porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
             porter.setCurrentLuggage(null);
             this.generalRepository.updatePorterState(porter.getPorterState(), true);

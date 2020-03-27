@@ -54,11 +54,6 @@ public class ArrivalTerminalTransfer {
 	private final int maxBusSeats;
 
 	/**
-	 * maximum size of passenger waiting in line
-	 */
-	private final int maxWaitingPass;
-
-	/**
 	 * Bus max waiting time
 	 */
 	private final long busSchedule;
@@ -68,7 +63,7 @@ public class ArrivalTerminalTransfer {
 	 */
 	private boolean announcingBoarding;
 
-	public static final String ANSI_BLUE = "\u001B[34m";
+	public static final String ANSI_BLUE = "\u001B[0m\u001B[34m";
 
 	/**
 	 * ArrivalTerminalTransfer constructor method
@@ -78,14 +73,13 @@ public class ArrivalTerminalTransfer {
 	 * @param busSchedule
 	 * @param generalRepository
 	 */
-	public ArrivalTerminalTransfer(int maxQueueSize, int busSeats, long busSchedule,
+	public ArrivalTerminalTransfer(int busSeats, long busSchedule,
 			GeneralRepository generalRepository) {
 		this.generalRepository = generalRepository;
 		this.dayFinished = false;
 		this.availableBus = false;
 		this.passengerArrived = false;
 		this.announcingBoarding = false;
-		this.maxWaitingPass = maxQueueSize;
 		this.transferQuay = new LinkedList<>();
 		this.busSeats = new LinkedList<>();
 		this.busSchedule = busSchedule;
@@ -124,8 +118,8 @@ public class ArrivalTerminalTransfer {
 		Passenger passenger = (Passenger) Thread.currentThread();
 		System.out.printf(ANSI_BLUE+"[ARRTERTRA] P%d entering the bus\n", passenger.getPassengerId());
 		// if this passenger is not the head of waiting line queue it must wait until it
-		System.out.println(this.transferQuay.toString());
-		System.out.println(this.transferQuay.peek());
+		//System.out.println(this.transferQuay.toString());
+		//System.out.println(this.transferQuay.peek());
 		if (this.transferQuay.peek() != passenger.getPassengerId() || !this.announcingBoarding
 				|| this.busSeats.size() == this.maxBusSeats) {
 			return false;
@@ -135,7 +129,8 @@ public class ArrivalTerminalTransfer {
 		System.out.printf(ANSI_BLUE+"[ARRTERTRA] P%d entered the bus\n", passenger.getPassengerId());
 		passenger.setCurrentState(PassengerState.TERMINAL_TRANSFER);
 		this.busSeats.add(this.transferQuay.poll());
-		this.generalRepository.removeFromWaitingQueue(passenger.getPassengerId(), true);
+		this.generalRepository.removeFromWaitingQueue(true);
+		this.generalRepository.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
 		this.generalRepository.addToBusSeat(passenger.getPassengerId(), false);
 		if (this.busSeats.size() == this.maxBusSeats) {
 			notifyAll();
@@ -210,10 +205,7 @@ public class ArrivalTerminalTransfer {
 		System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver is starting FORWARD voyage\n");
 		try {
 			Thread.sleep(this.busSchedule);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (InterruptedException e) {}
 		System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver ended FORWARD voyage\n");
 		return this.busSeats;
 	}

@@ -106,10 +106,6 @@ public class Passenger extends Thread {
 	 */
 	private DepartureTerminalEntrance departureTerminalEntrance;
 
-	/**
-	 * General Repository of information
-	 */
-	private GeneralRepository generalRepository;
 
 	/**
 	 * State for the Passenger thread
@@ -121,12 +117,7 @@ public class Passenger extends Thread {
 	 */
 	private int currentBags;
 
-	/**
-	 * Total passengers on flight
-	 */
-	private int passengers;
-
-	public static final String ANSI_GREEN = "\u001B[32m";
+	public static final String ANSI_GREEN = "\u001B[0m\u001B[32m";
 
 
 	/**
@@ -154,7 +145,6 @@ public class Passenger extends Thread {
 						GeneralRepository generalRepository) {
 		this.id = id;
 		this.flights=flights;
-		this.passengers=passengers;
 		this.startingBags = startingBags;
 		this.situation=type;
 		this.arrivalLounge = arrivalLounge;
@@ -164,7 +154,6 @@ public class Passenger extends Thread {
 		this.arrivalTerminalTransfer = arrivalTerminalTransfer;
 		this.departureTerminalTransfer = departureTerminalTransfer;
 		this.departureTerminalEntrance = departureTerminalEntrance;
-		this.generalRepository = generalRepository;
 		this.currentBags = 0;
 		this.currentState = PassengerState.AT_DISEMBARKING_ZONE;
 		this.startingBags = startingBags;

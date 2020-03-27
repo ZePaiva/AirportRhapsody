@@ -1,9 +1,6 @@
 package Rhapsody.sharedMems;
 
-import java.util.List;
 import java.util.Queue;
-import java.util.Random;
-import java.util.Stack;
 
 import Rhapsody.entities.Passenger;
 import Rhapsody.entities.Porter;
@@ -59,7 +56,7 @@ public class Lounge {
 	private boolean init;
 	private boolean limit;
 
-	public static final String ANSI_WHITE = "\u001B[37m";
+	public static final String ANSI_WHITE = "\u001B[0m\u001B[37m";
 
 	/**
 	 * Contructor method for the Lounge class

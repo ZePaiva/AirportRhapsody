@@ -40,7 +40,7 @@ public class ArrivalTerminalExit {
 	 */
 	private int passengersTerminated;
 
-	public static final String ANSI_YELLOW = "\u001B[33m";
+	public static final String ANSI_YELLOW = "\u001B[0m\u001B[33m";
 
 	/**
 	 * Constructor for arrival terminal exit entity

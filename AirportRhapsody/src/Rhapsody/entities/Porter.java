@@ -26,11 +26,6 @@ public class Porter extends Thread{
 	private Luggage currentBag;
 
 	/**
-	 * General repository of information (plane hol mostly)
-	 */
-	private GeneralRepository generalRepository;
-
-	/**
 	 * StoreRoom entity
 	 */
 	private StoreRoom storeRoom;
@@ -45,12 +40,7 @@ public class Porter extends Thread{
 	 */
 	private Lounge lounge;
 
-	/**
-	 * While true the porter will try to get more bags
-	 */
-	private boolean planeHasBags;
-
-	public static final String ANSI_CYAN = "\u001B[36m";
+	public static final String ANSI_CYAN = "\u001B[0m\u001B[36m";
 
 	/**
 	 * Porter constructor mehtod
@@ -63,9 +53,7 @@ public class Porter extends Thread{
 					BaggageCollectionPoint baggageCollectionPoint){
 		this.currentState=PorterState.WAITING_FOR_PLANE_TO_LAND;
 		this.currentBag=null;
-		this.planeHasBags=false;
 		this.baggageCollectionPoint=baggageCollectionPoint;
-		this.generalRepository=generalRepository;
 		this.storeRoom=storeRoom;
 		this.lounge=lounge;
 	}
@@ -100,14 +88,6 @@ public class Porter extends Thread{
 	 */
 	public Luggage getCurrentLuggage() {
 		return this.currentBag;
-	}
-
-	/**
-	 * Set if there are still any bags on the plane, else unsets
-	 * @param has
-	 */
-	public void planeHasBags(boolean has) {
-		this.planeHasBags = has;
 	}
 
 	/**

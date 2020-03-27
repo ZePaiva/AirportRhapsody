@@ -4,12 +4,10 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 import Rhapsody.entities.states.BusDriverState;
 import Rhapsody.entities.states.PassengerState;
 import Rhapsody.entities.states.PorterState;
-import Rhapsody.utils.Luggage;
 
 /**
  * General repository of information for the rhapsody
@@ -291,11 +289,11 @@ public class GeneralRepository {
 				if (this.flightPassengers[p] == -1) {
 					bufferedWriter.write("--- ---  -   - ");
 				} else {
-					int pId=this.flightPassengers[p];
+					//int pId=this.flightPassengers[p];
 					bufferedWriter.write(String.format(
 						"%s %s %2d  %2d ", 
-						this.passengersState[pId], this.passengersSituation[pId], 
-						this.passengersStartingBags[pId], this.passengersCurrentBags[pId]
+						this.passengersState[p], this.passengersSituation[p], 
+						this.passengersStartingBags[p], this.passengersCurrentBags[p]
 						)
 					);
 				}
@@ -376,12 +374,9 @@ public class GeneralRepository {
 	 * @param passengerId
 	 * @param noLog
 	 */
-	public synchronized void removeFromWaitingQueue(int passengerId, boolean noLog) {
-		for (int i = 0; i < this.waitingQueue.length; i++) {
-			if (this.waitingQueue[i] == passengerId) {
-				this.waitingQueue[i] = -1;
-				break;
-			}
+	public synchronized void removeFromWaitingQueue(boolean noLog) {
+		for (int i = 0; i < this.waitingQueue.length-1; i++) {
+			this.waitingQueue[i]=this.waitingQueue[i+1];
 		}
 		if (!noLog){
 			this.updateFileLog();
@@ -412,12 +407,9 @@ public class GeneralRepository {
 	 * @param passengerId
 	 * @param noLog
 	 */
-	public synchronized void removeFromBusSeat(int passengerId, boolean noLog) {
-		for (int i = 0; i < this.busSeats.length; i++) {
-			if (this.busSeats[i] == passengerId) {
-				this.busSeats[i] = -1;
-				break;
-			}
+	public synchronized void removeFromBusSeat(boolean noLog) {
+		for (int i = 0; i < this.busSeats.length-1; i++) {
+			this.busSeats[i]=this.busSeats[i+1];
 		}
 		if (!noLog){
 			this.updateFileLog();
@@ -431,12 +423,7 @@ public class GeneralRepository {
 	 * @param noLog
 	 */
 	public synchronized void addPassengerToFlight(int passengerId, boolean noLog) {
-		for (int i = 0; i < this.flightPassengers.length; i++) {
-			if (this.flightPassengers[i] == -1) {
-				this.flightPassengers[i] = passengerId;
-				break;
-			}
-		}
+		this.flightPassengers[passengerId]=1;
 		if (!noLog){
 			this.updateFileLog();
 		}
@@ -448,12 +435,7 @@ public class GeneralRepository {
 	 * @param noLog
 	 */
 	public synchronized void removePassengerFromFlight(int passengerId, boolean noLog) {
-		for (int i = 0; i < this.flightPassengers.length; i++) {
-			if (this.flightPassengers[i] == passengerId) {
-				this.flightPassengers[i] = -1;
-				break;
-			}
-		}
+		this.flightPassengers[passengerId]=-1;
 		if (!noLog){
 			this.updateFileLog();
 		}

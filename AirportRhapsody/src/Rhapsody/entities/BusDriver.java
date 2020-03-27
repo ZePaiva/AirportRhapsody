@@ -19,25 +19,19 @@ public class BusDriver extends Thread {
 	
 	private BusDriverState currentState;
 
-	private GeneralRepository generalRepository;
 	private ArrivalTerminalTransfer arrivalTerminalTransfer;
 	private DepartureTerminalTransfer departureTerminalTransfer;
 
-	private final long maxWait;
-	private final int maxSeats;
 	private Queue<Integer> busSeats;
-	public static final String ANSI_PURPLE = "\u001B[35m";
+	public static final String ANSI_PURPLE = "\u001B[0m\u001B[35m";
 	
 	public BusDriver(int busSeats, long maxWait, GeneralRepository generalRepository, 
 						ArrivalTerminalTransfer arrivalTerminalTransfer, 
 						DepartureTerminalTransfer departureTerminalTransfer) {
 		this.currentState=BusDriverState.PARKING_AT_THE_ARRIVAL_LOUNGE;
 		this.arrivalTerminalTransfer=arrivalTerminalTransfer;
-		this.generalRepository=generalRepository;
 		this.departureTerminalTransfer=departureTerminalTransfer;
-		this.maxWait=maxWait;
 		this.busSeats=new LinkedList<>();
-		this.maxSeats=busSeats;
 	}
 
 	public BusDriverState getBusDriverState(){

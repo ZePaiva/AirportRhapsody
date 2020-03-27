@@ -23,6 +23,8 @@ public class DepartureTerminalTransfer {
 
 	private Queue<Integer> busSeats;
 
+	public static final String ANSI_BLACK = "\033[1;37m";
+
 	public DepartureTerminalTransfer(GeneralRepository generalRepository) {
 		this.generalRepository=generalRepository;
 		this.busArrived=false;
@@ -33,19 +35,24 @@ public class DepartureTerminalTransfer {
 	 */
 	public synchronized void leaveTheBus() {
 		Passenger passenger = (Passenger) Thread.currentThread();
+		System.out.printf(ANSI_BLACK+"[DEPTERTRA] P%d is on the bus traveling\n", passenger.getPassengerId());
 		while(!this.busArrived) {
 			try {
 				wait();
 			} catch (InterruptedException e) {}
 		}
-		while (!(this.busSeats.peek()!=passenger.getPassengerId())) {
+		System.out.printf(ANSI_BLACK+"[DEPTERTRA] P%d travel has ended\n", passenger.getPassengerId());
+		//System.out.println(this.busSeats.toString());
+		while (this.busSeats.peek()!=passenger.getPassengerId()) {
 			try {
 				wait();
 			} catch (InterruptedException e) {}
 		}
+		System.out.printf(ANSI_BLACK+"[DEPTERTRA] P%d exited the bus\n", passenger.getPassengerId());
 		passenger.setCurrentState(PassengerState.DEPARTING_TRANSFER_TERMINAL);
 		this.generalRepository.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
-		this.generalRepository.removeFromBusSeat(this.busSeats.poll(), false);
+		this.generalRepository.removeFromBusSeat(false);
+		this.busSeats.poll();
 		notifyAll();
 	}
 
@@ -58,6 +65,8 @@ public class DepartureTerminalTransfer {
 		this.generalRepository.updateBusDriverState(busDriver.getBusDriverState(), false);
 		this.busSeats=busSeats;
 		this.busArrived=true;
+		System.out.printf(ANSI_BLACK+"[DEPTERTRA] Bus has parked, waiting for all to leave\n");
+		notifyAll();
 		while(!busSeats.isEmpty()) {
 			try {
 				wait();
@@ -73,5 +82,6 @@ public class DepartureTerminalTransfer {
 		busDriver.setBusDriverState(BusDriverState.DRIVING_BACKWARD);
 		this.generalRepository.updateBusDriverState(busDriver.getBusDriverState(), false);
 		this.busArrived=false;
+		System.out.printf(ANSI_BLACK+"[DEPTERTRA] Bus leaving to ARRIVAL TERMINAL TRANSFER\n");
 	}
 }

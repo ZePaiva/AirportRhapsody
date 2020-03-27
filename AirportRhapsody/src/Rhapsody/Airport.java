@@ -1,11 +1,8 @@
 package Rhapsody;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Random;
-import java.util.Stack;
-import java.util.List;
 import java.util.Queue;
 
 import Rhapsody.entities.BusDriver;
@@ -150,7 +147,7 @@ public class Airport {
 		StoreRoom storeRoom = new StoreRoom(generalRepository);
 		BaggageReclaim baggageReclaim = new BaggageReclaim(generalRepository);
 		ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(generalRepository, N, null, lounge, null);
-		ArrivalTerminalTransfer arrivalTerminalTransfer = new ArrivalTerminalTransfer(N, T, busSchedule, generalRepository);
+		ArrivalTerminalTransfer arrivalTerminalTransfer = new ArrivalTerminalTransfer(T, busSchedule, generalRepository);
 		DepartureTerminalTransfer departureTerminalTransfer = new DepartureTerminalTransfer(generalRepository);
 		DepartureTerminalEntrance departureTerminalEntrance = new DepartureTerminalEntrance(generalRepository, arrivalTerminalExit, lounge, arrivalTerminalTransfer, N);
 		arrivalTerminalExit.setArrivalTerminalTransfer(arrivalTerminalTransfer);

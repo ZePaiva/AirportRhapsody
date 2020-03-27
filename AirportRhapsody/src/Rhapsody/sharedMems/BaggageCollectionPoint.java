@@ -32,7 +32,7 @@ public class BaggageCollectionPoint{
      */
     private boolean collectedAllBags;
 
-	public static final String ANSI_WHITE = "\u001B[37m";
+	public static final String ANSI_WHITE = "\u001B[0m\u001B[37m";
 
     /**
      * Constructor of Baggage collection point
@@ -64,8 +64,6 @@ public class BaggageCollectionPoint{
        
         } catch (NullPointerException e) {
             System.err.println(ANSI_WHITE+"[BAGCOLLPT] Porter has no bag, reseting porter");
-            // resetting porter
-            porter.planeHasBags(false);
             porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
             porter.setCurrentLuggage(null);
             this.generalRepository.updatePorterState(porter.getPorterState(), true);
