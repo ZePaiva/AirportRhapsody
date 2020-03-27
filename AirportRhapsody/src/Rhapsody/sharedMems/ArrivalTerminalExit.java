@@ -26,11 +26,6 @@ public class ArrivalTerminalExit {
 	private Lounge arrivalLounge;
 
 	/**
-	 * Departure entrance entity, used for the cross-communication channel
-	 */
-	private DepartureTerminalEntrance departureTerminalEntrance;
-
-	/**
 	 * Amount of passengers per flight, usefull to restart the simultion loop
 	 */
 	private final int passengers;
@@ -52,12 +47,10 @@ public class ArrivalTerminalExit {
 	 * @param departureTerminalEntrance
 	 */
 	public ArrivalTerminalExit(GeneralRepository generalRepository, int passengers, 
-								ArrivalTerminalTransfer arrivalTerminalTransfer, Lounge arrivalLounge, 
-								DepartureTerminalEntrance departureTerminalEntrance) {
+								ArrivalTerminalTransfer arrivalTerminalTransfer, Lounge arrivalLounge) {
 		this.generalRepository=generalRepository;
 		this.arrivalTerminalTransfer=arrivalTerminalTransfer;
 		this.arrivalLounge=arrivalLounge;
-		this.departureTerminalEntrance=departureTerminalEntrance;
 		this.passengers=passengers;
 		this.passengersTerminated=0;
 	}
@@ -72,7 +65,6 @@ public class ArrivalTerminalExit {
 		passenger.setCurrentState(PassengerState.EXIT_ARRIVAL_TERMINAL);
 		this.generalRepository.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
 		this.generalRepository.updateFDTPassengers(1, false);
-		this.passengersTerminated++;
 		System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d terminating... | PT %d | P %d\n", passenger.getPassengerId(), this.passengersTerminated+departed, this.passengers);
 		if (!(this.passengersTerminated+departed==this.passengers)) {
 			System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d blocking \n", passenger.getPassengerId());
@@ -81,6 +73,7 @@ public class ArrivalTerminalExit {
 				System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d woke \n", passenger.getPassengerId());
 			} catch (InterruptedException e) {}
 		}
+		this.passengersTerminated=0;
 		// in case it is the last flight
 		if ( lastFlight ) {
 			System.out.printf(ANSI_YELLOW+"[ARRTERMEX] Simulation ended\n");
@@ -90,19 +83,10 @@ public class ArrivalTerminalExit {
 	}
 
 	/**
-	 * ArrivalTerminalTransfer setter
-	 * @param arrivalTerminalTransfer
+	 * Method to increment the number of passengers that terminated in this monitor
 	 */
-	public void setArrivalTerminalTransfer(ArrivalTerminalTransfer arrivalTerminalTransfer) {
-		this.arrivalTerminalTransfer = arrivalTerminalTransfer;
-	}
-
-	/**
-	 * DepartureTerminalEntrance setter
-	 * @param departureTerminalEntrance
-	 */
-	public void setDepartureTerminalEntrance(DepartureTerminalEntrance departureTerminalEntrance) {
-		this.departureTerminalEntrance = departureTerminalEntrance;
+	public synchronized void synchBlocked() {
+		this.passengersTerminated++;
 	}
 
 	/**
@@ -119,7 +103,6 @@ public class ArrivalTerminalExit {
 	public synchronized void wakeCurrentBlockedPassengers(){
 		Passenger passenger = (Passenger) Thread.currentThread();
 		System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d waking others \n", passenger.getPassengerId());
-		this.passengersTerminated=0;
 		notifyAll();
 	}
 }

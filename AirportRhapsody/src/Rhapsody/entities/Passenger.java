@@ -267,11 +267,15 @@ public class Passenger extends Thread {
 				departureTerminalTransfer.leaveTheBus();
 
 				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is preparing next leg of journey\n", this.id);
-				// blocking state that will make passenger wait until all other passengers are ready
+				
+				// signal that one more is waiting in the DTE
+				departureTerminalEntrance.synchBlocked();
+				// get blocked in ATE
 				int exited=arrivalTerminalExit.currentBlockedPassengers();
-				departureTerminalEntrance.prepareNextLeg(flight==this.flights-1, arrivalTerminalExit.currentBlockedPassengers());
-				int departed=departureTerminalEntrance.currentBlockedPassengers();
-				System.out.printf("[PASSENGER] P%d exiting | PT %d\n", this.id, departed+exited);
+				// blocks or not in the DTE, block state depends if DTE+ATE blocked passengers is equal to amount of passengers per flight
+				departureTerminalEntrance.prepareNextLeg(flight==this.flights-1, exited);
+				System.out.printf("[PASSENGER] P%d exiting \n", this.id);
+				// wakes all passengers currently blocked in both end-entities
 				departureTerminalEntrance.wakeCurrentBlockedPassengers();
 				arrivalTerminalExit.wakeCurrentBlockedPassengers();
 
@@ -292,12 +296,14 @@ public class Passenger extends Thread {
 					System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is reclaiming bags\n", this.id);
 				}
 
-				// blocking goHome method, must 
-				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is going home\n", this.id);
-				int departed=departureTerminalEntrance.currentBlockedPassengers();
-				arrivalTerminalExit.goHome(flight==this.flights-1, departureTerminalEntrance.currentBlockedPassengers());
-				int exited=arrivalTerminalExit.currentBlockedPassengers();
-				System.out.printf("[PASSENGER] P%d exiting | PT %d\n", this.id, departed+exited);
+				// signal that one more is waiting in the DTE
+				arrivalTerminalExit.synchBlocked();
+				// get blocked in ATE
+				int exited=departureTerminalEntrance.currentBlockedPassengers();
+				// blocks or not in the DTE, block state depends if DTE+ATE blocked passengers is equal to amount of passengers per flight
+				arrivalTerminalExit.goHome(flight==this.flights-1, exited);
+				System.out.printf("[PASSENGER] P%d exiting \n", this.id);
+				// wakes all passengers currently blocked in both end-entities
 				departureTerminalEntrance.wakeCurrentBlockedPassengers();
 				arrivalTerminalExit.wakeCurrentBlockedPassengers();
 			} else {

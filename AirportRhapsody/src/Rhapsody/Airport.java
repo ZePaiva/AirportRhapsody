@@ -147,12 +147,10 @@ public class Airport {
 		Lounge lounge = new Lounge(generalRepository, baggageCollectionPoint, N, planeHoldLuggage);
 		StoreRoom storeRoom = new StoreRoom(generalRepository);
 		BaggageReclaim baggageReclaim = new BaggageReclaim(generalRepository);
-		ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(generalRepository, N, null, lounge, null);
 		ArrivalTerminalTransfer arrivalTerminalTransfer = new ArrivalTerminalTransfer(T, busSchedule, generalRepository);
+		ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(generalRepository, N, arrivalTerminalTransfer, lounge);
 		DepartureTerminalTransfer departureTerminalTransfer = new DepartureTerminalTransfer(generalRepository);
-		DepartureTerminalEntrance departureTerminalEntrance = new DepartureTerminalEntrance(generalRepository, arrivalTerminalExit, lounge, arrivalTerminalTransfer, N);
-		arrivalTerminalExit.setArrivalTerminalTransfer(arrivalTerminalTransfer);
-		arrivalTerminalExit.setDepartureTerminalEntrance(departureTerminalEntrance);
+		DepartureTerminalEntrance departureTerminalEntrance = new DepartureTerminalEntrance(generalRepository, lounge, arrivalTerminalTransfer, N);
 		
 		// Generate porter
 		Porter porter = new Porter(generalRepository, storeRoom, lounge, baggageCollectionPoint);

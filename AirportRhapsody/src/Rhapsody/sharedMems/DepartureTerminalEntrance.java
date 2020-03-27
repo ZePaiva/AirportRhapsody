@@ -22,11 +22,6 @@ public class DepartureTerminalEntrance {
 	private GeneralRepository generalRepository;
 
 	/**
-	 * Cross comunication entity
-	 */
-	private ArrivalTerminalExit arrivalTerminalExit;
-
-	/**
 	 * Entity to signal porter simulation has ended
 	 */
 	private Lounge arrivalLounge;
@@ -52,11 +47,9 @@ public class DepartureTerminalEntrance {
 	 * @param arrivalTerminalTransfer
 	 * @param passengers
 	 */
-	public DepartureTerminalEntrance(GeneralRepository generalRepository, 
-										ArrivalTerminalExit arrivalTerminalExit, Lounge lounge, 
+	public DepartureTerminalEntrance(GeneralRepository generalRepository, Lounge lounge, 
 										ArrivalTerminalTransfer arrivalTerminalTransfer, int passengers) {
 		this.generalRepository=generalRepository;
-		this.arrivalTerminalExit=arrivalTerminalExit;
 		this.arrivalLounge=lounge;
 		this.arrivalTerminalTransfer=arrivalTerminalTransfer;
 		this.passengers=passengers;
@@ -74,8 +67,6 @@ public class DepartureTerminalEntrance {
 		passenger.setCurrentState(PassengerState.DEPARTING);
 		this.generalRepository.updatePassengerState(passenger.getCurrentState(), passenger.getPassengerId(), true);
 		this.generalRepository.updateTRTPassengers(1, false);
-		// increment own terminated passengers
-		this.passengersTerminated++;
 		System.out.printf(ANSI_RED+"[DEPTERMEN] P%d terminating... | PT %d | P %d\n", passenger.getPassengerId(), this.passengersTerminated+exited, this.passengers);
 		if (!(exited+this.passengersTerminated==this.passengers)) {
 			System.out.printf(ANSI_RED+"[DEPTERMEN] P%d blocking \n", passenger.getPassengerId());
@@ -84,12 +75,20 @@ public class DepartureTerminalEntrance {
 				System.out.printf(ANSI_RED+"[DEPTERMEN] P%d woke \n", passenger.getPassengerId());
 			} catch (InterruptedException e) {}	
 		}
+		this.passengersTerminated=0;
 		// in case it is the last flight
 		if ( lastFlight ) {
 			System.out.printf(ANSI_RED+"[DEPTERMEN] Simulation ended\n");
 			arrivalTerminalTransfer.endOfWork();
 			arrivalLounge.endOfWork();
 		}
+	}
+
+	/**
+	 * Method to increment the number of passengers that terminated in this monitor
+	 */
+	public synchronized void synchBlocked() {
+		this.passengersTerminated++;
 	}
 
 	/**
@@ -106,7 +105,6 @@ public class DepartureTerminalEntrance {
 	public synchronized void wakeCurrentBlockedPassengers(){
 		Passenger passenger = (Passenger) Thread.currentThread();
 		System.out.printf(ANSI_RED+"[DEPTERMEN] P%d waking others\n", passenger.getPassengerId());
-		this.passengersTerminated=0;
 		notifyAll();
 	}
 }
