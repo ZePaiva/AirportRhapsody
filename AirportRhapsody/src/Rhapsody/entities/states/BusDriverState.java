@@ -22,7 +22,7 @@ public enum BusDriverState {
 	 * <li>{@link Rhapsody.sharedMems.ArrivalTerminalTransfer#goToDepartureTerminal} puts instante in {@link BusDriverState#DRIVING_FORWARD} state. 
 	 * </ul>
 	 */
-	PARKING_AT_THE_ARRIVAL_LOUNGE ("PKAL"),
+	PARKING_AT_THE_ARRIVAL_LOUNGE ("PKAT"),
 	/**
 	 * Transition state<p/>
 	 * 

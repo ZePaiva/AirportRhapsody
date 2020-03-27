@@ -119,7 +119,7 @@ public class Lounge {
 		// update porter
 		porter.setPorterState(PorterState.WAITING_FOR_PLANE_TO_LAND);
 		this.generalRepository.updateBagsInPlane(planeHoldLuggage[this.currentFlight].size(), true);
-		this.generalRepository.updatePorterState(porter.getPorterState(), false);
+		this.generalRepository.updatePorterState(porter.getPorterState(), true);
 		
 		System.out.printf(ANSI_WHITE+"[LOUNGE---] Porter waiting for passengers | CP: %d | Sim %s\n", this.passengersDisembarked, this.simulationEnded);
 		// waits for all passengers to arrive

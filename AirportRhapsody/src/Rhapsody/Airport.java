@@ -55,11 +55,6 @@ public class Airport {
 	public static final int T = 3;
 
 	/**
-	 * Sleep time for the BusDriver
-	 */
-	public static final int sleepTime = 100;
-
-	/**
 	 * Logfile name
 	 */
 	public static final String logFile = "logs/log.txt";
@@ -68,6 +63,11 @@ public class Airport {
 	 * Random to help generate passengers and luggages
 	 */
 	public static final Random random = new Random();
+
+	/**
+	 * Max Duration of bus driver waiting time
+	 */
+	public static final int busSchedule = 100;
 
 	public static final String ANSI_RESET = "\u001B[0m";
 
@@ -150,8 +150,8 @@ public class Airport {
 		StoreRoom storeRoom = new StoreRoom(generalRepository);
 		BaggageReclaim baggageReclaim = new BaggageReclaim(generalRepository);
 		ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(generalRepository, N, null, lounge, null);
-		ArrivalTerminalTransfer arrivalTerminalTransfer = new ArrivalTerminalTransfer(generalRepository);
-		DepartureTerminalTransfer departureTerminalTransfer = new DepartureTerminalTransfer();
+		ArrivalTerminalTransfer arrivalTerminalTransfer = new ArrivalTerminalTransfer(N, T, busSchedule, generalRepository);
+		DepartureTerminalTransfer departureTerminalTransfer = new DepartureTerminalTransfer(generalRepository);
 		DepartureTerminalEntrance departureTerminalEntrance = new DepartureTerminalEntrance(generalRepository, arrivalTerminalExit, lounge, arrivalTerminalTransfer, N);
 		arrivalTerminalExit.setArrivalTerminalTransfer(arrivalTerminalTransfer);
 		arrivalTerminalExit.setDepartureTerminalEntrance(departureTerminalEntrance);
@@ -161,7 +161,8 @@ public class Airport {
 		porter.start();
 
 		// Generate bus driver
-		BusDriver busDriver = new BusDriver();
+		BusDriver busDriver = new BusDriver(T, 100, generalRepository, arrivalTerminalTransfer,
+				departureTerminalTransfer);
 		busDriver.start();
 
 		// Generate passengers

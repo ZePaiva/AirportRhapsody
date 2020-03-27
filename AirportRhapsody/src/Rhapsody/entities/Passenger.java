@@ -271,7 +271,7 @@ public class Passenger extends Thread {
 
 				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is trying to enter the bus\n", this.id);
 				// enter the bus to go to the departure terminal transfer quay
-				arrivalTerminalTransfer.enterTheBus();
+				while (!arrivalTerminalTransfer.enterTheBus());
 
 				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d entered the bus\n", this.id);
 				// goes from departure terminal transfer quay to the departure termianl transfer

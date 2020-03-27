@@ -169,11 +169,13 @@ public class GeneralRepository {
 
 			// regular prints
 			bufferedWriter.write("\t\t\tAIRPORT RHAPSODY - Description of the internal state of the problem\n");
-			bufferedWriter.write("PLANE\tPORTER\t\tDRIVER\n");
-			bufferedWriter.write("FN BN Stat CB SR\tStat");
+			bufferedWriter.write("PLANE\tPORTER\t\t\t\tDRIVER\n");
+			bufferedWriter.write("FN BN  Stat CB SR   Stat");
 			
 			// printing occupation of wait queue
 			for (int queueOccupant=1; queueOccupant <= this.waitingQueue.length; queueOccupant++) { bufferedWriter.write(String.format(" Q%d",queueOccupant)); }
+
+			bufferedWriter.write(" ");
 
 			// printing bus occupation
 			for (int seat=1; seat <= this.busSeats.length; seat++) { bufferedWriter.write(String.format(" S%d",seat)); }
@@ -259,7 +261,7 @@ public class GeneralRepository {
 			// writing about flight stuff
 			bufferedWriter.write(
 				String.format(
-					"%2d %2d %s %2d %2d %s ",
+					"%2d %2d  %s %2d %2d   %s ",
 					this.flight+1, this.bagsOnPlane, this.porterState, this.bagsOnConveyor, 
 					this.bagsOnStoreroom, this.busDriverState  
 				)
@@ -267,15 +269,16 @@ public class GeneralRepository {
 			// writing about waiting queue
 			for (int q=1; q <= this.waitingQueue.length; q++) {
 				if (this.waitingQueue[q-1] == -1) {
-					bufferedWriter.write("-- ");
+					bufferedWriter.write(" - ");
 				} else {
 					bufferedWriter.write(String.format("%2d ", this.waitingQueue[q-1]));
 				}
 			}
+			bufferedWriter.write(" ");
 			// writing about bus seats
 			for (int s=1; s <= this.busSeats.length; s++) {
 				if (this.busSeats[s-1] == -1) {
-					bufferedWriter.write("-- ");
+					bufferedWriter.write(" - ");
 				} else {
 					bufferedWriter.write(String.format("%2d ", this.busSeats[s-1]));
 				}
@@ -286,11 +289,11 @@ public class GeneralRepository {
 			// writing about passengers
 			for (int p=0; p < this.flightPassengers.length; p++) {
 				if (this.flightPassengers[p] == -1) {
-					bufferedWriter.write("--- --- --- --- ");
+					bufferedWriter.write("--- ---  -   - ");
 				} else {
 					int pId=this.flightPassengers[p];
 					bufferedWriter.write(String.format(
-						"%s %s %3d %3d ", 
+						"%s %s %2d  %2d ", 
 						this.passengersState[pId], this.passengersSituation[pId], 
 						this.passengersStartingBags[pId], this.passengersCurrentBags[pId]
 						)

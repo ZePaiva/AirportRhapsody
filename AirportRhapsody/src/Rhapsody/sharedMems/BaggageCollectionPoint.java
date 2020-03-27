@@ -87,8 +87,9 @@ public class BaggageCollectionPoint{
     }
 
     /**
-     * Method for a passenger to try to collect a bag
-     * 
+     * Method for a passenger to try to collect the bags
+     * @param startingBags
+     * @return currentBags
      */
     public synchronized int goCollectABag(int startingBags){
         Passenger passenger = (Passenger) Thread.currentThread();
