@@ -42,13 +42,6 @@ public class ArrivalTerminalTransfer {
 	private Queue<Integer> busSeats;
 
 	/**
-	 * Variable to check if any passenger has arrived or not.
-	 * <p/>
-	 * Used to wake up the BusDriver when a passenger arrives
-	 */
-	private boolean passengerArrived;
-
-	/**
 	 * maximum size of the bus
 	 */
 	private final int maxBusSeats;
@@ -62,11 +55,6 @@ public class ArrivalTerminalTransfer {
 	 * Has anyone arrived to the bus station?
 	 */
 	private boolean announcingBoarding;
-
-	/**
-	 * Used to signal that
-	 */
-	private boolean fullQueue;
 
 	public static final String ANSI_BLUE = "\u001B[0m\u001B[34m";
 
@@ -83,7 +71,6 @@ public class ArrivalTerminalTransfer {
 		this.generalRepository = generalRepository;
 		this.dayFinished = false;
 		this.availableBus = false;
-		this.passengerArrived = false;
 		this.announcingBoarding = false;
 		this.transferQuay = new LinkedList<>();
 		this.busSeats = new LinkedList<>();

@@ -1,5 +1,8 @@
 package Rhapsody;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Random;
@@ -54,7 +57,7 @@ public class Airport {
 	/**
 	 * Logfile name
 	 */
-	public static final String logFile = "logs/log.txt";
+	public static String logFile = "logs/log.txt";
 
 	/**
 	 * Random to help generate passengers and luggages
@@ -77,6 +80,7 @@ public class Airport {
 	public static void main(String args[]) throws InterruptedException {
 
 		// Generate bags and where to store as well as passengers situation for each flight   
+		@SuppressWarnings("unchecked")
 		Queue<Luggage>[] planeHoldLuggage = new Queue[K];
 		int[][] luggageForPassengers = new int[N][K];
 		String[][] passengersSituation = new String[N][K];
@@ -97,6 +101,13 @@ public class Airport {
 					}
 				}
 			}
+		}
+
+
+		// check if file exists, if not create
+		Path path = Paths.get(logFile);
+		if (Files.notExists(path)) {
+			logFile="logs.txt";
 		}
 
 		System.out.println(ANSI_RESET+"Starting variables:\nPlane  Hold Luggagge");
