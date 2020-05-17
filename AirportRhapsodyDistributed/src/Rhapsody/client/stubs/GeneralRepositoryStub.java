@@ -1,5 +1,5 @@
 package Rhapsody.client.stubs;
 
-public class RepositoryStub {
+public class GeneralRepositoryStub {
     
 }

@@ -2,19 +2,19 @@ package Rhapsody.server.proxies;
 
 import Rhapsody.common.Packet;
 import Rhapsody.common.RunParameters;
-import Rhapsody.server.sharedRegions.Repository;
+import Rhapsody.server.sharedRegions.GeneralRepository;
 
 /**
- * Repository proxy data type 
+ * Repository proxy data type
  */
-public class RepositoryProxy implements SharedMemoryProxy {
-    
+public class GeneralRepositoryProxy implements SharedMemoryProxy {
+
     /**
-     * Repository 
+     * Repository
      * 
      * @serialField repository
      */
-    private final Repository repository;
+    private final GeneralRepository repository;
 
     /**
      * Number of finished passengers
@@ -28,7 +28,7 @@ public class RepositoryProxy implements SharedMemoryProxy {
      * 
      * @param repository
      */
-    public RepositoryProxy(Repository repository) {
+    public GeneralRepositoryProxy(GeneralRepository repository) {
         this.repository = repository;
         this.finishedPassengers=0;
     }

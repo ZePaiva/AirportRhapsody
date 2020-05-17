@@ -8,7 +8,7 @@ import Rhapsody.client.stubs.BaggageCollectionStub;
 import Rhapsody.client.stubs.BaggageReclaimStub;
 import Rhapsody.client.stubs.DepartureEntranceStub;
 import Rhapsody.client.stubs.DepartureQuayStub;
-import Rhapsody.client.stubs.RepositoryStub;
+import Rhapsody.client.stubs.GeneralRepositoryStub;
 
 /**
  * Passenger Thread Implements the life-cycle of the passenger and stores it's
@@ -67,7 +67,7 @@ public class PassengerMain {
         ArrivalQuayStub arrivalQuayStub = new ArrivalQuayStub();
         DepartureEntranceStub departureEntranceStub = new DepartureEntranceStub();
         DepartureQuayStub departureQuayStub = new DepartureQuayStub();
-        RepositoryStub repositoryStub = new RepositoryStub();
+        GeneralRepositoryStub repositoryStub = new GeneralRepositoryStub();
 
         /**
          * Initialize passenger entity

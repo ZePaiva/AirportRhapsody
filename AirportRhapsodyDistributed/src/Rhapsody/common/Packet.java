@@ -129,6 +129,34 @@ public class Packet implements Serializable {
      * @serial validBool2
      */
     private boolean validBool2;
+
+    /**
+     * String value, useful for comunication of passenger type
+     * 
+     * @serial string1
+     */
+    private String string1;
+
+    /**
+     * String value validity
+     * 
+     * @serial validString1
+     */
+    private boolean validString1;
+
+    /**
+     * Integer array, useful to pass amount of luggages at start of passenger
+     * 
+     * @serial intArray1
+     */
+    private int[] intArray1;
+
+    /**
+     * Integer Array validity
+     * 
+     * @serial validIntArray1
+     */
+    private boolean validIntArray1;
     
     /** 
      * Packet instantiation
@@ -142,6 +170,8 @@ public class Packet implements Serializable {
         this.validInt3 = false;
         this.validBool1 = false;
         this.validBool2 = false;
+        this.validString1 = false;
+        this.validIntArray1 = false;
     }
 
     /**
@@ -173,11 +203,9 @@ public class Packet implements Serializable {
 
     /**
      * Set entity ID validity
-     * 
-     * @param id entity ID
      */
-    public void setValidID(boolean validID) {
-        this.validID = validID;
+    public void setValidID() {
+        this.validID = true;
     }
 
     /**
@@ -209,11 +237,9 @@ public class Packet implements Serializable {
 
     /**
      * Set entity state validity 
-     * 
-     * @param validState
      */
-    public void setValidState(boolean validState) {
-        this.validState = validState;
+    public void setValidState() {
+        this.validState = true;
     }
 
     /**
@@ -245,11 +271,9 @@ public class Packet implements Serializable {
 
     /**
      * Set packet type validity
-     * 
-     * @param validType
      */
-    public void setValidType(boolean validType) {
-        this.validType = validType;
+    public void setValidType() {
+        this.validType = true;
     }
 
     /**
@@ -281,11 +305,9 @@ public class Packet implements Serializable {
 
     /**
      * Set first integer value validity
-     * 
-     * @param int1
      */
-    public void setValidInt1(boolean validInt1) {
-        this.validInt1 = validInt1;
+    public void setValidInt1() {
+        this.validInt1 = true;
     }
 
     /**
@@ -317,11 +339,9 @@ public class Packet implements Serializable {
 
     /**
      * Set second integer value validity
-     * 
-     * @param int2
      */
-    public void setValidInt2(boolean validInt2) {
-        this.validInt2 = validInt2;
+    public void setValidInt2() {
+        this.validInt2 = true;
     }
 
     /**
@@ -353,11 +373,9 @@ public class Packet implements Serializable {
 
     /**
      * Set third integer value validity
-     * 
-     * @param int3
      */
-    public void setValidInt3(boolean validInt3) {
-        this.validInt3 = validInt3;
+    public void setValidInt3() {
+        this.validInt3 = true;
     }
 
     /**
@@ -370,7 +388,7 @@ public class Packet implements Serializable {
     }
 
     /**
-     * Set first boolean value
+     * Set first boolean to given value
      * 
      * @param bool1
      */
@@ -389,11 +407,9 @@ public class Packet implements Serializable {
 
     /**
      * Set first boolean value validity
-     * 
-     * @param validBool1
      */
-    public void setValidBool1(boolean validBool1) {
-        this.validBool1 = validBool1;
+    public void setValidBool1() {
+        this.validBool1 = true;
     }
 
     /**
@@ -406,7 +422,7 @@ public class Packet implements Serializable {
     }
 
     /**
-     * Set second boolean value
+     * Set second boolean value to given value
      * 
      * @param bool2
      */
@@ -425,10 +441,77 @@ public class Packet implements Serializable {
 
     /**
      * Set second boolean value validity
-     * 
-     * @param validBool2
      */
-    public void setValidBool2(boolean validBool2) {
-        this.validBool2 = validBool2;
+    public void setValidBool2() {
+        this.validBool2 = true;
     }
+
+    /**
+     * Get String sent, can be parsed as a string array (and will be)
+     * 
+     * @return sent String
+     */
+    public String getString1() {
+        return this.string1;
+    }
+
+    /**
+     * Set string to be sent, will be parsed as a CSV
+     * 
+     * @param string1 outgoing string value
+     */
+    public void setString1(String string1) {
+        this.string1 = string1;
+    }
+
+    /**
+     * Get validity of string1 field
+     * 
+     * @return string1 validity
+     */
+    public boolean getValidString1() {
+        return this.validString1;
+    }
+
+    /**
+     * Set string1 validity
+     */
+    public void setValidString1() {
+        this.validString1 = true;
+    }
+
+    /**
+     * Get intArray value
+     * 
+     * @return array
+     */
+    public int[] getIntArray1() {
+        return this.intArray1;
+    }
+
+    /**
+     * set intArray value to be sent
+     * 
+     * @param intArray1
+     */
+    public void setIntArray1(int[] intArray1) {
+        this.intArray1 = intArray1;
+    }
+
+    /**
+     * Get validity of intArray1 field
+     * 
+     * @return
+     */
+    public boolean getValidIntArray1() {
+        return this.validIntArray1;
+    }
+
+    /**
+     * Set validity of intArray field
+     */
+    public void setValidIntArray1() {
+        this.validIntArray1 = true;
+    }
+
 }

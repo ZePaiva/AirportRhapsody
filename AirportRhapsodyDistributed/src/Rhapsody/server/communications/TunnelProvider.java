@@ -85,19 +85,85 @@ public class TunnelProvider extends Thread implements PassengerInterface,
         serverCom.close();
     }
 
+    /**
+     * Return the state of the current entity
+     * 
+     * @return entity state
+     */
     public States getEntityState(){
         return this.state;
     }
 
+    /**
+     * Set current entity state
+     * 
+     * @param state entity state
+     */
     public void setEntityState(States state) {
         this.state=state;
     }
 
+    /**
+     * Get entity ID
+     * 
+     * @return entity ID
+     */
     public int getEntityId() {
         return this.entityID;
     }
 
+    /**
+     * Set entity ID
+     * 
+     * @param id entity ID
+     */
     public void setEntityID(int id) {
         this.entityID=id;
+    }
+
+    /**
+     * Get entity ID
+     * 
+     * @return entity ID
+     */
+    public int getEntityID() {
+        return this.entityID;
+    }
+
+    /**
+     * Get current clight ID
+     * 
+     * @return current flight
+     */
+    public int getFlightID() {
+        return this.flightID;
+    }
+
+    /**
+     * Set the flight ID, useful for altering the flight ID mid-simulation
+     * 
+     * @param flightID new flight
+     */
+    public void setFlightID(int flightID) {
+        this.flightID = flightID;
+    }
+
+    /**
+     * Get the amount of luggages the passenger has, or -1 if it is 
+     * a Porter/BusDriver entity
+     * 
+     * @return luggages
+     */
+    public int getLuggages() {
+        return this.luggages;
+    }
+
+    /**
+     * Sets the amount of luggages the entity has or -1 if it is a 
+     * Porter/BusDriver
+     * @param luggages entity luggages
+     */
+    public void setLuggages(int luggages) {
+        this.luggages = luggages;
     }
 }

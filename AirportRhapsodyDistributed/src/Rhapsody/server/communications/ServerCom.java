@@ -152,7 +152,7 @@ public class ServerCom {
      * 
      * @return clientConnectionSocket
      */
-    public ServerCom accept() {
+    public ServerCom accept() throws SocketTimeoutException {
         
         ServerCom conn;
         conn = new ServerCom(port, listener);
@@ -167,7 +167,6 @@ public class ServerCom {
         } catch (final SocketTimeoutException e) {
             System.err.printf("%s socket timeout\n", Thread.currentThread().getName());
             e.printStackTrace();
-            System.exit(1);
         } catch (final IOException e) {
             System.err.printf("%s suffered unknown IO error\n", Thread.currentThread().getName());
             e.printStackTrace();
