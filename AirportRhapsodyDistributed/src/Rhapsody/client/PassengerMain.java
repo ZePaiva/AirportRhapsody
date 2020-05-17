@@ -1,5 +1,7 @@
 package Rhapsody.client;
 
+import java.util.Random;
+
 import Rhapsody.client.entities.Passenger;
 import Rhapsody.client.stubs.ArrivalExitStub;
 import Rhapsody.client.stubs.ArrivalLoungeStub;
@@ -9,6 +11,7 @@ import Rhapsody.client.stubs.BaggageReclaimStub;
 import Rhapsody.client.stubs.DepartureEntranceStub;
 import Rhapsody.client.stubs.DepartureQuayStub;
 import Rhapsody.client.stubs.GeneralRepositoryStub;
+import Rhapsody.common.RunParameters;
 
 /**
  * Passenger Thread Implements the life-cycle of the passenger and stores it's
@@ -58,6 +61,11 @@ public class PassengerMain {
     public static void main(String[] args) {
         
         /**
+         * Passengers array
+         */
+        Passenger[] passengers = new Passenger[RunParameters.N];
+
+        /**
          * Initialize stubs for communication
          */
         ArrivalLoungeStub arrivalLoungeStub = new ArrivalLoungeStub();
@@ -69,12 +77,46 @@ public class PassengerMain {
         DepartureQuayStub departureQuayStub = new DepartureQuayStub();
         GeneralRepositoryStub repositoryStub = new GeneralRepositoryStub();
 
+        Random random = new Random();
+
+        /**
+         * Passenger generation
+         */
+        int[][] luggage = new int[RunParameters.N][RunParameters.K];
+		String[][] situations = new String[RunParameters.N][RunParameters.K];
+
+		for (int flights=0; flights < RunParameters.K; flights++) {
+			for (int j=0; j < RunParameters.N; j++) {
+				luggage[j][flights] = random.nextInt(RunParameters.M+1);
+				situations[j][flights] = random.nextBoolean() ? "TRT" : "FDT";
+			}
+		}
+
+
         /**
          * Initialize passenger entity
          */
-        Passenger passenger = new Passenger();
+        for (int i = 0; i < RunParameters.N; i++){
+            passengers[i] = new Passenger(i, luggage[i], situations[i], 
+                                            arrivalExitStub, arrivalLoungeStub, 
+                                            arrivalQuayStub, baggageCollectionStub, 
+                                            baggageReclaimStub, departureEntranceStub, 
+                                            departureQuayStub);
+            passengers[i].start();
+        }
 
-        
-
+        for (Passenger passenger: passengers) {
+            try {
+                passenger.join();
+            } catch (InterruptedException e) {
+                System.err.printf("%s interrupted\n", Thread.currentThread().getName());
+                e.printStackTrace();
+                System.exit(400);
+            } catch (Exception e) {
+                System.err.printf("%s unknown error, check logs\n", Thread.currentThread().getName());
+                e.printStackTrace();
+                System.exit(10);
+            }
+        }
     }
 }
