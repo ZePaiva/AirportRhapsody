@@ -1,5 +1,6 @@
 package Rhapsody.server.communications;
 
+import Rhapsody.common.Luggage;
 import Rhapsody.common.Message;
 import Rhapsody.common.States;
 import Rhapsody.server.interfaces.BusDriverInterface;
@@ -8,18 +9,16 @@ import Rhapsody.server.interfaces.PorterInterface;
 import Rhapsody.server.proxies.SharedMemoryProxy;
 
 /**
- * Provides the necessary channels to redirect the messages 
- * in order to be unwrapped and processed.
- * Impersonates the clients
+ * Provides the necessary channels to redirect the messages in order to be
+ * unwrapped and processed. Impersonates the clients
  * 
  * @author José Paiva
  * @author André Mourato
  * 
  * @version 1.0
  */
-public class TunnelProvider extends Thread implements PassengerInterface, 
-                                        BusDriverInterface, PorterInterface {
-    
+public class TunnelProvider extends Thread implements PassengerInterface, BusDriverInterface, PorterInterface {
+
     /**
      * Shared Memory Proxy Interface, generic to all proxies
      * 
@@ -33,7 +32,6 @@ public class TunnelProvider extends Thread implements PassengerInterface,
      * @serialField serverCom
      */
     private ServerCom serverCom;
-
 
     /**
      * Entity state
@@ -64,10 +62,31 @@ public class TunnelProvider extends Thread implements PassengerInterface,
     private int luggages;
 
     /**
+     * Starting bags of the passenger
+     * 
+     * @serialField startingBags
+     */
+    private int[] startingBags;
+
+    /**
+     * Bus seats
+     * 
+     * @serialField seats
+     */
+    private int[] seats;
+
+    /**
+     * The bag the porter is holding, null if not a porter
+     * 
+     * @serialField currentBag
+     */
+    private Luggage currentBag;
+
+    /**
      * Tunnel Provider constructor method
      * 
      * @param sharedMemory shared memory corresponding to this provider
-     * @param serverCom coms channel corresponding to the target
+     * @param serverCom    coms channel corresponding to the target
      */
     public TunnelProvider(SharedMemoryProxy sharedMemory, ServerCom serverCom) {
         this.sharedMemory = sharedMemory;
@@ -90,7 +109,7 @@ public class TunnelProvider extends Thread implements PassengerInterface,
      * 
      * @return entity state
      */
-    public States getEntityState(){
+    public States getEntityState() {
         return this.state;
     }
 
@@ -100,7 +119,7 @@ public class TunnelProvider extends Thread implements PassengerInterface,
      * @param state entity state
      */
     public void setEntityState(States state) {
-        this.state=state;
+        this.state = state;
     }
 
     /**
@@ -108,7 +127,8 @@ public class TunnelProvider extends Thread implements PassengerInterface,
      * 
      * @return entity ID
      */
-    public int getEntityId() {
+    @Override
+    public int getEntityID() {
         return this.entityID;
     }
 
@@ -118,16 +138,7 @@ public class TunnelProvider extends Thread implements PassengerInterface,
      * @param id entity ID
      */
     public void setEntityID(int id) {
-        this.entityID=id;
-    }
-
-    /**
-     * Get entity ID
-     * 
-     * @return entity ID
-     */
-    public int getEntityID() {
-        return this.entityID;
+        this.entityID = id;
     }
 
     /**
@@ -149,8 +160,8 @@ public class TunnelProvider extends Thread implements PassengerInterface,
     }
 
     /**
-     * Get the amount of luggages the passenger has, or -1 if it is 
-     * a Porter/BusDriver entity
+     * 7Get the amount of luggages the passenger has, or -1 if it is a
+     * Porter/BusDriver entity
      * 
      * @return luggages
      */
@@ -159,11 +170,75 @@ public class TunnelProvider extends Thread implements PassengerInterface,
     }
 
     /**
-     * Sets the amount of luggages the entity has or -1 if it is a 
-     * Porter/BusDriver
+     * Sets the amount of luggages the entity has or -1 if it is a Porter/BusDriver
+     * 
      * @param luggages entity luggages
      */
     public void setLuggages(int luggages) {
         this.luggages = luggages;
+    }
+
+    /**
+     * Sets the seats in the bus
+     * 
+     * @param seats bus seats
+     */
+    public void setSeats(int[] seats) {
+        this.seats = seats;
+
+    }
+
+    /**
+     * Gets the seats in the bus
+     * 
+     * @return bus seats
+     */
+    public int[] getSeats() {
+        return seats;
+    }
+
+    /**
+     * Gets the current bags of the passenger
+     * 
+     * @return current bags
+     */
+    public int getCurrentBags() {
+        return this.luggages;
+    }
+
+    /**
+     * Sets the current luggages to the specified value
+     * 
+     * @param bags
+     */
+    public void setCurrentBags(int bags) {
+        this.luggages = bags;
+    }
+
+    /**
+     * gets the starting bags for the current flight
+     * 
+     * @return starting bags
+     */
+    public int getStartingBags() {
+        return this.startingBags[this.flightID];
+    }
+
+    /**
+     * Get current luggage the porter is holding
+     * 
+     * @return current porter bag
+     */
+    public Luggage getCurrentBag() {
+        return this.currentBag;
+    }
+
+    /**
+     * Sets the current luggage the porter is holding
+     * 
+     * @param bag
+     */
+    public void setCurrentBag(Luggage bag) {
+        this.currentBag=bag;
     }
 }
