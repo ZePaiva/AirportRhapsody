@@ -25,5 +25,18 @@ public enum MessageType {
      * Bus Driver related message types
      */
     PASSENGERS_WAITING,
-    BUS_FULL;
+    BUS_FULL,
+
+    /**
+     * Passenger related message types
+     */
+    PASSENGER_GOING_HOME,
+
+    /**
+     * Shared memories related message types
+     */
+    DEPARTURE_SYNCH,
+    DEPARTURE_REQUEST_HOWMANY,
+    DEPARTURE_REQUEST_WAKEUP
+    ;
 }

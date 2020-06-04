@@ -59,4 +59,10 @@ public interface PassengerInterface {
      * @return flight ID
      */
     public int getFlightID();
+
+    /**
+     * Get passenger situation for this flight
+     * @return passenger situation
+     */
+    public String getSituation();
 }
