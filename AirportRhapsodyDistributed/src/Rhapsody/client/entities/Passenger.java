@@ -202,7 +202,6 @@ public class Passenger extends Thread {
         for (int i = 0; i < RunParameters.K; i++) {
             this.currentBags = 0;
             // need to implement at least life-cycles in the stubs
-
         }
     }
 }
