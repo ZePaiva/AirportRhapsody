@@ -13,8 +13,6 @@ public enum MessageType {
     /**
      * Porter related message types
      */
-    PASSENGER_IN,
-    PASSENGER_OUT,
     PORTER_STORE_BAG_SR,
     PORTER_STORE_BAG_CB,
     PORTER_COLLECT_BAG,
@@ -30,13 +28,15 @@ public enum MessageType {
     /**
      * Passenger related message types
      */
+    PASSENGER_ARRIVED,
     PASSENGER_GOING_HOME,
+    PASSENGER_IN,
 
     /**
      * Shared memories related message types
      */
     DEPARTURE_SYNCH,
     DEPARTURE_REQUEST_HOWMANY,
-    DEPARTURE_REQUEST_WAKEUP
+    DEPARTURE_REQUEST_WAKEUP,
     ;
 }

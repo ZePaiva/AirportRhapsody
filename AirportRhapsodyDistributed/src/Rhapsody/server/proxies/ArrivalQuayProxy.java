@@ -14,15 +14,28 @@ import Rhapsody.server.sharedRegions.ArrivalQuay;
  */
 public class ArrivalQuayProxy implements SharedMemoryProxy{
     
+    /**
+     * entity to proxy
+     */
     private final ArrivalQuay arrivalQuay;
+    
+    /**
+     * Simulation status
+     */
     private int finished;
 
+    /**
+     * Proxy constructor
+     * @param arrivalQuay
+     */
     public ArrivalQuayProxy(ArrivalQuay arrivalQuay) {
         this.arrivalQuay=arrivalQuay;
         this.finished=0;
     }
 
-	@Override
+    /**
+     * Process message and generate reply
+     */
 	public Message proccesPacket(Message pkt) {
         
         Message reply = new Message();
@@ -31,6 +44,9 @@ public class ArrivalQuayProxy implements SharedMemoryProxy{
         switch (pkt.getType()) {
             // in case a passenger arrives to the 
             case PASSENGERS_WAITING:
+                provider.setEntityID(pkt.getId());
+                arrivalQuay.takeABus();         // will sert in a blocking state
+                reply.setState(provider.getEntityState());
                 break;
             default:
                 throw new RuntimeOperationsException(new RuntimeException("Wrong operation in message: " + pkt.getType()));
@@ -40,7 +56,9 @@ public class ArrivalQuayProxy implements SharedMemoryProxy{
         return null;
 	}
 
-	@Override
+    /**
+     * Check simulation status
+     */
 	public boolean hasSimEnded() {
 		// TODO Auto-generated method stub
 		return false;

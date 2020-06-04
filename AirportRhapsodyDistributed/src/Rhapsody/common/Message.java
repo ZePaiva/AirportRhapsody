@@ -16,7 +16,7 @@ public class Message implements Serializable {
     /**
      * Serial UID
      */
-    private static final long serialVersionUID = 2020L;
+    private static final long serialVersionUID = 202005L;
     
     /**
      * Entity ID

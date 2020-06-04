@@ -1,6 +1,9 @@
 package Rhapsody.server.proxies;
 
+import Rhapsody.common.Luggage;
 import Rhapsody.common.Message;
+import Rhapsody.common.RunParameters;
+import Rhapsody.server.communications.TunnelProvider;
 import Rhapsody.server.sharedRegions.ArrivalLounge;
 
 /**
@@ -31,13 +34,44 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
         this.finished = 0;
     }
 
+    /**
+     * Process message and generate reply
+     */
     public Message proccesPacket(Message pkt) {
-        // TODO Auto-generated method stub
+        Message reply = new Message();
+        TunnelProvider provider = (TunnelProvider) Thread.currentThread();
+
+        switch (pkt.getType()) {
+            // Porter login (takeARest)
+            case PORTER_WAITING:
+                reply.setBool1(arrivalLounge.takeARest());
+                reply.setState(provider.getEntityState());
+                break;
+            // passenger login (whatShouldIDo), must allow passengers to add starting bags
+            case PASSENGER_ARRIVED:
+                provider.setEntityID(pkt.getId());
+                provider.setEntityState(pkt.getState());
+                arrivalLounge.whatShouldIDo(provider.getEntityID()); //induces blocking state
+                reply.setState(provider.getEntityState());
+                break;
+            // Porter collecting bags from plane hold, will parse to a boolean and a int instead of a luggage
+            case PORTER_COLLECT_BAG:
+                Luggage bag = arrivalLounge.tryToCollectABag();
+                reply.setInt1(bag.getPassengerId());
+                reply.setBool1(bag.getLuggageType().equals("FDT"));
+                break;
+            // in case the passenger is logging into the lounge for the first time, useful to register it's situations and starting bags on the plane
+            case PASSENGER_IN:
+                arrivalLounge.updateStartingBags(pkt.getId(), pkt.getIntArray1(), pkt.getIntArray2());
+                break;
+        }
         return null;
     }
 
+    /**
+     * Check simulation status
+     */
     public boolean hasSimEnded() {
-        // TODO Auto-generated method stub
-        return false;
+        return this.finished==RunParameters.K;
     }
 }

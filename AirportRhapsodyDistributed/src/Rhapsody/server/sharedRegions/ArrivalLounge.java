@@ -1,6 +1,8 @@
 package Rhapsody.server.sharedRegions;
 
+import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 
 import Rhapsody.common.Luggage;
 import Rhapsody.common.RunParameters;
@@ -70,21 +72,29 @@ public class ArrivalLounge {
     public static final String ANSI_WHITE = "\u001B[0m\u001B[37m";
     
     /**
+     * randomizer
+     */
+    private Random random = new Random();
+
+    /**
      * Arrival Lounge constructor
      * @param generalRepositoryStub
      * @param baggageCollectionStub
      */
     public ArrivalLounge(GeneralRepositoryStub generalRepositoryStub, 
                             BaggageCollectionStub baggageCollectionStub) {
+        this.planeHoldLuggage=new Queue[RunParameters.K];
         this.generalRepository=generalRepositoryStub;
         this.baggageCollection=baggageCollectionStub;
         this.passengersDisembarked=0;
         this.simulationStatus=true;
-        this.planeHoldLuggage=new Queue[RunParameters.K];
         this.currentFlight=-1;
         this.airportOpen=false;
         this.init=true;
         this.limit=false;
+        for (Queue<Luggage> queue: planeHoldLuggage) {
+            queue = new LinkedList<>();
+        }
     }
 
     /**
@@ -230,5 +240,24 @@ public class ArrivalLounge {
     public synchronized void endOfWork() {
         this.simulationStatus = true;
 		notifyAll();
-	}   
+    }   
+    
+    /**
+     * Method to update the starting bags of the planes
+     * @param passengerID
+     * @param bags
+     * @param situations
+     */
+    public synchronized void updateStartingBags(int passengerID, int[] bags, int[] situations) {
+        assert(bags.length==RunParameters.K);
+        assert(situations.length==RunParameters.K);
+
+        for(int i=0; i < RunParameters.K; i++) {
+            for (int j=0; j <= bags[i]; j++){
+                if (random.nextInt(100) <= 90) {
+                    planeHoldLuggage[i].add(new Luggage(passengerID, situations[i]==0 ? "FDT" : "TRT"));
+                }
+            }
+        }
+    }
 }
