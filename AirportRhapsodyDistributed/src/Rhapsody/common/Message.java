@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 
  * @version 1.0
  */
-public class Packet implements Serializable {
+public class Message implements Serializable {
     
     /**
      * Serial UID
@@ -51,7 +51,7 @@ public class Packet implements Serializable {
      * 
      * @serial type
      */
-    private PacketType type;
+    private MessageType type;
 
     /**
      * Packer type is valid
@@ -131,20 +131,6 @@ public class Packet implements Serializable {
     private boolean validBool2;
 
     /**
-     * String value, useful for comunication of passenger type
-     * 
-     * @serial string1
-     */
-    private String string1;
-
-    /**
-     * String value validity
-     * 
-     * @serial validString1
-     */
-    private boolean validString1;
-
-    /**
      * Integer array, useful to pass amount of luggages at start of passenger
      * 
      * @serial intArray1
@@ -158,10 +144,24 @@ public class Packet implements Serializable {
      */
     private boolean validIntArray1;
     
+    /**
+     * Integer array, useful to pass amount of luggages at start of passenger
+     * 
+     * @serial intArray2
+     */
+    private int[] intArray2;
+
+    /**
+     * Integer Array validity
+     * 
+     * @serial validIntArray2
+     */
+    private boolean validIntArray2;
+
     /** 
      * Packet instantiation
      */
-    public Packet() {
+    public Message() {
         this.validID = false;
         this.validState = false;
         this.validType = false;
@@ -170,8 +170,8 @@ public class Packet implements Serializable {
         this.validInt3 = false;
         this.validBool1 = false;
         this.validBool2 = false;
-        this.validString1 = false;
         this.validIntArray1 = false;
+        this.validIntArray2 = false;
     }
 
     /**
@@ -247,7 +247,7 @@ public class Packet implements Serializable {
      * 
      * @return packet type
      */
-    public PacketType getType() {
+    public MessageType getType() {
         return this.type;
     }
 
@@ -256,7 +256,7 @@ public class Packet implements Serializable {
      * 
      * @param type
      */
-    public void setType(PacketType type) {
+    public void setType(MessageType type) {
         this.type = type;
     }
 
@@ -447,41 +447,7 @@ public class Packet implements Serializable {
     }
 
     /**
-     * Get String sent, can be parsed as a string array (and will be)
-     * 
-     * @return sent String
-     */
-    public String getString1() {
-        return this.string1;
-    }
-
-    /**
-     * Set string to be sent, will be parsed as a CSV
-     * 
-     * @param string1 outgoing string value
-     */
-    public void setString1(String string1) {
-        this.string1 = string1;
-    }
-
-    /**
-     * Get validity of string1 field
-     * 
-     * @return string1 validity
-     */
-    public boolean getValidString1() {
-        return this.validString1;
-    }
-
-    /**
-     * Set string1 validity
-     */
-    public void setValidString1() {
-        this.validString1 = true;
-    }
-
-    /**
-     * Get intArray value
+     * Get intArray1 value
      * 
      * @return array
      */
@@ -490,7 +456,7 @@ public class Packet implements Serializable {
     }
 
     /**
-     * set intArray value to be sent
+     * set intArray1 value to be sent
      * 
      * @param intArray1
      */
@@ -508,10 +474,43 @@ public class Packet implements Serializable {
     }
 
     /**
-     * Set validity of intArray field
+     * Set validity of intArray1 field
      */
     public void setValidIntArray1() {
         this.validIntArray1 = true;
     }
 
+    /**
+     * Get intArray2 value
+     * 
+     * @return array
+     */
+    public int[] getIntArray2() {
+        return this.intArray2;
+    }
+
+    /**
+     * set intArray2 value to be sent
+     * 
+     * @param intArray2
+     */
+    public void setIntArray2(int[] intArray2) {
+        this.intArray2 = intArray2;
+    }
+
+    /**
+     * Get validity of intArray2 field
+     * 
+     * @return
+     */
+    public boolean getValidIntArray2() {
+        return this.validIntArray2;
+    }
+
+    /**
+     * Set validity of intArray2 field
+     */
+    public void setValidIntArray2() {
+        this.validIntArray2 = true;
+    }
 }

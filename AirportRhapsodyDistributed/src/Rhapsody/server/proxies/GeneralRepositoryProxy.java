@@ -1,6 +1,6 @@
 package Rhapsody.server.proxies;
 
-import Rhapsody.common.Packet;
+import Rhapsody.common.Message;
 import Rhapsody.common.RunParameters;
 import Rhapsody.server.sharedRegions.GeneralRepository;
 
@@ -38,9 +38,9 @@ public class GeneralRepositoryProxy implements SharedMemoryProxy {
      * @param packet message from clients
      * @return reply to message
      */
-    public Packet proccesPacket(Packet packet) {
+    public Message proccesPacket(Message packet) {
 
-        Packet pkt = new Packet();
+        Message pkt = new Message();
 
         /**
         switch(pkt.getType()) {

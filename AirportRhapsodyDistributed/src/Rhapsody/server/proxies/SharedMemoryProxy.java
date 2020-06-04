@@ -1,6 +1,6 @@
 package Rhapsody.server.proxies;
 
-import Rhapsody.common.Packet;
+import Rhapsody.common.Message;
 
 /**
  * Generic interface for all the shared memories
@@ -13,7 +13,7 @@ public interface SharedMemoryProxy {
      * @param pkt received message
      * @return reply
      */
-    public Packet proccesPacket(Packet pkt);
+    public Message proccesPacket(Message pkt);
 
     /**
      * Generic method to check if the simulation has ended

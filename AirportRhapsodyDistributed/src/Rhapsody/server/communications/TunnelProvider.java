@@ -1,6 +1,6 @@
 package Rhapsody.server.communications;
 
-import Rhapsody.common.Packet;
+import Rhapsody.common.Message;
 import Rhapsody.common.States;
 import Rhapsody.server.interfaces.BusDriverInterface;
 import Rhapsody.server.interfaces.PassengerInterface;
@@ -79,8 +79,8 @@ public class TunnelProvider extends Thread implements PassengerInterface,
      */
     @Override
     public void run() {
-        Packet rcv = (Packet) serverCom.readObject();
-        Packet snd = sharedMemory.proccesPacket(rcv);
+        Message rcv = (Message) serverCom.readObject();
+        Message snd = sharedMemory.proccesPacket(rcv);
         serverCom.writeObject(snd);
         serverCom.close();
     }
