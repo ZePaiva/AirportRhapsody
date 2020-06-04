@@ -190,6 +190,7 @@ public class Message implements Serializable {
      */
     public void setId(int id) {
         this.id = id;
+        this.validID=true;
     }
 
     /**
@@ -199,13 +200,6 @@ public class Message implements Serializable {
      */
     public boolean getValidID() {
         return this.validID;
-    }
-
-    /**
-     * Set entity ID validity
-     */
-    public void setValidID() {
-        this.validID = true;
     }
 
     /**
@@ -224,6 +218,7 @@ public class Message implements Serializable {
      */
     public void setState(States state) {
         this.state = state;
+        this.validState = true;
     }
 
     /**
@@ -233,13 +228,6 @@ public class Message implements Serializable {
      */
     public boolean getValidState() {
         return this.validState;
-    }
-
-    /**
-     * Set entity state validity 
-     */
-    public void setValidState() {
-        this.validState = true;
     }
 
     /**
@@ -258,6 +246,7 @@ public class Message implements Serializable {
      */
     public void setType(MessageType type) {
         this.type = type;
+        this.validType = true;
     }
 
     /**
@@ -267,13 +256,6 @@ public class Message implements Serializable {
      */
     public boolean getValidType() {
         return this.validType;
-    }
-
-    /**
-     * Set packet type validity
-     */
-    public void setValidType() {
-        this.validType = true;
     }
 
     /**
@@ -292,6 +274,7 @@ public class Message implements Serializable {
      */
     public void setInt1(int int1) {
         this.int1 = int1;
+        this.validInt1=true;
     }
 
     /**
@@ -301,13 +284,6 @@ public class Message implements Serializable {
      */
     public boolean getValidInt1() {
         return this.validInt1;
-    }
-
-    /**
-     * Set first integer value validity
-     */
-    public void setValidInt1() {
-        this.validInt1 = true;
     }
 
     /**
@@ -326,6 +302,7 @@ public class Message implements Serializable {
      */
     public void setInt2(int int2) {
         this.int2 = int2;
+        this.validInt2=true;
     }
 
     /**
@@ -335,13 +312,6 @@ public class Message implements Serializable {
      */
     public boolean getValidInt2() {
         return this.validInt2;
-    }
-
-    /**
-     * Set second integer value validity
-     */
-    public void setValidInt2() {
-        this.validInt2 = true;
     }
 
     /**
@@ -360,6 +330,7 @@ public class Message implements Serializable {
      */
     public void setInt3(int int3) {
         this.int3 = int3;
+        this.validInt3=true;
     }
 
     /**
@@ -369,13 +340,6 @@ public class Message implements Serializable {
      */
     public boolean getValidInt3() {
         return this.validInt3;
-    }
-
-    /**
-     * Set third integer value validity
-     */
-    public void setValidInt3() {
-        this.validInt3 = true;
     }
 
     /**
@@ -394,6 +358,7 @@ public class Message implements Serializable {
      */
     public void setBool1(boolean bool1) {
         this.bool1 = bool1;
+        this.validBool1=true;
     }
 
     /**
@@ -403,13 +368,6 @@ public class Message implements Serializable {
      */
     public boolean getValidBool1() {
         return this.validBool1;
-    }
-
-    /**
-     * Set first boolean value validity
-     */
-    public void setValidBool1() {
-        this.validBool1 = true;
     }
 
     /**
@@ -428,6 +386,7 @@ public class Message implements Serializable {
      */
     public void setBool2(boolean bool2) {
         this.bool2 = bool2;
+        this.validBool2=true;
     }
 
     /**
@@ -437,13 +396,6 @@ public class Message implements Serializable {
      */
     public boolean getValidBool2() {
         return this.validBool2;
-    }
-
-    /**
-     * Set second boolean value validity
-     */
-    public void setValidBool2() {
-        this.validBool2 = true;
     }
 
     /**
@@ -462,6 +414,7 @@ public class Message implements Serializable {
      */
     public void setIntArray1(int[] intArray1) {
         this.intArray1 = intArray1;
+        this.validIntArray1=true;
     }
 
     /**
@@ -471,13 +424,6 @@ public class Message implements Serializable {
      */
     public boolean getValidIntArray1() {
         return this.validIntArray1;
-    }
-
-    /**
-     * Set validity of intArray1 field
-     */
-    public void setValidIntArray1() {
-        this.validIntArray1 = true;
     }
 
     /**
@@ -496,6 +442,7 @@ public class Message implements Serializable {
      */
     public void setIntArray2(int[] intArray2) {
         this.intArray2 = intArray2;
+        this.validIntArray2=true;
     }
 
     /**
@@ -505,12 +452,5 @@ public class Message implements Serializable {
      */
     public boolean getValidIntArray2() {
         return this.validIntArray2;
-    }
-
-    /**
-     * Set validity of intArray2 field
-     */
-    public void setValidIntArray2() {
-        this.validIntArray2 = true;
     }
 }

@@ -1,9 +1,13 @@
 package Rhapsody.server.sharedRegions;
 
-import Rhapsody.client.stubs.GeneralRepositoryStub;
+import Rhapsody.server.stubs.GeneralRepositoryStub;
 import Rhapsody.common.RunParameters;
+import Rhapsody.common.States;
 import Rhapsody.server.communications.TunnelProvider;
 import Rhapsody.server.interfaces.PassengerInterface;
+import Rhapsody.server.stubs.ArrivalLoungeStub;
+import Rhapsody.server.stubs.ArrivalQuayStub;
+import Rhapsody.server.stubs.DepartureEntranceStub;
 
 /**
  * Arrival Exit entity 
@@ -18,7 +22,22 @@ public class ArrivalExit {
      * 
      * @serialField generalRepository
      */
-    private GeneralRepositoryStub generalRepository;
+	private GeneralRepositoryStub generalRepository;
+	
+	/**
+	 * Arrival terminal transfer quay stub
+	 */
+	private ArrivalQuayStub arrivalQuay;
+
+	/**
+	 * Departure terminal entrance stub
+	 */
+	private DepartureEntranceStub departureEntrance;
+
+	/**
+	 * Arrival lounge stub
+	 */
+	private ArrivalLoungeStub arrivalLounge;
 
     /**
      * Passengers that finished flight
@@ -36,9 +55,13 @@ public class ArrivalExit {
      * Arrival Exit constructor
      * @param gStub
      */
-    public ArrivalExit(GeneralRepositoryStub gStub) {
+	public ArrivalExit(GeneralRepositoryStub gStub, ArrivalQuayStub aStub, 
+						DepartureEntranceStub dStub, ArrivalLoungeStub aStub2) {
         this.passengersTerminated=0;
-        this.generalRepository=gStub;
+		this.generalRepository=gStub;
+		this.arrivalQuay=aStub;
+		this.departureEntrance=dStub;
+		this.arrivalLounge=aStub2;
     }
 
 	/**
@@ -46,8 +69,27 @@ public class ArrivalExit {
 	 * @param lastFlight
 	 * @param departed
 	 */
-	public synchronized void goHome(boolean lastFlight, int departed) {
-		
+	public synchronized void goHome(boolean lastFlight) {
+		PassengerInterface passenger = (TunnelProvider) Thread.currentThread();
+		passenger.setEntityState(States.EXIT_ARRIVAL_TERMINAL);
+		this.generalRepository.updatePassengerState(passenger.getEntityState(), passenger.getEntityID(), true);
+		this.generalRepository.updateTRTPassengers(1, false);
+		int departed = departureEntrance.currentBlockedPassengers();
+		System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d terminating... | PT %d | P %d\n", passenger.getEntityID(), this.passengersTerminated+departed, RunParameters.N);
+		if (!(this.passengersTerminated+departed==RunParameters.N)) {
+			System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d blocking \n", passenger.getEntityID());
+			try {
+				wait();
+				System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d woke \n", passenger.getEntityID());
+			} catch (InterruptedException e) {}
+		}
+		this.passengersTerminated=0;
+		// in case it is the last flight
+		if ( lastFlight ) {
+			System.out.printf(ANSI_YELLOW+"[ARRTERMEX] Simulation ended\n");
+			arrivalQuay.endOfWork();
+			arrivalLounge.endOfWork();
+		}
 	}
 
 	/**

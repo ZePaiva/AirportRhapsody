@@ -33,7 +33,7 @@ public class ArrivalExitProxy implements SharedMemoryProxy {
      * Arrival Exit Proxy constructor
      * @param arrivalExit
      */
-    private ArrivalExitProxy(ArrivalExit arrivalExit) {
+    public ArrivalExitProxy(ArrivalExit arrivalExit) {
         this.arrivalExit = arrivalExit;
         this.finished = 0;
     }
@@ -52,23 +52,29 @@ public class ArrivalExitProxy implements SharedMemoryProxy {
         switch (pkt.getType()) {
             // in case it is a pssenger going home
             case PASSENGER_GOING_HOME:
+                provider.setEntityID(pkt.getId());
+                provider.setEntityState(pkt.getState());
+                this.finished=pkt.getInt1();
+                arrivalExit.goHome(finished==RunParameters.K); // enters a blocking state
+                reply.setState(provider.getEntityState());
                 break;
             // in case it is departure entrance synching a new passenger
             case DEPARTURE_SYNCH:
+                arrivalExit.synchBlocked();
                 break;
             // in case it is departure entrance wanting to know how many are blocked @ exit
             case DEPARTURE_REQUEST_HOWMANY:
+                reply.setInt1(arrivalExit.currentBlockedPassengers());
                 break;
             // in case it is departure entrance wanting to wake up all passengers
             case DEPARTURE_REQUEST_WAKEUP:
+                arrivalExit.wakeCurrentBlockedPassengers();
                 break;
             
             default:
                 throw new RuntimeOperationsException(new RuntimeException("Wrong operation in message: " + pkt.getType()));
         }
-
-        
-        return null;
+        return reply;
     }
 
     /**

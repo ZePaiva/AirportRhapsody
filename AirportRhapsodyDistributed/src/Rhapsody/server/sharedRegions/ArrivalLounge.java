@@ -19,18 +19,63 @@ import Rhapsody.server.stubs.GeneralRepositoryStub;
  */
 public class ArrivalLounge {
 
+    /**
+     * Logger stub
+     */
     public GeneralRepositoryStub generalRepository;
+    
+    /**
+     * Luggage collection point stub
+     */
     public BaggageCollectionStub baggageCollection;
+
+    /**
+     * passengers that disembarked
+     */
     private int passengersDisembarked;
+
+    /**
+     * has simulation ended
+     */
     private boolean simulationStatus;
+    
+    /**
+     * Current luggage in the plane's hold
+     */
     private Queue<Luggage>[] planeHoldLuggage;
+
+    /**
+     * Current flight ID attending
+     */
     private int currentFlight;
+
+    /**
+     * Has porter logged in yet
+     */
     private boolean airportOpen;
+
+    /**
+     * Passengers started to disembark
+     */
     private boolean init;
+
+    /**
+     * All passengers disembarked
+     */
     private boolean limit;
+
+    /**
+     * prettify
+     */
     public static final String ANSI_WHITE = "\u001B[0m\u001B[37m";
     
-    public ArrivalLounge(GeneralRepositoryStub generalRepositoryStub, BaggageCollectionStub baggageCollectionStub) {
+    /**
+     * Arrival Lounge constructor
+     * @param generalRepositoryStub
+     * @param baggageCollectionStub
+     */
+    public ArrivalLounge(GeneralRepositoryStub generalRepositoryStub, 
+                            BaggageCollectionStub baggageCollectionStub) {
         this.generalRepository=generalRepositoryStub;
         this.baggageCollection=baggageCollectionStub;
         this.passengersDisembarked=0;

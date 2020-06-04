@@ -1,6 +1,7 @@
 package Rhapsody.client.stubs;
 
 import Rhapsody.common.RunParameters;
+import Rhapsody.common.States;
 
 /**
  * General repository stub 
@@ -35,5 +36,11 @@ public class GeneralRepositoryStub {
 	 */
 	public synchronized void addPassenger(int passengerId, boolean noLog) {
 
+	}
+
+	public void updatePassengerState(States entityState, int entityID, boolean b) {
+	}
+
+	public void updateFDTPassengers(int i, boolean b) {
 	}
 }

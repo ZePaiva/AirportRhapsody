@@ -70,4 +70,20 @@ public class GeneralRepositoryStub {
 
 	public void updateBusDriverState(States entityState, boolean b) {
 	}
+
+	public void updateConveyorBags(int size, boolean b) {
+	}
+
+	public void updateStoreRoomBags(int i, boolean b) {
+	}
+
+	public void updateLostbags(int lostBags, boolean b) {
+	}
+
+	public void updateTRTPassengers(int i, boolean b) {
+	}
+
+	public void removeFromBusSeat(boolean b) {
+	}
+
 }
