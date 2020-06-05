@@ -4,6 +4,7 @@ import Rhapsody.common.RunParameters;
 import Rhapsody.common.States;
 import Rhapsody.server.communications.TunnelProvider;
 import Rhapsody.server.interfaces.PassengerInterface;
+import Rhapsody.server.stubs.ArrivalExitStub;
 import Rhapsody.server.stubs.ArrivalLoungeStub;
 import Rhapsody.server.stubs.ArrivalQuayStub;
 import Rhapsody.server.stubs.GeneralRepositoryStub;
@@ -30,6 +31,11 @@ public class DepartureEntrance {
 	 * Entity to signal busdriver simulation has ended
 	 */
 	private ArrivalQuayStub arrivalTerminalTransfer;
+
+	/**
+	 * Entity to synch the exits
+	 */
+	private ArrivalExitStub arrivalExit;
 	
 	/**
 	 * Variable to account for terminated passengers
@@ -62,11 +68,12 @@ public class DepartureEntrance {
 	 * @param lastFlight
 	 * @param exited
 	 */
-	public synchronized void prepareNextLeg(boolean lastFlight, int exited) {
+	public synchronized void prepareNextLeg(boolean lastFlight) {
 		PassengerInterface passenger = (TunnelProvider) Thread.currentThread();
 		passenger.setEntityState(States.DEPARTING);
 		this.generalRepository.updatePassengerState(passenger.getEntityState(), passenger.getEntityID(), true);
 		this.generalRepository.updateTRTPassengers(1, false);
+		int exited = arrivalExit.currentBlockedPassengers();
 		System.out.printf(ANSI_RED+"[DEPTERMEN] P%d terminating... | PT %d | P %d\n", passenger.getEntityID(), this.passengersTerminated+exited, RunParameters.N);
 		if (!(exited+this.passengersTerminated==RunParameters.N)) {
 			System.out.printf(ANSI_RED+"[DEPTERMEN] P%d blocking \n", passenger.getEntityID());

@@ -88,10 +88,8 @@ public class ArrivalQuayProxy implements SharedMemoryProxy{
                 reply.setState(provider.getEntityState());
                 break;
             default:
-                throw new RuntimeOperationsException(new RuntimeException("Wrong operation in message: " + pkt.getType()));
+                throw new RuntimeException("Wrong operation in message: " + pkt.getType());
         }
-
-        
         return null;
 	}
 

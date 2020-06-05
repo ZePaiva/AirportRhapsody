@@ -16,7 +16,7 @@ import Rhapsody.server.stubs.GeneralRepositoryStub;
  */
 public class DepartureQuay {
     
-    	/**
+	/**
 	 * Logger for the shared memory entity
 	 */
 	private GeneralRepositoryStub generalRepository;

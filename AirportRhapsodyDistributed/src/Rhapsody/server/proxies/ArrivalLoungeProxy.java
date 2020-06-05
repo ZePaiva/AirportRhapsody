@@ -64,6 +64,8 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
             case PASSENGER_IN:
                 arrivalLounge.updateStartingBags(pkt.getId(), pkt.getIntArray1(), pkt.getIntArray2());
                 break;
+            default:
+                throw new RuntimeException("Wrong operation in message: " + pkt.getType());
         }
         return reply;
     }

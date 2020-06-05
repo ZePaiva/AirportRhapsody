@@ -69,10 +69,9 @@ public class ArrivalExitProxy implements SharedMemoryProxy {
             // in case it is departure entrance wanting to wake up all passengers
             case DEPARTURE_REQUEST_WAKEUP:
                 arrivalExit.wakeCurrentBlockedPassengers();
-                break;
-            
+                break;        
             default:
-                throw new RuntimeOperationsException(new RuntimeException("Wrong operation in message: " + pkt.getType()));
+                throw new RuntimeException("Wrong operation in message: " + pkt.getType());
         }
         return reply;
     }
