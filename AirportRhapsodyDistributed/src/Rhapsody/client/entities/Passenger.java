@@ -23,6 +23,11 @@ import Rhapsody.common.States;
 public class Passenger extends Thread {
 
     /**
+     * Passegner ID
+     */
+    private int id;
+
+    /**
      * Starting bags for the passenger, passed on at creation
      */
     private int[] startingBags;
@@ -55,37 +60,42 @@ public class Passenger extends Thread {
     /**
      * Arrival Lounge stub
      */
-    private ArrivalLoungeStub loungeStub;
+    private ArrivalLoungeStub arrivalLounge;
 
     /**
      * Arrival exit stub
      */
-    private ArrivalExitStub arrivalExitStub;
+    private ArrivalExitStub arrivalExit;
 
     /**
      * Arrival terminal transfer quay stub
      */
-    private ArrivalQuayStub arrivalQuayStub;
+    private ArrivalQuayStub arrivalQuay;
 
     /**
      * Baggage collection point stub
      */
-    private BaggageCollectionStub baggageCollectionStub;
+    private BaggageCollectionStub baggageCollection;
 
     /**
      * Baggage reclaim office stub
      */
-    private BaggageReclaimStub baggageReclaimStub;
+    private BaggageReclaimStub baggageReclaim;
 
     /**
      * Departure Entrance stub
      */
-    private DepartureEntranceStub departureEntranceStub;
+    private DepartureEntranceStub departureEntrance;
 
     /**
      * Departure terminal transfer quay stub
      */
-    private DepartureQuayStub departureQuayStub;
+    private DepartureQuayStub departureQuay;
+
+    /**
+     * Prettify
+     */
+    public static final String ANSI_GREEN = "\u001B[0m\u001B[32m";
 
     /**
      * Passenger entity constructor 
@@ -105,13 +115,13 @@ public class Passenger extends Thread {
         this.passengerId = passengerId;
         this.situations = situations;
         this.currentState = States.AT_DISEMBARKING_ZONE;
-        this.arrivalExitStub = arrivalExitStub;
-        this.arrivalQuayStub = arrivalQuayStub;
-        this.loungeStub = arrivalLoungeStub;
-        this.baggageCollectionStub = baggageCollectionStub;
-        this.baggageReclaimStub = baggageReclaimStub;
-        this.departureEntranceStub = departureEntranceStub;
-        this.departureQuayStub = departureQuayStub;
+        this.arrivalExit = arrivalExitStub;
+        this.arrivalQuay = arrivalQuayStub;
+        this.arrivalLounge = arrivalLoungeStub;
+        this.baggageCollection = baggageCollectionStub;
+        this.baggageReclaim = baggageReclaimStub;
+        this.departureEntrance = departureEntranceStub;
+        this.departureQuay = departureQuayStub;
     }
 
 	/**
@@ -199,9 +209,73 @@ public class Passenger extends Thread {
      */
     public void run() {
 
-        for (int i = 0; i < RunParameters.K; i++) {
-            this.currentBags = 0;
-            // need to implement at least life-cycles in the stubs
-        }
+        System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is up\n", this.id);
+		for (int flight = 0; flight < RunParameters.K; flight++){
+			this.currentBags=0;
+			arrivalLounge.whatShouldIDo(flight);
+			System.out.printf(ANSI_GREEN + "[PASSENGER] P%d disembarked from flight %d | SB %d\n", this.id, flight, this.startingBags[flight]);
+			
+			// Transit passengers life-cycle
+			if ( this.situations[flight].equals("TRT") ){
+				// transit passenger, goes to arrival transfer quay 
+				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d will go to bus stop\n", this.id);
+			
+				// goes to arrrival terminal transfer quay and waits until it can board
+				arrivalQuay.takeABus();
+
+				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is trying to enter the bus\n", this.id);
+				// enter the bus to go to the departure terminal transfer quay
+				while (!arrivalQuay.enterTheBus());
+
+				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d entered the bus\n", this.id);
+				// goes from departure terminal transfer quay to the departure termianl transfer
+				departureQuay.leaveTheBus();
+
+				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is preparing next leg of journey\n", this.id);
+				
+				// signal that one more is waiting in the DTE
+				departureEntrance.synchBlocked();
+				// get blocked in ATE
+				int exited=arrivalExit.currentBlockedPassengers();
+				// blocks or not in the DTE, block state depends if DTE+ATE blocked passengers is equal to amount of passengers per flight
+				departureEntrance.prepareNextLeg(flight==RunParameters.K-1, exited);
+				System.out.printf("[PASSENGER] P%d exiting \n", this.id);
+				// wakes all passengers currently blocked in both end-entities
+				departureEntrance.wakeCurrentBlockedPassengers();
+				arrivalExit.wakeCurrentBlockedPassengers();
+
+			// Final Destination passengers life-cycle
+			} else if ( this.situations[flight].equals("FDT")) {
+				// final destination passenger, goes to luggage collection point
+				System.out.printf(ANSI_GREEN + "[PASSENGER] P%d will terminate it's journey here\n", this.id);
+				// tries to collect all bags until it collects them all or it knows it lost it's bags
+				if (this.startingBags[flight]!=0) {
+					this.currentBags= baggageCollection.goCollectABag(this.startingBags[flight]);
+					System.out.printf(ANSI_GREEN + "[PASSENGER] P%d tried to collect a bag | CB %d | SB %d | LB %s\n", 
+										this.id, this.currentBags, this.startingBags[flight], this.startingBags[flight]==this.currentBags);	
+				}
+
+				// if lost any luggage
+				if ( this.currentBags!= this.startingBags[flight]) {
+					baggageReclaim.reportMissingBags(this.startingBags[flight]-this.currentBags);
+					System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is reclaiming bags\n", this.id);
+				}
+
+				// signal that one more is waiting in the DTE
+				arrivalExit.synchBlocked();
+				// get blocked in ATE
+				int exited=departureEntrance.currentBlockedPassengers();
+				// blocks or not in the DTE, block state depends if DTE+ATE blocked passengers is equal to amount of passengers per flight
+				arrivalExit.goHome(flight==RunParameters.K-1, exited);
+				System.out.printf("[PASSENGER] P%d exiting \n", this.id);
+				// wakes all passengers currently blocked in both end-entities
+				departureEntrance.wakeCurrentBlockedPassengers();
+				arrivalExit.wakeCurrentBlockedPassengers();
+			} else {
+				System.err.printf(ANSI_GREEN + "[PASSENGER] Passenger %d had wrong start", this.id);
+				System.exit(5);
+			}
+		}
+		System.out.printf(ANSI_GREEN+"[PASSENGER] P%d exiting run(), joining...\n", this.id);
     }
 }

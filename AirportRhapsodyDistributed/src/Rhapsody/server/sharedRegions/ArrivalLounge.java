@@ -255,7 +255,7 @@ public class ArrivalLounge {
         for(int i=0; i < RunParameters.K; i++) {
             for (int j=0; j <= bags[i]; j++){
                 if (random.nextInt(100) <= 90) {
-                    planeHoldLuggage[i].add(new Luggage(passengerID, situations[i]==0 ? "FDT" : "TRT"));
+                    planeHoldLuggage[i].add(new Luggage(passengerID, situations[i]==1 ? "FDT" : "TRT"));
                 }
             }
         }

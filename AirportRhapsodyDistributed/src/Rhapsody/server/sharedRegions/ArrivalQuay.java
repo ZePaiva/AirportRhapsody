@@ -203,7 +203,7 @@ public class ArrivalQuay {
 	/**
 	 * Method to simulate the bus voyage
 	 */
-	public synchronized Queue<Integer> goToDepartureTerminal() {
+	public synchronized int[] goToDepartureTerminal() {
 		BusDriverInterface busDriver = (TunnelProvider) Thread.currentThread();
 		busDriver.setEntityState(States.DRIVING_FORWARD);
 		this.generalRepository.updateBusDriverState(busDriver.getEntityState(), false);
@@ -214,6 +214,7 @@ public class ArrivalQuay {
 			Thread.sleep(this.busSchedule);
 		} catch (InterruptedException e) {}
 		System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver ended FORWARD voyage\n");
-		return this.busSeats;
+		int[] seats = this.busSeats.stream().mapToInt(i -> i).toArray();
+		return seats;
 	}
 }

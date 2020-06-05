@@ -24,13 +24,17 @@ public enum MessageType {
      */
     PASSENGERS_WAITING,
     BUS_FULL,
-
+    BD_HAS_ENDED,
+    BD_ANNOUNCING_BOARDING,
+    BD_ARRIVING,
+    BD_DRIVING, 
     /**
      * Passenger related message types
      */
     PASSENGER_ARRIVED,
     PASSENGER_GOING_HOME,
     PASSENGER_IN,
+    PASSENGER_INTO_BUS,
 
     /**
      * Shared memories related message types
@@ -38,5 +42,6 @@ public enum MessageType {
     DEPARTURE_SYNCH,
     DEPARTURE_REQUEST_HOWMANY,
     DEPARTURE_REQUEST_WAKEUP,
+    SIM_ENDED
     ;
 }

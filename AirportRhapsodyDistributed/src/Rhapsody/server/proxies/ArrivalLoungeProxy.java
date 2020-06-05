@@ -65,7 +65,7 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
                 arrivalLounge.updateStartingBags(pkt.getId(), pkt.getIntArray1(), pkt.getIntArray2());
                 break;
         }
-        return null;
+        return reply;
     }
 
     /**
