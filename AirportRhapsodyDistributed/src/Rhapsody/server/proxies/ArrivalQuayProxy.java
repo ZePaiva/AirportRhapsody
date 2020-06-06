@@ -97,8 +97,7 @@ public class ArrivalQuayProxy implements SharedMemoryProxy{
      * Check simulation status
      */
 	public boolean hasSimEnded() {
-		// TODO Auto-generated method stub
-		return false;
+		return finished==RunParameters.K;
 	}
 
 }

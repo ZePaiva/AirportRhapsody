@@ -22,7 +22,7 @@ public class ArrivalQuayStub {
     /**
 	 * Client communication channelt
 	 */
-	private final ClientCom clientCom;
+	private ClientCom clientCom;
 
     /**
      * Prettify
@@ -33,8 +33,7 @@ public class ArrivalQuayStub {
      * Arrival quay stub constructor
      */
     public ArrivalQuayStub(){
-        this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-		this.clientCom.open();
+		clientCom=null;
     }
 
 	/**
@@ -44,6 +43,10 @@ public class ArrivalQuayStub {
 	 * he can start announcing the bus boarding if necessary
 	 */
 	public void takeABus() {
+		if (clientCom==null) {
+			this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+			this.clientCom.open();	
+		}
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PASSENGERS_WAITING);
@@ -60,6 +63,10 @@ public class ArrivalQuayStub {
 	 * of the bus ride.
 	 */
 	public boolean enterTheBus() {
+		if (clientCom==null) {
+			this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+			this.clientCom.open();	
+		}
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PASSENGER_INTO_BUS);
@@ -76,6 +83,10 @@ public class ArrivalQuayStub {
 	 * Method used to signal BusDriver that day of work has ended
 	 */
 	public void endOfWork() {
+		if (clientCom==null) {
+			this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+			this.clientCom.open();	
+		}
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
@@ -94,6 +105,10 @@ public class ArrivalQuayStub {
 	 * @return daysWorkEnded
 	 */
 	public boolean hasDaysWorkEnded() {
+		if (clientCom==null) {
+			this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+			this.clientCom.open();	
+		}
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_HAS_ENDED);
@@ -110,6 +125,10 @@ public class ArrivalQuayStub {
 	 * Method used by the BusDriver that is waiting for a full bus or starting time
 	 */
 	public void announcingBusBoarding() {
+		if (clientCom==null) {
+			this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+			this.clientCom.open();	
+		}
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_ANNOUNCING_BOARDING);
@@ -123,6 +142,10 @@ public class ArrivalQuayStub {
 	 * bus stop
 	 */
 	public void parkTheBus() {
+		if (clientCom==null) {
+			this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+			this.clientCom.open();	
+		}
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_ARRIVING);
@@ -138,6 +161,10 @@ public class ArrivalQuayStub {
 	 * Method to simulate the bus voyage
 	 */
 	public Queue<Integer> goToDepartureTerminal() {
+		if (clientCom==null) {
+			this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+			this.clientCom.open();	
+		}
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_DRIVING);

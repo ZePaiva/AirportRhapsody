@@ -21,7 +21,7 @@ public class ArrivalLoungeStub {
     /**
 	 * Client communication channelt
 	 */
-	private final ClientCom clientCom;
+	private ClientCom clientCom;
 
     /**
      * Prettify
@@ -29,14 +29,19 @@ public class ArrivalLoungeStub {
 	public static final String ANSI_WHITE = "\u001B[0m\u001B[37m";
 
     public ArrivalLoungeStub() {
-        this.clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
-		this.clientCom.open();
+        clientCom=null;
 	}
     
 	/**
 	 * Method to signal Porter that the simulation has ended
 	 */
 	public void endOfWork() {
+		
+		if (clientCom == null) {
+			this.clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
+			this.clientCom.open();		
+		}
+
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
 

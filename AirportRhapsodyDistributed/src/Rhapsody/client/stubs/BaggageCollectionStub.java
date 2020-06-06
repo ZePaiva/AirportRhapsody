@@ -21,7 +21,7 @@ public class BaggageCollectionStub {
     /**
 	 * Client communication channelt
 	 */
-	private final ClientCom clientCom;
+	private ClientCom clientCom;
 
     /**
      * Prettify
@@ -32,8 +32,7 @@ public class BaggageCollectionStub {
      * Baggage collection stub constructor
      */
     public BaggageCollectionStub(){
-        clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
-		clientCom.open();
+        clientCom=null;
     }
 
     /**
@@ -42,6 +41,10 @@ public class BaggageCollectionStub {
      * @param luggage
      */
     public void carryItToAppropriateStore(Luggage luggage) {
+		if (clientCom==null) {
+            clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
+            clientCom.open();
+		}
         Porter porter = (Porter) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PORTER_STORE_BAG_CB);
@@ -59,6 +62,10 @@ public class BaggageCollectionStub {
      * Method to signal all passengers that luggage collection has ended 
      */
     public void noMoreBagsToCollect() {
+		if (clientCom==null) {
+            clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
+            clientCom.open();
+		}
         Porter porter = (Porter) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PORTER_NO_MORE_BAGS);
@@ -75,6 +82,10 @@ public class BaggageCollectionStub {
      * @return currentBags
      */
     public int goCollectABag(int startingBags){
+		if (clientCom==null) {
+            clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
+            clientCom.open();
+		}
         Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PASSENGER_COLLECTING_BAG);
@@ -93,6 +104,10 @@ public class BaggageCollectionStub {
      * Mehtod to reset baggage collection variable by the porter thread
      */
     public void newFlight(){
+		if (clientCom==null) {
+            clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
+            clientCom.open();
+		}
         Message pkt = new Message();
 		pkt.setType(MessageType.NEW_FLIGHT);
 		

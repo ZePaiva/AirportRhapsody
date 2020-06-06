@@ -16,7 +16,7 @@ public class DepartureEntranceStub {
     /**
 	 * Client communication channelt
 	 */
-	private final ClientCom clientCom;
+	private ClientCom clientCom;
 
     /**
      * Prettify
@@ -27,14 +27,18 @@ public class DepartureEntranceStub {
      * Departure entrance stub constructor
      */
     public DepartureEntranceStub() {
-		clientCom = new ClientCom(RunParameters.DepartureEntranceHostName, RunParameters.DepartureEntrancePort);
-		clientCom.open();
+		clientCom=null;
     }
 
 	/**
 	 * Method to increment the number of passengers that terminated in this monitor
 	 */
 	public void synchBlocked() {
+
+		if (clientCom == null) {
+			clientCom = new ClientCom(RunParameters.DepartureEntranceHostName, RunParameters.DepartureEntrancePort);
+			clientCom.open();
+        }
 		Message pkt = new Message();
 		pkt.setType(MessageType.ATE_SYNCH);
 		

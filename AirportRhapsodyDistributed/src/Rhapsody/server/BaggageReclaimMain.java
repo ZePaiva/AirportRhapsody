@@ -1,5 +1,6 @@
 package Rhapsody.server;
 
+import java.io.IOException;
 import java.net.SocketTimeoutException;
 
 import Rhapsody.common.RunParameters;
@@ -16,13 +17,14 @@ import Rhapsody.server.stubs.GeneralRepositoryStub;
  * @author André Mourato
  */
 public class BaggageReclaimMain {
-    
+
     /**
      * Main method
+     * 
      * @param args
      */
     public static void main(String[] args) {
-        
+
         /**
          * Create communication utilities
          */
@@ -33,7 +35,7 @@ public class BaggageReclaimMain {
          * Create stubs
          */
         GeneralRepositoryStub repository = new GeneralRepositoryStub();
-        
+
         /**
          * Create main entity
          */
@@ -43,25 +45,28 @@ public class BaggageReclaimMain {
          * Create proxy
          */
         BaggageReclaimProxy proxy = new BaggageReclaimProxy(baggageReclaim);
-    
+
         /**
          * Start comms
          */
         serverCommunication = new ServerCom(RunParameters.BaggageReclaimPort, 1000);
         serverCommunication.start();
 
+        System.out.println("Baggage reclaim office started");
         while (!proxy.hasSimEnded()) {
             try {
                 serverConnections = serverCommunication.accept();
                 provider = new TunnelProvider(proxy, serverConnections);
                 provider.start();
             } catch (SocketTimeoutException e) {
-                System.err.println("Socket timeout on arrival exit");
-                e.printStackTrace();
+                System.err.printf("%s [BAGGAGERECLAIM] socket timouted\n", Thread.currentThread().getName());
             } catch (RuntimeException e) {
                 System.err.println("Error on proxy");
                 e.printStackTrace();
-            }     
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         System.out.println("[Baggage Reclaim] terminating...");
     }

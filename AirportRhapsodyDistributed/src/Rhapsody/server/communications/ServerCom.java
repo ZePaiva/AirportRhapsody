@@ -151,27 +151,30 @@ public class ServerCom {
      * Client acception method
      * 
      * @return clientConnectionSocket
+     * @throws IOException
      */
-    public ServerCom accept() throws SocketTimeoutException {
+    public ServerCom accept() throws IOException {
         
         ServerCom conn;
         conn = new ServerCom(port, listener);
 
-        // accept socket
-        try {
-            conn.sock = listener.accept();
-        } catch (final SocketException e) {
-            System.err.printf("%s socket is closed\n", Thread.currentThread().getName());
-            e.printStackTrace();
-            System.exit(1);
-        } catch (final SocketTimeoutException e) {
-            System.err.printf("%s socket timeout\n", Thread.currentThread().getName());
-            e.printStackTrace();
-        } catch (final IOException e) {
-            System.err.printf("%s suffered unknown IO error\n", Thread.currentThread().getName());
-            e.printStackTrace();
-            System.exit(1);
-        }
+        conn.sock=listener.accept();
+
+        //// accept socket
+        //try {
+        //    conn.sock = listener.accept();
+        //} catch (final SocketException e) {
+        //    System.err.printf("%s socket is closed\n", Thread.currentThread().getName());
+        //    e.printStackTrace();
+        //    System.exit(1);
+        //} catch (final SocketTimeoutException e) {
+        //    System.err.printf("%s socket timeout\n", Thread.currentThread().getName());
+        //    e.printStackTrace();
+        //} catch (final IOException e) {
+        //    System.err.printf("%s suffered unknown IO error\n", Thread.currentThread().getName());
+        //    e.printStackTrace();
+        //    System.exit(1);
+        //}
 
         // listen to client input
         try {

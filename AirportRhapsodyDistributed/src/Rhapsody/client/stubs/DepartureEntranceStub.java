@@ -17,7 +17,7 @@ public class DepartureEntranceStub {
     /**
 	 * Client communication channelt
 	 */
-	private final ClientCom clientCom;
+	private ClientCom clientCom;
 
     /**
      * Prettify
@@ -28,8 +28,8 @@ public class DepartureEntranceStub {
      * Departure entrance stub constructor
      */
     public DepartureEntranceStub() {
-		clientCom = new ClientCom(RunParameters.DepartureEntranceHostName, RunParameters.DepartureEntrancePort);
-		clientCom.open();
+		clientCom=null;
+
     }
 
 
@@ -40,6 +40,10 @@ public class DepartureEntranceStub {
 	 * @param exited
 	 */
 	public void prepareNextLeg(boolean lastFlight) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.DepartureEntranceHostName, RunParameters.DepartureEntrancePort);
+			clientCom.open();
+		}
 		Passenger passenger = (Passenger) Thread.currentThread();
         Message pkt = new Message();
         pkt.setType(MessageType.PASSENGER_NEXT_FLIGHT);
@@ -56,6 +60,10 @@ public class DepartureEntranceStub {
 	 * Method to increment the number of passengers that terminated in this monitor
 	 */
 	public void synchBlocked() {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.DepartureEntranceHostName, RunParameters.DepartureEntrancePort);
+			clientCom.open();
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.ATE_SYNCH);
 		
@@ -68,6 +76,10 @@ public class DepartureEntranceStub {
 	 * @return waitingThreads
 	 */
 	public int currentBlockedPassengers() {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.DepartureEntranceHostName, RunParameters.DepartureEntrancePort);
+			clientCom.open();
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.ATE_REQUEST_HOWMANY);
 
@@ -81,6 +93,10 @@ public class DepartureEntranceStub {
 	 * Method to wake all waiting threads in this object monitor
 	 */
 	public void wakeCurrentBlockedPassengers(){
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.DepartureEntranceHostName, RunParameters.DepartureEntrancePort);
+			clientCom.open();
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.ATE_REQUEST_WAKEUP);
 
@@ -93,6 +109,10 @@ public class DepartureEntranceStub {
 	 * Close the stub
 	 */
 	public void closeStub() {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.DepartureEntranceHostName, RunParameters.DepartureEntrancePort);
+			clientCom.open();
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
 		clientCom.writeObject(pkt);

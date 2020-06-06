@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
+import Rhapsody.common.RunParameters;
 import Rhapsody.common.States;
 
 /**
@@ -180,7 +181,7 @@ public class GeneralRepository {
 			bufferedWriter.write("\n\t\t\t\t\t\tPASSENGERS\n");
 			
 			// printing flight passengers
-			for (int passenger=0; passenger < this.flightPassengers.length; passenger++) { bufferedWriter.write(String.format("St%d Si%d NR%d NA%d ", passenger+1, passenger+1, passenger+1, passenger+1)); }
+			for (int passenger=0; passenger < RunParameters.K; passenger++) { bufferedWriter.write(String.format("St%d Si%d NR%d NA%d ", passenger+1, passenger+1, passenger+1, passenger+1)); }
 
 			bufferedWriter.write("\n");
 			bufferedWriter.close();

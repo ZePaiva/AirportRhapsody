@@ -2,6 +2,7 @@ package Rhapsody.server;
 
 import Rhapsody.server.stubs.DepartureEntranceStub;
 
+import java.io.IOException;
 import java.net.SocketTimeoutException;
 
 import Rhapsody.common.RunParameters;
@@ -24,6 +25,7 @@ public class ArrivalExitMain {
 
     /**
      * Main method
+     * 
      * @param args
      */
     public static void main(String[] args) {
@@ -58,18 +60,20 @@ public class ArrivalExitMain {
         serverCommunications = new ServerCom(RunParameters.ArrivalExitPort, 1000);
         serverCommunications.start();
 
+        System.out.println("Arrival Exit started");
         while (!arrivalExitProxy.hasSimEnded()) {
             try {
                 serverConnections = serverCommunications.accept();
                 provider = new TunnelProvider(arrivalExitProxy, serverConnections);
                 provider.start();
             } catch (SocketTimeoutException e) {
-                System.err.println("Socket timeout on arrival exit");
-                e.printStackTrace();
+                System.err.printf("%s [ARRIVALEXIT] socket timouted\n", Thread.currentThread().getName());
             } catch (RuntimeException e) {
                 System.err.println("Error on proxy");
                 e.printStackTrace();
-            }                
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         System.out.println("[Arrival Terminal Exit] terminating...");
     }

@@ -1,5 +1,6 @@
 package Rhapsody.server;
 
+import java.io.IOException;
 import java.net.SocketTimeoutException;
 
 import Rhapsody.common.RunParameters;
@@ -17,13 +18,14 @@ import Rhapsody.server.stubs.GeneralRepositoryStub;
  * @author André Mourato
  */
 public class ArrivalLoungeMain {
-    
+
     /**
-     * Main method 
+     * Main method
+     * 
      * @param args
      */
     public static void main(String[] args) {
-        
+
         /**
          * Create communication utilities
          */
@@ -52,18 +54,21 @@ public class ArrivalLoungeMain {
         serverCommunication = new ServerCom(RunParameters.ArrivalLoungePort, 1000);
         serverCommunication.start();
 
+        System.out.println("Arrival Lounge started");
         while (!arrivalLoungeProxy.hasSimEnded()) {
             try {
                 serverConnections = serverCommunication.accept();
                 provider = new TunnelProvider(arrivalLoungeProxy, serverConnections);
                 provider.start();
             } catch (SocketTimeoutException e) {
-                System.err.println("Socket timeout on arrival exit");
-                e.printStackTrace();
+                System.err.printf("%s [ARRIVALLOUNGE] socket timouted\n", Thread.currentThread().getName());
             } catch (RuntimeException e) {
                 System.err.println("Error on proxy");
                 e.printStackTrace();
-            }     
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         System.out.println("[Arrival Lounge] terminating...");
     }

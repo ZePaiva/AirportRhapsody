@@ -18,7 +18,7 @@ public class BaggageCollectionStub {
  /**
 	 * Client communication channelt
 	 */
-	private final ClientCom clientCom;
+	private ClientCom clientCom;
 
     /**
      * Prettify
@@ -29,14 +29,19 @@ public class BaggageCollectionStub {
      * Baggage collection stub constructor
      */
     public BaggageCollectionStub(){
-        clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
-		clientCom.open();
+        clientCom=null;
     }
 
     /**
      * Mehtod to reset baggage collection variable by the porter thread
      */
     public void newFlight(){
+				
+		if (clientCom == null) {
+            clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
+            clientCom.open();
+        }
+        
         Message pkt = new Message();
 		pkt.setType(MessageType.NEW_FLIGHT);
 		

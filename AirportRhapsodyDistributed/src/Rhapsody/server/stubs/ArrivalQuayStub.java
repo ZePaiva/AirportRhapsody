@@ -18,7 +18,7 @@ public class ArrivalQuayStub {
      /**
 	 * Client communication channelt
 	 */
-	private final ClientCom clientCom;
+	private ClientCom clientCom;
 
     /**
      * Prettify
@@ -29,14 +29,19 @@ public class ArrivalQuayStub {
      * Arrival quay stub constructor
      */
     public ArrivalQuayStub(){
-        this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-		this.clientCom.open();
+		clientCom=null;
     }
 
 	/**
 	 * Method to signal Porter that the simulation has ended
 	 */
 	public void endOfWork() {
+				
+		if (clientCom == null) {
+			this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+			this.clientCom.open();	
+		}
+
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
 

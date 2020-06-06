@@ -17,17 +17,21 @@ public class GeneralRepositoryStub {
     /**
 	 * Client communication channelt
 	 */
-	private final ClientCom clientCom;
+	private ClientCom clientCom;
 
     /**
      *  Stub constructor
      */
     public GeneralRepositoryStub() {
-        clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
-		clientCom.open();
+		clientCom=null;
+
     }
 
 	public void clearFlight(boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_FLIGHT_CLEAR);
 		pkt.setBool1(b);
@@ -36,6 +40,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void updateFlight(int currentFlight, boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_FLIGHT);
 		pkt.setBool1(b);
@@ -45,6 +53,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void updateBagsInPlane(int size, boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_BAG_PLANE);
 		pkt.setBool1(b);
@@ -54,6 +66,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void updatePorterState(States entityState, boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PORTER_STATE);
 		pkt.setBool1(b);
@@ -63,6 +79,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void updatePassengerState(States entityState, int entityID, boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_STATE);
 		pkt.setBool1(b);
@@ -72,6 +92,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void addPassengerToFlight(int entityID, boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_IN_FLIGHT);
 		pkt.setBool1(b);
@@ -81,6 +105,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void updatePlaneHoldBags(int startingBags, boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_BAG_PH);
 		pkt.setBool1(b);
@@ -90,6 +118,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void updateCurrentBags(int entityID, int i, boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_CB);
 		pkt.setBool1(b);
@@ -100,6 +132,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void updateSituation(int entityID, String situation, boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_SIT);
 		pkt.setBool1(b);
@@ -110,6 +146,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void updateStartingBags(int entityID, int startingBags, boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_SB);
 		pkt.setBool1(b);
@@ -120,6 +160,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void addToWaitingQueue(int entityID, boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_IN_WAIT);
 		pkt.setBool1(b);
@@ -129,6 +173,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void removeFromWaitingQueue(boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_OUT_WAIT);
 		pkt.setBool1(b);
@@ -137,6 +185,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void addToBusSeat(int entityID, boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_IN_BUS);
 		pkt.setBool1(b);
@@ -146,6 +198,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void updateBusDriverState(States entityState, boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_BD_STATE);
 		pkt.setBool1(b);
@@ -155,6 +211,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void updateConveyorBags(int size, boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_BAG_CB);
 		pkt.setBool1(b);
@@ -164,6 +224,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void updateStoreRoomBags(int i, boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_BAG_SR);
 		pkt.setBool1(b);
@@ -173,6 +237,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void updateLostbags(int lostBags, boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_BAG_L);
 		pkt.setBool1(b);
@@ -182,6 +250,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void updateTRTPassengers(int i, boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_TRT);
 		pkt.setBool1(b);
@@ -191,6 +263,10 @@ public class GeneralRepositoryStub {
 	}
 
 	public void removeFromBusSeat(boolean b) {
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();	
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_OUT_BUS);
 		pkt.setBool1(b);

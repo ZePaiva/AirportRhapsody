@@ -81,6 +81,7 @@ public class ArrivalLounge {
      * @param generalRepositoryStub
      * @param baggageCollectionStub
      */
+    @SuppressWarnings("unchecked")
     public ArrivalLounge(GeneralRepositoryStub generalRepositoryStub, 
                             BaggageCollectionStub baggageCollectionStub) {
         this.planeHoldLuggage=new Queue[RunParameters.K];

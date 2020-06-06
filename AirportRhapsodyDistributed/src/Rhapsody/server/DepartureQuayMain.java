@@ -1,5 +1,6 @@
 package Rhapsody.server;
 
+import java.io.IOException;
 import java.net.SocketTimeoutException;
 
 import Rhapsody.common.RunParameters;
@@ -16,12 +17,14 @@ import Rhapsody.server.stubs.GeneralRepositoryStub;
  * @author André Mourato
  */
 public class DepartureQuayMain {
-    
+
     /**
      * Main method
+     * 
      * @param args
+     * @throws IOException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         
         /**
          * Create communication utilities
@@ -51,14 +54,14 @@ public class DepartureQuayMain {
         serverCommunication = new ServerCom(RunParameters.DepartureQuayPort, 1000);
         serverCommunication.start();
 
+        System.out.println("Departure terminal transfer started");
         while (!proxy.hasSimEnded()) {
             try {
                 serverConnections = serverCommunication.accept();
                 provider = new TunnelProvider(proxy, serverConnections);
                 provider.start();
             } catch (SocketTimeoutException e) {
-                System.err.println("Socket timeout on arrival exit");
-                e.printStackTrace();
+                System.err.printf("%s [DEPARTURETERMINAL] socket timouted\n", Thread.currentThread().getName());
             } catch (RuntimeException e) {
                 System.err.println("Error on proxy");
                 e.printStackTrace();

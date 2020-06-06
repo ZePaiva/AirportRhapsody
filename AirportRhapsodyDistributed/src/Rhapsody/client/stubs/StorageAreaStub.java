@@ -18,14 +18,14 @@ public class StorageAreaStub {
     /**
 	 * Client communication channelt
 	 */
-    private final ClientCom clientCom;
+    private ClientCom clientCom;
     
     /**
      * Stub constructor
      */
     public StorageAreaStub() {
-        clientCom = new ClientCom(RunParameters.StorageAreaHostName, RunParameters.StorageAreaPort);
-		clientCom.open();
+        clientCom=null;
+
     }
 
     /**
@@ -34,6 +34,10 @@ public class StorageAreaStub {
      * @param luggage
      */
     public void carryItToAppropriateStore(Luggage luggage) {
+		if (clientCom==null) {
+            clientCom = new ClientCom(RunParameters.StorageAreaHostName, RunParameters.StorageAreaPort);
+            clientCom.open();
+		}
         Porter porter = (Porter) Thread.currentThread();
         Message pkt = new Message();
         pkt.setType(MessageType.PORTER_STORE_BAG_SR);
@@ -50,6 +54,10 @@ public class StorageAreaStub {
      * Close the stub
      */
 	public void closeStub() {
+		if (clientCom==null) {
+            clientCom = new ClientCom(RunParameters.StorageAreaHostName, RunParameters.StorageAreaPort);
+            clientCom.open();
+		}
         Message pkt = new Message();
         pkt.setType(MessageType.SIM_ENDED);
         clientCom.writeObject(pkt);

@@ -16,8 +16,8 @@ public class ArrivalExitStub {
 	/**
 	 * Server communication channel
 	 */
-	private final ClientCom clientCom;
-
+	private ClientCom clientCom;
+	
 	/**
      * Prettify
      */
@@ -27,8 +27,7 @@ public class ArrivalExitStub {
 	 * Arrival exit stub constructor
 	 */
     public ArrivalExitStub() {
-        clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
-		clientCom.open();
+		clientCom=null;
     }
 
 	/**
@@ -36,6 +35,12 @@ public class ArrivalExitStub {
 	 * @return number of waiting threads in object
 	 */
 	public int currentBlockedPassengers() {
+		
+		if (clientCom == null) {
+			clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
+			clientCom.open();			
+		}
+
 		Message pkt = new Message();
 		pkt.setType(MessageType.DEPARTURE_REQUEST_HOWMANY);
 
@@ -49,6 +54,12 @@ public class ArrivalExitStub {
 	 * Method to wake all threads in object monitor
 	 */
 	public void wakeCurrentBlockedPassengers(){
+		
+		if (clientCom == null) {
+			clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
+			clientCom.open();			
+		}
+
 		Message pkt = new Message();
 		pkt.setType(MessageType.DEPARTURE_REQUEST_WAKEUP);
 

@@ -64,18 +64,17 @@ public class GeneralRepositoryMain {
         GeneralRepositoryProxy repositoryProxy = new GeneralRepositoryProxy(repository);
         
         // start the repository server
-        serverCom = new ServerCom(RunParameters.RepositoryPort, 1000);
+        serverCom = new ServerCom(RunParameters.RepositoryPort, 10000);
         serverCom.start();
 
-        while (repositoryProxy.hasSimEnded()) {
+        System.out.println("Repository started, timeout set to 10 seconds");
+        while (!repositoryProxy.hasSimEnded()) {
             try {
                 serverConn = serverCom.accept();
                 provider = new TunnelProvider(repositoryProxy, serverConn);
                 provider.start();
             } catch (SocketTimeoutException e) {
                 System.err.printf("%s [REPOSITORYMAIN] socket timouted\n", Thread.currentThread().getName());
-                e.printStackTrace();
-                System.exit(2);
             } catch (Exception e) {
                 System.err.printf("%s [REPOSITORYMAIN] unknown error\n", Thread.currentThread().getName());
                 e.printStackTrace();
