@@ -209,7 +209,7 @@ public class Passenger extends Thread {
      */
     public void run() {
 
-		System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is up\n", this.id);
+		System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is up\n", this.passengerId);
 		arrivalLounge.updateStartingBags(startingBags, situations);
 		for (int flight = 0; flight < RunParameters.K; flight++){
 			this.currentBags=0;
