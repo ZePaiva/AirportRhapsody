@@ -27,6 +27,15 @@ public class BaggageCollectionProxy implements SharedMemoryProxy {
     private int finished;
 
     /**
+     * Proxy constructor
+     * @param baggageCollection
+     */
+    public BaggageCollectionProxy(BaggageCollection baggageCollection) {
+        this.baggageCollection=baggageCollection;
+        this.finished=0;
+    }
+
+    /**
      * Proccess received message and generate reply
      */
     public Message proccesPacket(Message pkt) {

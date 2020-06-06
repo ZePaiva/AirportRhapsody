@@ -65,7 +65,6 @@ public class ArrivalLoungeMain {
                 e.printStackTrace();
             }     
         }
-
         System.out.println("[Arrival Lounge] terminating...");
     }
 }

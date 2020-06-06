@@ -53,13 +53,15 @@ public class DepartureEntrance {
 	 * @param arrivalTerminalTransfer
 	 * @param passengers
 	 */
-    public DepartureEntrance(GeneralRepositoryStub generalRepository, 
+	public DepartureEntrance(GeneralRepositoryStub generalRepository, 
+								ArrivalExitStub arrivalExitStub,
                                 ArrivalLoungeStub lounge, 
                                 ArrivalQuayStub arrivalTerminalTransfer) {
 		this.generalRepository=generalRepository;
 		this.arrivalLounge=lounge;
 		this.arrivalTerminalTransfer=arrivalTerminalTransfer;
 		this.passengersTerminated=0;
+		this.arrivalExit=arrivalExitStub;
 	}
 
 	/**

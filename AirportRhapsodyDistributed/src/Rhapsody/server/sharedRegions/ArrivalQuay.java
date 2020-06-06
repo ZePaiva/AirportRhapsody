@@ -3,6 +3,7 @@ package Rhapsody.server.sharedRegions;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import Rhapsody.common.RunParameters;
 import Rhapsody.common.States;
 import Rhapsody.server.communications.TunnelProvider;
 import Rhapsody.server.interfaces.BusDriverInterface;
@@ -43,11 +44,6 @@ public class ArrivalQuay {
 	private Queue<Integer> busSeats;
 
 	/**
-	 * maximum size of the bus
-	 */
-	private final int maxBusSeats;
-
-	/**
 	 * Bus max waiting time
 	 */
 	private final long busSchedule;
@@ -67,7 +63,7 @@ public class ArrivalQuay {
 	 * @param busSchedule
 	 * @param generalRepository
 	 */
-	public ArrivalQuay(int busSeats, long busSchedule,
+	public ArrivalQuay(long busSchedule,
 			GeneralRepositoryStub generalRepository) {
 		this.generalRepository = generalRepository;
 		this.dayFinished = false;
@@ -76,7 +72,6 @@ public class ArrivalQuay {
 		this.transferQuay = new LinkedList<>();
 		this.busSeats = new LinkedList<>();
 		this.busSchedule = busSchedule;
-		this.maxBusSeats = busSeats;
 	}
 
 	/**
@@ -97,7 +92,7 @@ public class ArrivalQuay {
 		this.transferQuay.add(passenger.getEntityID());
 		this.generalRepository.updatePassengerState(passenger.getEntityState(), passenger.getEntityID(), true);
 		this.generalRepository.addToWaitingQueue(passenger.getEntityID(), false);
-		if (this.transferQuay.size()==this.maxBusSeats) {
+		if (this.transferQuay.size()==RunParameters.T) {
 			notifyAll();
 		} else if (this.transferQuay.size()==1) {
 			notifyAll();
@@ -115,7 +110,7 @@ public class ArrivalQuay {
 		//System.out.println(this.transferQuay.toString());
 		//System.out.println(this.transferQuay.peek());
 		while (!this.announcingBoarding || this.transferQuay.peek()!=passenger.getEntityID() ||
-				this.busSeats.size() == this.maxBusSeats) {
+				this.busSeats.size() == RunParameters.T) {
 			try {
 				wait();
 			} catch (InterruptedException e) {}
@@ -180,7 +175,7 @@ public class ArrivalQuay {
 		this.announcingBoarding = true;
 		System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver announcing boarding\n");
 		notifyAll();
-		while (!this.transferQuay.isEmpty() && this.busSeats.size()!=this.maxBusSeats) {
+		while (!this.transferQuay.isEmpty() && this.busSeats.size()!=RunParameters.T) {
 			try {
 				wait();
 			} catch (InterruptedException e) {}
