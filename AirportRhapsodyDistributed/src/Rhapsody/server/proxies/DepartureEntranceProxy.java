@@ -44,7 +44,7 @@ public class DepartureEntranceProxy implements SharedMemoryProxy{
             // passenger is preparing next flight
             case PASSENGER_NEXT_FLIGHT:
                 provider.setEntityID(pkt.getId());
-                departureEntrance.prepareNextLeg(pkt.getInt1()==RunParameters.K);
+                departureEntrance.prepareNextLeg(pkt.getBool1());
                 reply.setState(provider.getEntityState());
                 break;
             // ATE synching blocked passengers
@@ -58,6 +58,9 @@ public class DepartureEntranceProxy implements SharedMemoryProxy{
             // ATE requesting to wake up
             case ATE_REQUEST_WAKEUP:
                 departureEntrance.wakeCurrentBlockedPassengers();
+                break;
+            case SIM_ENDED:
+                this.finished=true;
                 break;
             default:
                 throw new RuntimeException("Wrong operation in message: " + pkt.getType());

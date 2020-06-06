@@ -2,7 +2,6 @@ package Rhapsody.client.entities;
 
 import Rhapsody.client.stubs.ArrivalLoungeStub;
 import Rhapsody.client.stubs.BaggageCollectionStub;
-import Rhapsody.client.stubs.GeneralRepositoryStub;
 import Rhapsody.client.stubs.StorageAreaStub;
 import Rhapsody.common.Luggage;
 import Rhapsody.common.States;
@@ -50,8 +49,8 @@ public class Porter extends Thread {
      * @param lounge
      * @param baggageCollectionPoint
      */
-    public Porter(GeneralRepositoryStub generalRepository, StorageAreaStub storeRoom,
-            ArrivalLoungeStub lounge, BaggageCollectionStub baggageCollectionPoint){
+	public Porter(StorageAreaStub storeRoom, ArrivalLoungeStub lounge, 
+					BaggageCollectionStub baggageCollectionPoint){
 		this.currentState=States.WAITING_FOR_PLANE_TO_LAND;
 		this.currentBag=null;
 		this.baggageCollectionPoint=baggageCollectionPoint;

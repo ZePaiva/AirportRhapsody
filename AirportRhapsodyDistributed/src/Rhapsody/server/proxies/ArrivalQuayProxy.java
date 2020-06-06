@@ -57,7 +57,7 @@ public class ArrivalQuayProxy implements SharedMemoryProxy{
             // has bus and bus has seats
             case PASSENGER_INTO_BUS:
                 provider.setEntityID(pkt.getId());
-                arrivalQuay.enterTheBus();
+                reply.setBool1(arrivalQuay.enterTheBus());
                 reply.setState(provider.getEntityState());
                 break;
             // simulation has ended

@@ -1,6 +1,11 @@
 package Rhapsody.client.stubs;
 
+import Rhapsody.client.communications.ClientCom;
+import Rhapsody.client.entities.Passenger;
+import Rhapsody.client.entities.Porter;
 import Rhapsody.common.Luggage;
+import Rhapsody.common.Message;
+import Rhapsody.common.MessageType;
 import Rhapsody.common.RunParameters;
 
 /**
@@ -14,14 +19,9 @@ import Rhapsody.common.RunParameters;
 public class BaggageCollectionStub {
     
     /**
-     * Server name of the Arrival Exit server
-     */
-    private String serverHostName;
-
-    /**
-     * Server port of the Arrival Exit server
-     */
-    private int serverHostPort;
+	 * Client communication channelt
+	 */
+	private final ClientCom clientCom;
 
     /**
      * Prettify
@@ -32,8 +32,8 @@ public class BaggageCollectionStub {
      * Baggage collection stub constructor
      */
     public BaggageCollectionStub(){
-        this.serverHostName=RunParameters.BaggageCollectionHostName;
-        this.serverHostPort=RunParameters.BaggageCollectionPort;
+        clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
+		clientCom.open();
     }
 
     /**
@@ -42,14 +42,31 @@ public class BaggageCollectionStub {
      * @param luggage
      */
     public void carryItToAppropriateStore(Luggage luggage) {
-        
+        Porter porter = (Porter) Thread.currentThread();
+		Message pkt = new Message();
+		pkt.setType(MessageType.PORTER_STORE_BAG_CB);
+		pkt.setInt1(luggage.getPassengerId());
+        pkt.setBool1(luggage.getLuggageType().equals("FDT"));
+        pkt.setState(porter.getPorterState());
+		
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+
+		porter.setPorterState(pkt.getState());   
     }
 
     /**
      * Method to signal all passengers that luggage collection has ended 
      */
     public void noMoreBagsToCollect() {
-    
+        Porter porter = (Porter) Thread.currentThread();
+		Message pkt = new Message();
+		pkt.setType(MessageType.PORTER_NO_MORE_BAGS);
+        
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+
+		porter.setPorterState(pkt.getState());   
     }
 
     /**
@@ -58,12 +75,35 @@ public class BaggageCollectionStub {
      * @return currentBags
      */
     public int goCollectABag(int startingBags){
-        return 0;
+        Passenger passenger = (Passenger) Thread.currentThread();
+		Message pkt = new Message();
+		pkt.setType(MessageType.PASSENGER_COLLECTING_BAG);
+        pkt.setId(passenger.getPassengerId());
+        pkt.setState(passenger.getCurrentState());
+        pkt.setInt1(startingBags);
+
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+
+        passenger.setCurrentState(pkt.getState());
+        return pkt.getInt1();
     }
 
     /**
      * Mehtod to reset baggage collection variable by the porter thread
      */
     public void newFlight(){
+        Message pkt = new Message();
+		pkt.setType(MessageType.NEW_FLIGHT);
+		
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();   
     }
+
+    /**
+     * Close the stub
+     */
+	public void closeStub() {
+        clientCom.close();
+	}
 }

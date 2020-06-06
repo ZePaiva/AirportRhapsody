@@ -1,6 +1,13 @@
 package Rhapsody.client.stubs;
 
+import java.util.Arrays;
+
+import Rhapsody.client.communications.ClientCom;
+import Rhapsody.client.entities.Passenger;
+import Rhapsody.client.entities.Porter;
 import Rhapsody.common.Luggage;
+import Rhapsody.common.Message;
+import Rhapsody.common.MessageType;
 import Rhapsody.common.RunParameters;
 
 /**
@@ -15,14 +22,9 @@ import Rhapsody.common.RunParameters;
 public class ArrivalLoungeStub {
     
     /**
-     * Server name of the Arrival Exit server
-     */
-    private String serverHostName;
-
-    /**
-     * Server port of the Arrival Exit server
-     */
-    private int serverHostPort;
+	 * Client communication channelt
+	 */
+	private final ClientCom clientCom;
 
     /**
      * Prettify
@@ -30,16 +32,23 @@ public class ArrivalLoungeStub {
 	public static final String ANSI_WHITE = "\u001B[0m\u001B[37m";
 
     public ArrivalLoungeStub() {
-        this.serverHostName=RunParameters.ArrivalLoungeHostName;
-        this.serverHostPort=RunParameters.ArrivalLoungePort;
-    }
+        this.clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
+		this.clientCom.open();
+	}
     
 	/**
 	 * Puts porter in {@link Rhapsody.entities.states.PorterState#WAITING_FOR_PLANE_TO_LAND} state
 	 * @return simulationContinue
 	 */
 	public boolean takeARest() {
-		return false;
+		Porter porter = (Porter) Thread.currentThread();
+		Message pkt = new Message();
+		pkt.setType(MessageType.PORTER_WAITING);
+
+		this.clientCom.writeObject(pkt);
+		pkt = (Message) this.clientCom.readObject();
+		porter.setPorterState(pkt.getState());
+		return pkt.getBool1();
 	}
 
 	/**
@@ -48,6 +57,15 @@ public class ArrivalLoungeStub {
 	 * @param flightId
 	 */
 	public void whatShouldIDo(int flightId) {
+		Passenger passenger = (Passenger) Thread.currentThread();
+		Message pkt = new Message();
+
+		pkt.setType(MessageType.PASSENGER_ARRIVED);
+		pkt.setId(passenger.getPassengerId());
+		pkt.setState(passenger.getCurrentState());
+		clientCom.writeObject(pkt);
+
+		passenger.setCurrentState(pkt.getState());
 	}
 
 	/**
@@ -56,12 +74,50 @@ public class ArrivalLoungeStub {
 	 * @return planeHasBags of type boolean
 	 */
 	public Luggage tryToCollectABag() {
-		return null;
+		Porter porter = (Porter) Thread.currentThread();
+		Message pkt = new Message();
+
+		pkt.setType(MessageType.PORTER_COLLECT_BAG);
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+
+		return new Luggage(pkt.getInt1(), pkt.getBool1() ? "FDT" : "TRT");
 	}
 
 	/**
 	 * Method to signal Porter that the simulation has ended
 	 */
 	public void endOfWork() {
+		Message pkt = new Message();
+		pkt.setType(MessageType.SIM_ENDED);
+
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+	}
+
+	/**
+	 * Logs passenger in the servers
+	 * 
+	 * @param startingBags
+	 * @param situations
+	 */
+	public void updateStartingBags(int[] startingBags, String[] situations) {
+		Passenger passenger = (Passenger) Thread.currentThread();
+		int[] sits = Arrays.asList(situations).stream().mapToInt(s -> s.equals("FDT") ? 1 : 0).toArray();
+		Message pkt = new Message();
+		pkt.setType(MessageType.PASSENGER_IN);
+		pkt.setId(passenger.getPassengerId());
+		pkt.setIntArray1(startingBags);
+		pkt.setIntArray2(sits);
+
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+	}
+
+	/**
+	 * Close the stub
+	 */
+	public void closeStub() {
+		clientCom.close();
 	}
 }

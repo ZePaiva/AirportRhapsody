@@ -209,7 +209,8 @@ public class Passenger extends Thread {
      */
     public void run() {
 
-        System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is up\n", this.id);
+		System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is up\n", this.id);
+		arrivalLounge.updateStartingBags(startingBags, situations);
 		for (int flight = 0; flight < RunParameters.K; flight++){
 			this.currentBags=0;
 			arrivalLounge.whatShouldIDo(flight);
@@ -238,7 +239,7 @@ public class Passenger extends Thread {
 				// get blocked in ATE
 				int exited=arrivalExit.currentBlockedPassengers();
 				// blocks or not in the DTE, block state depends if DTE+ATE blocked passengers is equal to amount of passengers per flight
-				departureEntrance.prepareNextLeg(flight==RunParameters.K-1, exited);
+				departureEntrance.prepareNextLeg(flight==RunParameters.K-1);
 				System.out.printf("[PASSENGER] P%d exiting \n", this.id);
 				// wakes all passengers currently blocked in both end-entities
 				departureEntrance.wakeCurrentBlockedPassengers();
@@ -264,9 +265,9 @@ public class Passenger extends Thread {
 				// signal that one more is waiting in the DTE
 				arrivalExit.synchBlocked();
 				// get blocked in ATE
-				int exited=departureEntrance.currentBlockedPassengers();
+				//int exited=departureEntrance.currentBlockedPassengers();
 				// blocks or not in the DTE, block state depends if DTE+ATE blocked passengers is equal to amount of passengers per flight
-				arrivalExit.goHome(flight==RunParameters.K-1, exited);
+				arrivalExit.goHome(flight==RunParameters.K-1);
 				System.out.printf("[PASSENGER] P%d exiting \n", this.id);
 				// wakes all passengers currently blocked in both end-entities
 				departureEntrance.wakeCurrentBlockedPassengers();

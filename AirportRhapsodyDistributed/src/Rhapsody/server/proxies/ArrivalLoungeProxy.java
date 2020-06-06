@@ -22,7 +22,7 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
     /**
      * Amount of flights, used when checking if it has ended or not
      */
-    private int finished;
+    private boolean finished;
 
     /**
      * Arrival lounge proxy constructor
@@ -31,7 +31,7 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
      */
     public ArrivalLoungeProxy(ArrivalLounge arrivalLounge) {
         this.arrivalLounge = arrivalLounge;
-        this.finished = 0;
+        this.finished = false;
     }
 
     /**
@@ -64,6 +64,10 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
             case PASSENGER_IN:
                 arrivalLounge.updateStartingBags(pkt.getId(), pkt.getIntArray1(), pkt.getIntArray2());
                 break;
+            // simulation has ended
+            case SIM_ENDED:
+                arrivalLounge.endOfWork();
+                this.finished = true;
             default:
                 throw new RuntimeException("Wrong operation in message: " + pkt.getType());
         }
@@ -74,6 +78,6 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
      * Check simulation status
      */
     public boolean hasSimEnded() {
-        return this.finished==RunParameters.K;
+        return this.finished;
     }
 }

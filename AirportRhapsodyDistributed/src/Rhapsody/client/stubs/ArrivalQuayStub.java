@@ -1,7 +1,14 @@
 package Rhapsody.client.stubs;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Queue;
 
+import Rhapsody.client.communications.ClientCom;
+import Rhapsody.client.entities.BusDriver;
+import Rhapsody.client.entities.Passenger;
+import Rhapsody.common.Message;
+import Rhapsody.common.MessageType;
 import Rhapsody.common.RunParameters;
 
 /**
@@ -13,14 +20,9 @@ import Rhapsody.common.RunParameters;
 public class ArrivalQuayStub {
     
     /**
-     * Server name of the Arrival Exit server
-     */
-    private String serverHostName;
-
-    /**
-     * Server port of the Arrival Exit server
-     */
-    private int serverHostPort;
+	 * Client communication channelt
+	 */
+	private final ClientCom clientCom;
 
     /**
      * Prettify
@@ -31,8 +33,8 @@ public class ArrivalQuayStub {
      * Arrival quay stub constructor
      */
     public ArrivalQuayStub(){
-        this.serverHostName=RunParameters.ArrivalQuayHostName;
-        this.serverHostPort=RunParameters.ArrivalQuayPort;
+        this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+		this.clientCom.open();
     }
 
 	/**
@@ -42,6 +44,15 @@ public class ArrivalQuayStub {
 	 * he can start announcing the bus boarding if necessary
 	 */
 	public void takeABus() {
+		Passenger passenger = (Passenger) Thread.currentThread();
+		Message pkt = new Message();
+		pkt.setType(MessageType.PASSENGERS_WAITING);
+		pkt.setId(passenger.getPassengerId());
+
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+
+		passenger.setCurrentState(pkt.getState());
 	}
 
 	/**
@@ -49,14 +60,31 @@ public class ArrivalQuayStub {
 	 * of the bus ride.
 	 */
 	public boolean enterTheBus() {
-        return false;
+		Passenger passenger = (Passenger) Thread.currentThread();
+		Message pkt = new Message();
+		pkt.setType(MessageType.PASSENGER_INTO_BUS);
+		pkt.setId(passenger.getPassengerId());
+
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+
+		passenger.setCurrentState(pkt.getState());
+        return pkt.getBool1();
     }
 
 	/**
 	 * Method used to signal BusDriver that day of work has ended
 	 */
 	public void endOfWork() {
-		
+		Passenger passenger = (Passenger) Thread.currentThread();
+		Message pkt = new Message();
+		pkt.setType(MessageType.SIM_ENDED);
+		pkt.setId(passenger.getPassengerId());
+
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+
+		passenger.setCurrentState(pkt.getState());
 	}
 
 	/**
@@ -66,13 +94,28 @@ public class ArrivalQuayStub {
 	 * @return daysWorkEnded
 	 */
 	public boolean hasDaysWorkEnded() {
-		return false;
+		BusDriver busDriver = (BusDriver) Thread.currentThread();
+		Message pkt = new Message();
+		pkt.setType(MessageType.BD_HAS_ENDED);
+
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+
+		busDriver.setBusDriverState(pkt.getState());
+
+        return pkt.getBool1();
 	}
 
 	/**
 	 * Method used by the BusDriver that is waiting for a full bus or starting time
 	 */
 	public void announcingBusBoarding() {
+		BusDriver busDriver = (BusDriver) Thread.currentThread();
+		Message pkt = new Message();
+		pkt.setType(MessageType.BD_ANNOUNCING_BOARDING);
+
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
 	}
 
 	/**
@@ -80,13 +123,42 @@ public class ArrivalQuayStub {
 	 * bus stop
 	 */
 	public void parkTheBus() {
+		BusDriver busDriver = (BusDriver) Thread.currentThread();
+		Message pkt = new Message();
+		pkt.setType(MessageType.BD_ARRIVING);
+		pkt.setState(busDriver.getBusDriverState());
+
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+
+		busDriver.setBusDriverState(pkt.getState());
 	}
 
 	/**
 	 * Method to simulate the bus voyage
 	 */
 	public Queue<Integer> goToDepartureTerminal() {
-		return null;
+		BusDriver busDriver = (BusDriver) Thread.currentThread();
+		Message pkt = new Message();
+		pkt.setType(MessageType.BD_DRIVING);
+
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+
+		int[] seats = pkt.getIntArray1();
+		busDriver.setBusDriverState(pkt.getState());
+
+		Queue<Integer> q = new LinkedList<>();
+		for (int i : seats) { q.add(i); }
+
+        return q;
+	}
+
+	/**
+	 * Close stub
+	 */
+	public void closeStub() {
+		clientCom.close();
 	}
 
 }

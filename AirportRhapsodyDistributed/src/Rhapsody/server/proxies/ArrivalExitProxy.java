@@ -54,8 +54,7 @@ public class ArrivalExitProxy implements SharedMemoryProxy {
             case PASSENGER_GOING_HOME:
                 provider.setEntityID(pkt.getId());
                 provider.setEntityState(pkt.getState());
-                this.finished=pkt.getInt1();
-                arrivalExit.goHome(finished==RunParameters.K); // enters a blocking state
+                arrivalExit.goHome(pkt.getBool1()); // enters a blocking state
                 reply.setState(provider.getEntityState());
                 break;
             // in case it is departure entrance synching a new passenger

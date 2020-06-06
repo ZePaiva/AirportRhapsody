@@ -1,5 +1,9 @@
 package Rhapsody.client.stubs;
 
+import Rhapsody.client.communications.ClientCom;
+import Rhapsody.client.entities.Passenger;
+import Rhapsody.common.Message;
+import Rhapsody.common.MessageType;
 import Rhapsody.common.RunParameters;
 
 /**
@@ -9,18 +13,13 @@ import Rhapsody.common.RunParameters;
  * @author André Mourato
  */
 public class ArrivalExitStub {
-   
-    /**
-     * Server name of the Arrival Exit server
-     */
-    private String serverHostName;
+	
+	/**
+	 * Client communication channelt
+	 */
+	private final ClientCom clientCom;
 
-    /**
-     * Server port of the Arrival Exit server
-     */
-    private int serverHostPort;
-
-    /**
+	/**
      * Prettify
      */
 	public static final String ANSI_YELLOW = "\u001B[0m\u001B[33m";
@@ -29,8 +28,8 @@ public class ArrivalExitStub {
 	 * Arrival exit stub constructor
 	 */
     public ArrivalExitStub() {
-        this.serverHostName=RunParameters.ArrivalExitHostName;
-        this.serverHostPort=RunParameters.ArrivalExitPort;
+        clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
+		clientCom.open();
     }
 
 	/**
@@ -38,15 +37,30 @@ public class ArrivalExitStub {
 	 * @param lastFlight
 	 * @param departed
 	 */
-	public void goHome(boolean lastFlight, int departed) {
+	public void goHome(boolean lastFlight) {
+		Passenger passenger = (Passenger) Thread.currentThread();
+		Message pkt = new Message();
+		pkt.setType(MessageType.PASSENGER_GOING_HOME);
+		pkt.setId(passenger.getPassengerId());
+		pkt.setState(passenger.getCurrentState());
+		pkt.setBool1(lastFlight);
 
+		
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+
+		passenger.setCurrentState(pkt.getState());
 	}
 
 	/**
 	 * Method to increment the number of passengers that terminated in this monitor
 	 */
 	public void synchBlocked() {
+		Message pkt = new Message();
+		pkt.setType(MessageType.DEPARTURE_SYNCH);
 		
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
 	}
 
 	/**
@@ -54,13 +68,30 @@ public class ArrivalExitStub {
 	 * @return number of waiting threads in object
 	 */
 	public int currentBlockedPassengers() {
-		return 0;
+		Message pkt = new Message();
+		pkt.setType(MessageType.DEPARTURE_REQUEST_HOWMANY);
+
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+
+		return pkt.getInt1();
 	}
 
 	/**
 	 * Method to wake all threads in object monitor
 	 */
 	public void wakeCurrentBlockedPassengers(){
-		
+		Message pkt = new Message();
+		pkt.setType(MessageType.DEPARTURE_REQUEST_WAKEUP);
+
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+	}
+
+	/**
+	 * Close teh stub
+	 */
+	public void closeStub() {
+		clientCom.close();
 	}
 }

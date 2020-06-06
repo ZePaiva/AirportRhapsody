@@ -10,7 +10,6 @@ import Rhapsody.client.stubs.BaggageCollectionStub;
 import Rhapsody.client.stubs.BaggageReclaimStub;
 import Rhapsody.client.stubs.DepartureEntranceStub;
 import Rhapsody.client.stubs.DepartureQuayStub;
-import Rhapsody.client.stubs.GeneralRepositoryStub;
 import Rhapsody.common.RunParameters;
 
 /**
@@ -75,7 +74,6 @@ public class PassengerMain {
         ArrivalQuayStub arrivalQuayStub = new ArrivalQuayStub();
         DepartureEntranceStub departureEntranceStub = new DepartureEntranceStub();
         DepartureQuayStub departureQuayStub = new DepartureQuayStub();
-        GeneralRepositoryStub repositoryStub = new GeneralRepositoryStub();
 
         Random random = new Random();
 
@@ -88,7 +86,7 @@ public class PassengerMain {
 		for (int flights=0; flights < RunParameters.K; flights++) {
 			for (int j=0; j < RunParameters.N; j++) {
 				luggage[j][flights] = random.nextInt(RunParameters.M+1);
-				situations[j][flights] = random.nextBoolean() ? "TRT" : "FDT";
+				situations[j][flights] = random.nextBoolean() ? "FDT" : "TRT";
 			}
 		}
 
@@ -118,5 +116,13 @@ public class PassengerMain {
                 System.exit(10);
             }
         }
+
+        arrivalLoungeStub.closeStub();
+        baggageCollectionStub.closeStub();
+        baggageReclaimStub.closeStub();
+        arrivalExitStub.closeStub();
+        arrivalQuayStub.closeStub();
+        departureEntranceStub.closeStub();
+        departureQuayStub.closeStub();
     }
 }

@@ -5,7 +5,6 @@ import java.util.Queue;
 
 import Rhapsody.client.stubs.ArrivalQuayStub;
 import Rhapsody.client.stubs.DepartureQuayStub;
-import Rhapsody.client.stubs.GeneralRepositoryStub;
 import Rhapsody.common.States;
 
 /**
@@ -52,9 +51,8 @@ public class BusDriver extends Thread{
      * @param arrivalTerminalTransfer
      * @param departureTerminalTransfer
      */
-    public BusDriver(int busSeats, long maxWait,
-            GeneralRepositoryStub generalRepository, 
-						ArrivalQuayStub arrivalTerminalTransfer, 
+    public BusDriver(int busSeats, long maxWait, 
+            ArrivalQuayStub arrivalTerminalTransfer, 
 						DepartureQuayStub departureTerminalTransfer) {
 		this.currentState=States.PARKING_AT_THE_ARRIVAL_LOUNGE;
 		this.arrivalTerminalTransfer=arrivalTerminalTransfer;

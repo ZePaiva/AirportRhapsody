@@ -1,6 +1,10 @@
 package Rhapsody.client.stubs;
 
+import Rhapsody.client.communications.ClientCom;
+import Rhapsody.client.entities.Porter;
 import Rhapsody.common.Luggage;
+import Rhapsody.common.Message;
+import Rhapsody.common.MessageType;
 import Rhapsody.common.RunParameters;
 
 /**
@@ -12,21 +16,16 @@ import Rhapsody.common.RunParameters;
 public class StorageAreaStub {
     
     /**
-     * Server name of the Arrival Exit server
-     */
-    private String serverHostName;
-
-    /**
-     * Server port of the Arrival Exit server
-     */
-    private int serverHostPort;
-
+	 * Client communication channelt
+	 */
+    private final ClientCom clientCom;
+    
     /**
      * Stub constructor
      */
     public StorageAreaStub() {
-        this.serverHostName=RunParameters.StorageAreaHostName;
-        this.serverHostPort=RunParameters.StorageAreaPort;
+        clientCom = new ClientCom(RunParameters.StorageAreaHostName, RunParameters.StorageAreaPort);
+		clientCom.open();
     }
 
     /**
@@ -35,6 +34,22 @@ public class StorageAreaStub {
      * @param luggage
      */
     public void carryItToAppropriateStore(Luggage luggage) {
-        
+        Porter porter = (Porter) Thread.currentThread();
+        Message pkt = new Message();
+        pkt.setType(MessageType.PORTER_STORE_BAG_SR);
+        pkt.setInt1(luggage.getPassengerId());
+        pkt.setBool1(luggage.getLuggageType().equals("FDT"));
+
+        clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+		
+		porter.setPorterState(pkt.getState());
+    }
+
+    /**
+     * Close the stub
+     */
+    public void close() {
+
     }
 }
