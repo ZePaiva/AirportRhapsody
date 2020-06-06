@@ -15,7 +15,7 @@ import Rhapsody.common.RunParameters;
 public class ArrivalExitStub {
 	
 	/**
-	 * Client communication channelt
+	 * Client communication channel
 	 */
 	private final ClientCom clientCom;
 

@@ -49,7 +49,10 @@ public class StorageAreaStub {
     /**
      * Close the stub
      */
-    public void close() {
-
-    }
+	public void closeStub() {
+        Message pkt = new Message();
+        pkt.setType(MessageType.SIM_ENDED);
+        clientCom.writeObject(pkt);
+        clientCom.close();
+	}
 }

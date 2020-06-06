@@ -51,7 +51,7 @@ public class BusDriver extends Thread{
      * @param arrivalTerminalTransfer
      * @param departureTerminalTransfer
      */
-    public BusDriver(int busSeats, long maxWait, 
+    public BusDriver(long maxWait, 
             ArrivalQuayStub arrivalTerminalTransfer, 
 						DepartureQuayStub departureTerminalTransfer) {
 		this.currentState=States.PARKING_AT_THE_ARRIVAL_LOUNGE;

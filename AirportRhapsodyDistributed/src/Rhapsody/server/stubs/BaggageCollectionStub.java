@@ -1,10 +1,12 @@
 package Rhapsody.server.stubs;
 
-import Rhapsody.common.Luggage;
+import Rhapsody.common.Message;
+import Rhapsody.common.MessageType;
 import Rhapsody.common.RunParameters;
+import Rhapsody.server.communications.ClientCom;
 
 /**
- * Luggage collection stub 
+ * Luggage collection stub  for the servers
  * 
  * @author José Paiva
  * @author André Mourato
@@ -13,15 +15,10 @@ import Rhapsody.common.RunParameters;
  */
 public class BaggageCollectionStub {
     
-    /**
-     * Server name of the Arrival Exit server
-     */
-    private String serverHostName;
-
-    /**
-     * Server port of the Arrival Exit server
-     */
-    private int serverHostPort;
+ /**
+	 * Client communication channelt
+	 */
+	private final ClientCom clientCom;
 
     /**
      * Prettify
@@ -32,38 +29,25 @@ public class BaggageCollectionStub {
      * Baggage collection stub constructor
      */
     public BaggageCollectionStub(){
-        this.serverHostName=RunParameters.BaggageCollectionHostName;
-        this.serverHostPort=RunParameters.BaggageCollectionPort;
-    }
-
-    /**
-     * Method to deposit a bag in the conveyor belt <p/>
-     * <b>DOES NOT ALTER BAGS IN PLANE'S HOLD OR STOREROOM</b>  
-     * @param luggage
-     */
-    public void carryItToAppropriateStore(Luggage luggage) {
-        
-    }
-
-    /**
-     * Method to signal all passengers that luggage collection has ended 
-     */
-    public void noMoreBagsToCollect() {
-    
-    }
-
-    /**
-     * Method for a passenger to try to collect the bags
-     * @param startingBags
-     * @return currentBags
-     */
-    public int goCollectABag(int startingBags){
-        return 0;
+        clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
+		clientCom.open();
     }
 
     /**
      * Mehtod to reset baggage collection variable by the porter thread
      */
     public void newFlight(){
+        Message pkt = new Message();
+		pkt.setType(MessageType.NEW_FLIGHT);
+		
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();   
     }
+
+    /**
+     * Close the stub
+     */
+	public void closeStub() {
+        clientCom.close();
+	}
 }

@@ -2,25 +2,23 @@ package Rhapsody.server.stubs;
 
 import java.util.Queue;
 
+import Rhapsody.common.Message;
+import Rhapsody.common.MessageType;
 import Rhapsody.common.RunParameters;
+import Rhapsody.server.communications.ClientCom;
 
 /**
- * Arrival Terminal Transfer Quay Stub for the clients
+ * Arrival Terminal Transfer Quay Stub for the server
  * 
  * @author José Paiva
  * @author André Mourato
  */
 public class ArrivalQuayStub {
     
-    /**
-     * Server name of the Arrival Exit server
-     */
-    private String serverHostName;
-
-    /**
-     * Server port of the Arrival Exit server
-     */
-    private int serverHostPort;
+     /**
+	 * Client communication channelt
+	 */
+	private final ClientCom clientCom;
 
     /**
      * Prettify
@@ -31,62 +29,25 @@ public class ArrivalQuayStub {
      * Arrival quay stub constructor
      */
     public ArrivalQuayStub(){
-        this.serverHostName=RunParameters.ArrivalQuayHostName;
-        this.serverHostPort=RunParameters.ArrivalQuayPort;
+        this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+		this.clientCom.open();
     }
 
 	/**
-	 * Mehtod to put passenger in the waiting line for the bus and signal the
-	 * busdriver that
-	 * <p/>
-	 * he can start announcing the bus boarding if necessary
-	 */
-	public void takeABus() {
-	}
-
-	/**
-	 * Method that inserts passenger in the bus seats and makes him wait for the end
-	 * of the bus ride.
-	 */
-	public boolean enterTheBus() {
-        return false;
-    }
-
-	/**
-	 * Method used to signal BusDriver that day of work has ended
+	 * Method to signal Porter that the simulation has ended
 	 */
 	public void endOfWork() {
-		
-	}
+		Message pkt = new Message();
+		pkt.setType(MessageType.SIM_ENDED);
+
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+	}	
 
 	/**
-	 * Method used by the bus driver if it's day of work has ended or any passenger
-	 * arrived to arrival termina ltransfer quay
-	 * 
-	 * @return daysWorkEnded
+	 * Close stub
 	 */
-	public boolean hasDaysWorkEnded() {
-		return false;
+	public void closeStub() {
+		clientCom.close();
 	}
-
-	/**
-	 * Method used by the BusDriver that is waiting for a full bus or starting time
-	 */
-	public void announcingBusBoarding() {
-	}
-
-	/**
-	 * Method used by the BusDriver to signal he has arrived to the arrival terminal
-	 * bus stop
-	 */
-	public void parkTheBus() {
-	}
-
-	/**
-	 * Method to simulate the bus voyage
-	 */
-	public Queue<Integer> goToDepartureTerminal() {
-		return null;
-	}
-
 }
