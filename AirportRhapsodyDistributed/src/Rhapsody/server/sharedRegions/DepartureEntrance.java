@@ -62,6 +62,7 @@ public class DepartureEntrance {
 		this.arrivalTerminalTransfer=arrivalTerminalTransfer;
 		this.passengersTerminated=0;
 		this.arrivalExit=arrivalExitStub;
+		this.generalRepository.registerMem(5);
 	}
 
 	/**

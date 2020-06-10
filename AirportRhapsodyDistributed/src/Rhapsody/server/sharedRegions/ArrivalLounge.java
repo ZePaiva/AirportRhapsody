@@ -96,6 +96,7 @@ public class ArrivalLounge {
         for (Queue<Luggage> queue: planeHoldLuggage) {
             queue = new LinkedList<>();
         }
+        this.generalRepository.registerMem(0);
     }
 
     /**

@@ -155,26 +155,23 @@ public class ServerCom {
      */
     public ServerCom accept() throws IOException {
         
-        ServerCom conn;
-        conn = new ServerCom(port, listener);
+        ServerCom conn = new ServerCom(port, listener);
 
-        conn.sock=listener.accept();
-
-        //// accept socket
-        //try {
-        //    conn.sock = listener.accept();
-        //} catch (final SocketException e) {
-        //    System.err.printf("%s socket is closed\n", Thread.currentThread().getName());
-        //    e.printStackTrace();
-        //    System.exit(1);
-        //} catch (final SocketTimeoutException e) {
-        //    System.err.printf("%s socket timeout\n", Thread.currentThread().getName());
-        //    e.printStackTrace();
-        //} catch (final IOException e) {
-        //    System.err.printf("%s suffered unknown IO error\n", Thread.currentThread().getName());
-        //    e.printStackTrace();
-        //    System.exit(1);
-        //}
+        // accept socket
+        try {
+            conn.sock = listener.accept();
+            System.out.println("Got connection: " +conn.sock.getInetAddress().toString());
+        } catch (final SocketException e) {
+            System.err.printf("%s socket is closed\n", Thread.currentThread().getName());
+            e.printStackTrace();
+            System.exit(1);
+        } catch (final SocketTimeoutException e) {
+            System.err.printf("%s socket timeout\n", Thread.currentThread().getName());
+        } catch (final IOException e) {
+            System.err.printf("%s suffered unknown IO error\n", Thread.currentThread().getName());
+            e.printStackTrace();
+            System.exit(1);
+        }
 
         // listen to client input
         try {
@@ -183,7 +180,9 @@ public class ServerCom {
             System.err.printf("%s suffered unknown IO error\n", Thread.currentThread().getName());
             e.printStackTrace();
             System.exit(1);
-        } 
+        } catch (NullPointerException e) {
+            System.err.print("Read on client - Nothing connected\n");
+        }
 
         // write client output
         try {
@@ -192,6 +191,8 @@ public class ServerCom {
             System.err.printf("%s suffered unknown IO error\n", Thread.currentThread().getName());
             e.printStackTrace();
             System.exit(1);
+        } catch (NullPointerException e) {
+            System.err.print("Write on client - Nothing connected\n");
         }
 
         return conn;

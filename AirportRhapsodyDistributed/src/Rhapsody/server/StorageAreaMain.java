@@ -59,11 +59,12 @@ public class StorageAreaMain {
                 provider.start();
             } catch (SocketTimeoutException e) {
                 System.err.printf("%s [STORAGEAREA] socket timouted\n", Thread.currentThread().getName());
+            }  catch (NullPointerException e) {
+                System.err.println("Nothing Connected");  
             } catch (RuntimeException e) {
                 System.err.println("Error on proxy");
                 e.printStackTrace();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

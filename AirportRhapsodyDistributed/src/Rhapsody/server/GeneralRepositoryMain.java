@@ -75,11 +75,12 @@ public class GeneralRepositoryMain {
                 provider.start();
             } catch (SocketTimeoutException e) {
                 System.err.printf("%s [REPOSITORYMAIN] socket timouted\n", Thread.currentThread().getName());
+            } catch (NullPointerException e) {
+                System.err.println("Nothing Connected");  
             } catch (Exception e) {
                 System.err.printf("%s [REPOSITORYMAIN] unknown error\n", Thread.currentThread().getName());
                 e.printStackTrace();
-                System.exit(500);
-            }
+            } 
         }
 
     }

@@ -72,6 +72,7 @@ public class ArrivalQuay {
 		this.transferQuay = new LinkedList<>();
 		this.busSeats = new LinkedList<>();
 		this.busSchedule = busSchedule;
+		this.generalRepository.registerMem(2);
 	}
 
 	/**

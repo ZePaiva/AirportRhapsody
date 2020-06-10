@@ -69,10 +69,14 @@ public class DepartureEntranceMain {
                 provider.start();
             } catch (SocketTimeoutException e) {
                 System.err.printf("%s [DEPARTUREENTRANCE] socket timouted\n", Thread.currentThread().getName());
+            }  catch (NullPointerException e) {
+                System.err.println("Nothing Connected");  
             } catch (RuntimeException e) {
                 System.err.println("Error on proxy");
                 e.printStackTrace();
-            }     
+            } catch (IOException e) {
+                e.printStackTrace();
+            }    
         }
         System.out.println("[Departure Transfer] terminating...");
     }

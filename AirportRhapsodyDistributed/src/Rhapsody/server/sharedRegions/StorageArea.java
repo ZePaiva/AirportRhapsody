@@ -29,6 +29,7 @@ public class StorageArea {
     public StorageArea(GeneralRepositoryStub generalRepository) {
         this.generalRepository=generalRepository;
         this.bagsInStoreRoom=new ArrayList<>();
+        this.generalRepository.registerMem(7);
     }
 
     /**

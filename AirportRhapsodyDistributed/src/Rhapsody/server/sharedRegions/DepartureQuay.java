@@ -30,6 +30,7 @@ public class DepartureQuay {
 	public DepartureQuay(GeneralRepositoryStub generalRepository) {
 		this.generalRepository=generalRepository;
 		this.busArrived=false;
+		this.generalRepository.registerMem(6);
 	}
 
 	/**

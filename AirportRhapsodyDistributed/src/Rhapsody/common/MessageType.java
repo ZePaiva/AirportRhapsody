@@ -76,6 +76,7 @@ public enum MessageType {
     UP_BAG_PH, 
     UP_BAG_L, 
     UP_BAG_PLANE, 
-    UP_BAG_SR,
+    UP_BAG_SR, 
+    LOG_MEM
     ;
 }

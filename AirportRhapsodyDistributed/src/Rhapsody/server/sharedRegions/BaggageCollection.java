@@ -42,6 +42,7 @@ public class BaggageCollection {
         this.generalRepository = generalRepository;
         this.bagsInConveyorBelt = new ArrayList<>();
         this.collectedAllBags = false;
+        this.generalRepository.registerMem(3);
     }
 
     /**

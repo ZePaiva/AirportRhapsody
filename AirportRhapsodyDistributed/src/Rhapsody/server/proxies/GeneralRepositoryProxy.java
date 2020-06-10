@@ -107,6 +107,36 @@ public class GeneralRepositoryProxy implements SharedMemoryProxy {
             case SIM_ENDED:
                 this.finished=true;
                 break;
+            case LOG_MEM:
+                switch (pkt.getInt1()) {
+                    case 0:
+                        System.out.println("ALG registered");
+                        break;
+                    case 1:
+                        System.out.println("ATE connected");
+                        break;
+                    case 2:
+                        System.out.println("AQA connected");
+                        break;
+                    case 3:
+                        System.out.println("BCP connected");
+                        break;
+                    case 4:
+                        System.out.println("BRP connected");
+                        break;
+                    case 5:
+                        System.out.println("DTE connected");
+                        break;
+                    case 6:
+                        System.out.println("DTT connected");
+                        break;
+                    case 7:
+                        System.out.println("SRM connected");
+                        break;
+                    default:
+                        break;
+                }
+                break;
             default:
                 throw new RuntimeException("Wrong operation in message: " + pkt.getType());
         }

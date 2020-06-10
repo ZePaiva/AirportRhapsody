@@ -24,6 +24,7 @@ public class BaggageReclaim {
 	 */
 	public BaggageReclaim(GeneralRepositoryStub generalRepository) {
 		this.generalRepository=generalRepository;
+		this.generalRepository.registerMem(4);
 	}
 
 	/**

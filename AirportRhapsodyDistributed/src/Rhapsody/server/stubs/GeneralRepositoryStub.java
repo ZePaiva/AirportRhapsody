@@ -273,4 +273,19 @@ public class GeneralRepositoryStub {
 		clientCom.writeObject(pkt);
 		pkt=(Message) clientCom.readObject();
 	}
+
+	public void registerMem(int i) {
+		System.out.print("clientcom == null: ");
+		System.out.println(clientCom==null);
+		if (clientCom==null) {
+			clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+			clientCom.open();
+		}
+		Message pkt = new Message();
+		pkt.setType(MessageType.LOG_MEM);
+		pkt.setInt1(i);
+		System.out.println("Registering Arrival Lounge in the repository");
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
+	}
 }

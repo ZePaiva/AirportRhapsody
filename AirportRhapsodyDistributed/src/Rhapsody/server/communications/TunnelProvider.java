@@ -104,14 +104,21 @@ public class TunnelProvider extends Thread implements PassengerInterface, BusDri
      */
     @Override
     public void run() {
-        Message rcv = (Message) serverCom.readObject();
-        if (rcv!=null) {
-            Message snd = sharedMemory.proccesPacket(rcv);
-            serverCom.writeObject(snd);
-            serverCom.close();
-        } else {
-            System.out.println("Received no message");
+        try {
+            Message rcv = (Message) serverCom.readObject();
+            if (rcv!=null) {
+                Message snd = sharedMemory.proccesPacket(rcv);
+                serverCom.writeObject(snd);
+                serverCom.close();
+            } else {
+                System.out.println("Received no message");
+            }
+        } catch (NullPointerException e) {
+            System.err.println("Nothing connected");
+        } catch (Exception e) {
+            System.err.println("Exception");
         }
+        
     }
 
     /**

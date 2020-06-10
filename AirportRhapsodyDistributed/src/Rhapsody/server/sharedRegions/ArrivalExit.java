@@ -62,6 +62,7 @@ public class ArrivalExit {
 		this.arrivalQuay=aStub;
 		this.departureEntrance=dStub;
 		this.arrivalLounge=aStub2;
+		this.generalRepository.registerMem(1);
     }
 
 	/**

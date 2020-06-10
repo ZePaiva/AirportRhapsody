@@ -37,6 +37,7 @@ public class ArrivalLoungeMain {
          */
         GeneralRepositoryStub repository = new GeneralRepositoryStub();
         BaggageCollectionStub baggageCollection = new BaggageCollectionStub();
+        
 
         /**
          * Create main entity
@@ -62,11 +63,12 @@ public class ArrivalLoungeMain {
                 provider.start();
             } catch (SocketTimeoutException e) {
                 System.err.printf("%s [ARRIVALLOUNGE] socket timouted\n", Thread.currentThread().getName());
+            }  catch (NullPointerException e) {
+                System.err.println("Nothing Connected");  
             } catch (RuntimeException e) {
                 System.err.println("Error on proxy");
                 e.printStackTrace();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
