@@ -166,7 +166,7 @@ public class ServerCom {
             e.printStackTrace();
             System.exit(1);
         } catch (final SocketTimeoutException e) {
-            System.err.printf("%s socket timeout\n", Thread.currentThread().getName());
+            //System.err.printf("%s socket timeout\n", Thread.currentThread().getName());
         } catch (final IOException e) {
             System.err.printf("%s suffered unknown IO error\n", Thread.currentThread().getName());
             e.printStackTrace();
@@ -181,7 +181,7 @@ public class ServerCom {
             e.printStackTrace();
             System.exit(1);
         } catch (NullPointerException e) {
-            System.err.print("Read on client - Nothing connected\n");
+            //System.err.print("Read on client - Nothing connected\n");
         }
 
         // write client output
@@ -192,7 +192,7 @@ public class ServerCom {
             e.printStackTrace();
             System.exit(1);
         } catch (NullPointerException e) {
-            System.err.print("Write on client - Nothing connected\n");
+            //System.err.print("Write on client - Nothing connected\n");
         }
 
         return conn;

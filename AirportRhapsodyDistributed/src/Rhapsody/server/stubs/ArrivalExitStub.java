@@ -14,11 +14,6 @@ import Rhapsody.server.communications.ClientCom;
 public class ArrivalExitStub {
 
 	/**
-	 * Server communication channel
-	 */
-	private ClientCom clientCom;
-	
-	/**
      * Prettify
      */
 	public static final String ANSI_YELLOW = "\u001B[0m\u001B[33m";
@@ -27,7 +22,7 @@ public class ArrivalExitStub {
 	 * Arrival exit stub constructor
 	 */
     public ArrivalExitStub() {
-		clientCom=null;
+		
     }
 
 	/**
@@ -35,18 +30,15 @@ public class ArrivalExitStub {
 	 * @return number of waiting threads in object
 	 */
 	public int currentBlockedPassengers() {
-		
-		if (clientCom == null) {
-			clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
-			clientCom.open();			
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
+		clientCom.open();
 
 		Message pkt = new Message();
 		pkt.setType(MessageType.DEPARTURE_REQUEST_HOWMANY);
 
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
-
+		clientCom.close();
 		return pkt.getInt1();
 	}
 
@@ -54,24 +46,21 @@ public class ArrivalExitStub {
 	 * Method to wake all threads in object monitor
 	 */
 	public void wakeCurrentBlockedPassengers(){
-		
-		if (clientCom == null) {
-			clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
-			clientCom.open();			
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
+		clientCom.open();
 
 		Message pkt = new Message();
 		pkt.setType(MessageType.DEPARTURE_REQUEST_WAKEUP);
 
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
+		clientCom.close();
 	}
 
 	/**
 	 * Close teh stub
 	 */
 	public void closeStub() {
-		clientCom.close();
 	}
     
 }

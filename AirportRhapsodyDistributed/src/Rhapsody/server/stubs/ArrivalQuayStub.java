@@ -15,11 +15,6 @@ import Rhapsody.server.communications.ClientCom;
  */
 public class ArrivalQuayStub {
     
-     /**
-	 * Client communication channelt
-	 */
-	private ClientCom clientCom;
-
     /**
      * Prettify
      */
@@ -29,7 +24,7 @@ public class ArrivalQuayStub {
      * Arrival quay stub constructor
      */
     public ArrivalQuayStub(){
-		clientCom=null;
+		
     }
 
 	/**
@@ -37,22 +32,21 @@ public class ArrivalQuayStub {
 	 */
 	public void endOfWork() {
 				
-		if (clientCom == null) {
-			this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-			this.clientCom.open();	
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+		clientCom.open();
 
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
 
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
+		clientCom.close();
 	}	
 
 	/**
 	 * Close stub
 	 */
 	public void closeStub() {
-		clientCom.close();
+		
 	}
 }

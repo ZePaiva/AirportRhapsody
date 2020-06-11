@@ -19,11 +19,6 @@ import Rhapsody.common.RunParameters;
 public class BaggageCollectionStub {
     
     /**
-	 * Client communication channelt
-	 */
-	private ClientCom clientCom;
-
-    /**
      * Prettify
      */
     public static final String ANSI_WHITE = "\u001B[0m\u001B[37m";
@@ -32,7 +27,6 @@ public class BaggageCollectionStub {
      * Baggage collection stub constructor
      */
     public BaggageCollectionStub(){
-        clientCom=null;
     }
 
     /**
@@ -41,11 +35,9 @@ public class BaggageCollectionStub {
      * @param luggage
      */
     public void carryItToAppropriateStore(Luggage luggage) {
-		if (clientCom==null) {
-            clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
-            clientCom.open();
-		}
-        Porter porter = (Porter) Thread.currentThread();
+		ClientCom clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
+		clientCom.open();
+		Porter porter = (Porter) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PORTER_STORE_BAG_CB);
 		pkt.setInt1(luggage.getPassengerId());
@@ -54,7 +46,7 @@ public class BaggageCollectionStub {
 		
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
-
+        clientCom.close();
 		porter.setPorterState(pkt.getState());   
     }
 
@@ -62,17 +54,15 @@ public class BaggageCollectionStub {
      * Method to signal all passengers that luggage collection has ended 
      */
     public void noMoreBagsToCollect() {
-		if (clientCom==null) {
-            clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
-            clientCom.open();
-		}
-        Porter porter = (Porter) Thread.currentThread();
+        ClientCom clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
+		clientCom.open();
+		Porter porter = (Porter) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PORTER_NO_MORE_BAGS);
         
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
-
+        clientCom.close();
 		porter.setPorterState(pkt.getState());   
     }
 
@@ -82,11 +72,9 @@ public class BaggageCollectionStub {
      * @return currentBags
      */
     public int goCollectABag(int startingBags){
-		if (clientCom==null) {
-            clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
-            clientCom.open();
-		}
-        Passenger passenger = (Passenger) Thread.currentThread();
+        ClientCom clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
+		clientCom.open();
+		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PASSENGER_COLLECTING_BAG);
         pkt.setId(passenger.getPassengerId());
@@ -95,7 +83,7 @@ public class BaggageCollectionStub {
 
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
-
+        clientCom.close();
         passenger.setCurrentState(pkt.getState());
         return pkt.getInt1();
     }
@@ -104,21 +92,19 @@ public class BaggageCollectionStub {
      * Mehtod to reset baggage collection variable by the porter thread
      */
     public void newFlight(){
-		if (clientCom==null) {
-            clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
-            clientCom.open();
-		}
-        Message pkt = new Message();
+        ClientCom clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
+		clientCom.open();
+		Message pkt = new Message();
 		pkt.setType(MessageType.NEW_FLIGHT);
 		
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();   
+        clientCom.close();
     }
 
     /**
      * Close the stub
      */
 	public void closeStub() {
-        clientCom.close();
 	}
 }

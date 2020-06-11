@@ -88,7 +88,7 @@ public class ArrivalLounge {
         this.generalRepository=generalRepositoryStub;
         this.baggageCollection=baggageCollectionStub;
         this.passengersDisembarked=0;
-        this.simulationStatus=true;
+        this.simulationStatus=false;
         this.currentFlight=-1;
         this.airportOpen=false;
         this.init=true;
@@ -107,8 +107,9 @@ public class ArrivalLounge {
 		// get porter thread
 		PorterInterface porter = (TunnelProvider) Thread.currentThread();
 
-		//System.out.println("Barks+"+(this.passengersDisembarked>0 && !this.init));
-		//System.out.println("Sim+"+this.simulationEnded);
+		System.out.println("Barks+"+(this.passengersDisembarked>0 && !this.init));
+        System.out.println("Sim+"+this.simulationStatus);
+        this.generalRepository.updatePorterState(porter.getEntityState(), true);
 		
 		while (this.passengersDisembarked>0 && !this.init || this.simulationStatus) {
             try {
@@ -116,7 +117,7 @@ public class ArrivalLounge {
                     return !this.simulationStatus;
                 }
                 wait();
-                // System.out.println("Porter+"+this.passengersDisembarked);
+                System.out.println("Porter+"+this.passengersDisembarked);
             } catch (InterruptedException e) {
             }
         }
@@ -169,6 +170,7 @@ public class ArrivalLounge {
     public synchronized void whatShouldIDo(int flightId) {
         PassengerInterface passenger = (TunnelProvider) Thread.currentThread();
 
+        System.out.printf("P%d disembarked on flight %d\n", passenger.getEntityID(), flightId);
         // delay to allow porter and bus to setup
         if (this.passengersDisembarked > 0 && this.limit) {
             this.passengersDisembarked--;
@@ -176,6 +178,7 @@ public class ArrivalLounge {
                     this.passengersDisembarked);
             notifyAll();
         }
+        System.out.println(!this.airportOpen || (this.passengersDisembarked > 0 && this.limit));
         while (!this.airportOpen || (this.passengersDisembarked > 0 && this.limit)) {
             try {
                 System.out.printf(ANSI_WHITE + "[LOUNGE---] P%d | Porter not ready yet\n", passenger.getEntityID());

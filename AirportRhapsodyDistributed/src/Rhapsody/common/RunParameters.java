@@ -16,12 +16,12 @@ public class RunParameters {
     /**
      * Number of planes landing
      */
-    public static final int K = 5;
+    public static final int K = 1;
 
     /**
      * Number of passengers arriving in each plane
      */
-    public static final int N = 6;
+    public static final int N = 1;
 
     /**
      * Number of maximumum luggage each passenger has
@@ -31,7 +31,7 @@ public class RunParameters {
     /**
      * Number of seats on the bus
      */
-    public static final int T = 3;
+    public static final int T = 1;
 
     /**
      * Bus scheduled timout

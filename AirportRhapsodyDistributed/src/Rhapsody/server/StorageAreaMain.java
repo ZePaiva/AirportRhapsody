@@ -52,6 +52,7 @@ public class StorageAreaMain {
         serverCommunication = new ServerCom(RunParameters.StorageAreaPort, 1000);
         serverCommunication.start();
 
+        System.out.println("Storage Area started");
         while (!proxy.hasSimEnded()) {
             try {
                 serverConnections = serverCommunication.accept();
@@ -60,7 +61,7 @@ public class StorageAreaMain {
             } catch (SocketTimeoutException e) {
                 System.err.printf("%s [STORAGEAREA] socket timouted\n", Thread.currentThread().getName());
             }  catch (NullPointerException e) {
-                System.err.println("Nothing Connected");  
+                //System.err.println("Nothing Connected");  
             } catch (RuntimeException e) {
                 System.err.println("Error on proxy");
                 e.printStackTrace();

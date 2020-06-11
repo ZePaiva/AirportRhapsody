@@ -20,11 +20,6 @@ import Rhapsody.common.RunParameters;
 public class ArrivalQuayStub {
     
     /**
-	 * Client communication channelt
-	 */
-	private ClientCom clientCom;
-
-    /**
      * Prettify
      */
     public static final String ANSI_BLUE = "\u001B[0m\u001B[34m";
@@ -33,8 +28,7 @@ public class ArrivalQuayStub {
      * Arrival quay stub constructor
      */
     public ArrivalQuayStub(){
-		clientCom=null;
-    }
+	}
 
 	/**
 	 * Mehtod to put passenger in the waiting line for the bus and signal the
@@ -43,10 +37,8 @@ public class ArrivalQuayStub {
 	 * he can start announcing the bus boarding if necessary
 	 */
 	public void takeABus() {
-		if (clientCom==null) {
-			this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-			this.clientCom.open();	
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+		clientCom.open();
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PASSENGERS_WAITING);
@@ -56,6 +48,7 @@ public class ArrivalQuayStub {
 		pkt = (Message) clientCom.readObject();
 
 		passenger.setCurrentState(pkt.getState());
+		clientCom.close();
 	}
 
 	/**
@@ -63,10 +56,8 @@ public class ArrivalQuayStub {
 	 * of the bus ride.
 	 */
 	public boolean enterTheBus() {
-		if (clientCom==null) {
-			this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-			this.clientCom.open();	
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+		clientCom.open();
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PASSENGER_INTO_BUS);
@@ -76,17 +67,16 @@ public class ArrivalQuayStub {
 		pkt = (Message) clientCom.readObject();
 
 		passenger.setCurrentState(pkt.getState());
-        return pkt.getBool1();
+		clientCom.close();
+		return pkt.getBool1();
     }
 
 	/**
 	 * Method used to signal BusDriver that day of work has ended
 	 */
 	public void endOfWork() {
-		if (clientCom==null) {
-			this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-			this.clientCom.open();	
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+		clientCom.open();
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
@@ -96,6 +86,7 @@ public class ArrivalQuayStub {
 		pkt = (Message) clientCom.readObject();
 
 		passenger.setCurrentState(pkt.getState());
+		clientCom.close();
 	}
 
 	/**
@@ -105,10 +96,8 @@ public class ArrivalQuayStub {
 	 * @return daysWorkEnded
 	 */
 	public boolean hasDaysWorkEnded() {
-		if (clientCom==null) {
-			this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-			this.clientCom.open();	
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+		clientCom.open();
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_HAS_ENDED);
@@ -117,7 +106,7 @@ public class ArrivalQuayStub {
 		pkt = (Message) clientCom.readObject();
 
 		busDriver.setBusDriverState(pkt.getState());
-
+		clientCom.close();
         return pkt.getBool1();
 	}
 
@@ -125,16 +114,15 @@ public class ArrivalQuayStub {
 	 * Method used by the BusDriver that is waiting for a full bus or starting time
 	 */
 	public void announcingBusBoarding() {
-		if (clientCom==null) {
-			this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-			this.clientCom.open();	
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+		clientCom.open();
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_ANNOUNCING_BOARDING);
 
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
+		clientCom.close();
 	}
 
 	/**
@@ -142,10 +130,8 @@ public class ArrivalQuayStub {
 	 * bus stop
 	 */
 	public void parkTheBus() {
-		if (clientCom==null) {
-			this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-			this.clientCom.open();	
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+		clientCom.open();
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_ARRIVING);
@@ -153,7 +139,7 @@ public class ArrivalQuayStub {
 
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
-
+		clientCom.close();
 		busDriver.setBusDriverState(pkt.getState());
 	}
 
@@ -161,10 +147,8 @@ public class ArrivalQuayStub {
 	 * Method to simulate the bus voyage
 	 */
 	public Queue<Integer> goToDepartureTerminal() {
-		if (clientCom==null) {
-			this.clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-			this.clientCom.open();	
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+		clientCom.open();
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_DRIVING);
@@ -177,7 +161,7 @@ public class ArrivalQuayStub {
 
 		Queue<Integer> q = new LinkedList<>();
 		for (int i : seats) { q.add(i); }
-
+		clientCom.close();
         return q;
 	}
 
@@ -185,7 +169,6 @@ public class ArrivalQuayStub {
 	 * Close stub
 	 */
 	public void closeStub() {
-		clientCom.close();
 	}
 
 }

@@ -69,7 +69,7 @@ public class ArrivalExitMain {
             } catch (SocketTimeoutException e) {
                 System.err.printf("%s [ARRIVALEXIT] socket timouted\n", Thread.currentThread().getName());
             } catch (NullPointerException e) {
-                System.err.println("Nothing Connected");  
+                //System.err.println("Nothing Connected");  
             } catch (RuntimeException e) {
                 System.err.println("Error on proxy");
                 e.printStackTrace();

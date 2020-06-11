@@ -46,10 +46,12 @@ public class ArrivalQuayProxy implements SharedMemoryProxy{
         
         Message reply = new Message();
         TunnelProvider provider = (TunnelProvider) Thread.currentThread();
+        System.out.println("Got message of type " + pkt.getType());
 
         switch (pkt.getType()) {
             // in case a passenger arrives to the arrival quay 
             case PASSENGERS_WAITING:
+                System.out.printf("P %d taking a bus\n", pkt.getId());
                 provider.setEntityID(pkt.getId());
                 arrivalQuay.takeABus();         // will sert in a blocking state
                 reply.setState(provider.getEntityState());
@@ -90,7 +92,7 @@ public class ArrivalQuayProxy implements SharedMemoryProxy{
             default:
                 throw new RuntimeException("Wrong operation in message: " + pkt.getType());
         }
-        return null;
+        return reply;
 	}
 
     /**

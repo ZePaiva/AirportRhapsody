@@ -15,11 +15,6 @@ import Rhapsody.server.communications.ClientCom;
  */
 public class BaggageCollectionStub {
     
- /**
-	 * Client communication channelt
-	 */
-	private ClientCom clientCom;
-
     /**
      * Prettify
      */
@@ -29,30 +24,25 @@ public class BaggageCollectionStub {
      * Baggage collection stub constructor
      */
     public BaggageCollectionStub(){
-        clientCom=null;
     }
 
     /**
      * Mehtod to reset baggage collection variable by the porter thread
      */
     public void newFlight(){
-				
-		if (clientCom == null) {
-            clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
-            clientCom.open();
-        }
-        
+        ClientCom clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
+		clientCom.open();        
         Message pkt = new Message();
 		pkt.setType(MessageType.NEW_FLIGHT);
 		
 		clientCom.writeObject(pkt);
-		pkt = (Message) clientCom.readObject();   
+        pkt = (Message) clientCom.readObject();  
+        clientCom.close();
     }
 
     /**
      * Close the stub
      */
 	public void closeStub() {
-        clientCom.close();
 	}
 }

@@ -16,16 +16,9 @@ import Rhapsody.common.RunParameters;
 public class StorageAreaStub {
     
     /**
-	 * Client communication channelt
-	 */
-    private ClientCom clientCom;
-    
-    /**
      * Stub constructor
      */
     public StorageAreaStub() {
-        clientCom=null;
-
     }
 
     /**
@@ -34,10 +27,8 @@ public class StorageAreaStub {
      * @param luggage
      */
     public void carryItToAppropriateStore(Luggage luggage) {
-		if (clientCom==null) {
-            clientCom = new ClientCom(RunParameters.StorageAreaHostName, RunParameters.StorageAreaPort);
-            clientCom.open();
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.StorageAreaHostName, RunParameters.StorageAreaPort);
+        clientCom.open();
         Porter porter = (Porter) Thread.currentThread();
         Message pkt = new Message();
         pkt.setType(MessageType.PORTER_STORE_BAG_SR);
@@ -45,22 +36,21 @@ public class StorageAreaStub {
         pkt.setBool1(luggage.getLuggageType().equals("FDT"));
 
         clientCom.writeObject(pkt);
-		pkt = (Message) clientCom.readObject();
-		
-		porter.setPorterState(pkt.getState());
+        pkt = (Message) clientCom.readObject();
+        clientCom.close();
+        porter.setPorterState(pkt.getState());
     }
 
     /**
      * Close the stub
      */
 	public void closeStub() {
-		if (clientCom==null) {
-            clientCom = new ClientCom(RunParameters.StorageAreaHostName, RunParameters.StorageAreaPort);
-            clientCom.open();
-		}
+        ClientCom clientCom = new ClientCom(RunParameters.StorageAreaHostName, RunParameters.StorageAreaPort);
+        clientCom.open();
         Message pkt = new Message();
         pkt.setType(MessageType.SIM_ENDED);
         clientCom.writeObject(pkt);
+        clientCom.readObject();
         clientCom.close();
 	}
 }

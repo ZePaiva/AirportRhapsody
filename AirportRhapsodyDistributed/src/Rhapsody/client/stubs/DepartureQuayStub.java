@@ -18,11 +18,6 @@ import Rhapsody.common.RunParameters;
 public class DepartureQuayStub {
     
     /**
-	 * Client communication channelt
-	 */
-	private ClientCom clientCom;
-
-    /**
      * Prettify
      */
     public static final String ANSI_BLACK = "\033[1;37m";
@@ -31,18 +26,14 @@ public class DepartureQuayStub {
      * Stub constructor
      */
     public DepartureQuayStub() {
-        clientCom=null;
-
     }
     
 	/**
 	 * Method to update passenger as a pessenger ready to embark in other adventures.
 	 */
 	public void leaveTheBus() {
-		if (clientCom==null) {
-            clientCom = new ClientCom(RunParameters.DepartureQuayHostName, RunParameters.DepartureQuayPort);
-            clientCom.open();
-		}
+        ClientCom clientCom = new ClientCom(RunParameters.DepartureQuayHostName, RunParameters.DepartureQuayPort);
+		clientCom.open();
         Passenger passenger = (Passenger) Thread.currentThread();
         Message pkt = new Message();
         pkt.setType(MessageType.PASSENGER_EXITING_BUS);
@@ -50,7 +41,7 @@ public class DepartureQuayStub {
 
         clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
-		
+		clientCom.close();
 		passenger.setCurrentState(pkt.getState());
 	}
 
@@ -58,10 +49,8 @@ public class DepartureQuayStub {
 	 * Method to signl bus parking by the BusDriver entity
 	 */
 	public void parkTheBusAndLetPassOff(Queue<Integer> busSeats) {
-		if (clientCom==null) {
-            clientCom = new ClientCom(RunParameters.DepartureQuayHostName, RunParameters.DepartureQuayPort);
-            clientCom.open();
-		}
+        ClientCom clientCom = new ClientCom(RunParameters.DepartureQuayHostName, RunParameters.DepartureQuayPort);
+        clientCom.open();
         BusDriver busDriver = (BusDriver) Thread.currentThread();
         Message pkt = new Message();
         
@@ -72,7 +61,7 @@ public class DepartureQuayStub {
         
         clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
-		
+		clientCom.close();
 		busDriver.setBusDriverState(pkt.getState());
 	}
 
@@ -80,10 +69,8 @@ public class DepartureQuayStub {
 	 * method that simulates go back voyage of the BusDriver
 	 */
 	public void goToArrivalTerminal() {
-		if (clientCom==null) {
-            clientCom = new ClientCom(RunParameters.DepartureQuayHostName, RunParameters.DepartureQuayPort);
-            clientCom.open();
-		}
+        ClientCom clientCom = new ClientCom(RunParameters.DepartureQuayHostName, RunParameters.DepartureQuayPort);
+        clientCom.open();
         BusDriver busDriver = (BusDriver) Thread.currentThread();
         Message pkt = new Message();
         
@@ -91,7 +78,7 @@ public class DepartureQuayStub {
         
         clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
-		
+		clientCom.close();
 		busDriver.setBusDriverState(pkt.getState());
 	}
 
@@ -99,13 +86,12 @@ public class DepartureQuayStub {
      * Close the stub
      */
 	public void closeStub() {
-		if (clientCom==null) {
-            clientCom = new ClientCom(RunParameters.DepartureQuayHostName, RunParameters.DepartureQuayPort);
-            clientCom.open();
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.DepartureQuayHostName, RunParameters.DepartureQuayPort);
+        clientCom.open();
         Message pkt = new Message();
         pkt.setType(MessageType.SIM_ENDED);
         clientCom.writeObject(pkt);
+        clientCom.readObject();
         clientCom.close();
 	}
 }

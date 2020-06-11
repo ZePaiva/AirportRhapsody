@@ -22,18 +22,11 @@ import Rhapsody.common.RunParameters;
 public class ArrivalLoungeStub {
     
     /**
-	 * Client communication channelt
-	 */
-	private ClientCom clientCom;
-
-    /**
      * Prettify
      */
 	public static final String ANSI_WHITE = "\u001B[0m\u001B[37m";
 
-    public ArrivalLoungeStub() {
-		clientCom=null;
-	}
+    public ArrivalLoungeStub() {}
     
 	/**
 	 * Puts porter in {@link Rhapsody.entities.states.PorterState#WAITING_FOR_PLANE_TO_LAND} state
@@ -41,17 +34,17 @@ public class ArrivalLoungeStub {
 	 */
 	public boolean takeARest() {
 
-		if (clientCom==null) {
-			this.clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
-			this.clientCom.open();	
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
+		clientCom.open();
 		Porter porter = (Porter) Thread.currentThread();
 		Message pkt = new Message();
+		pkt.setState(porter.getPorterState());
 		pkt.setType(MessageType.PORTER_WAITING);
 
-		this.clientCom.writeObject(pkt);
-		pkt = (Message) this.clientCom.readObject();
+		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
 		porter.setPorterState(pkt.getState());
+		clientCom.close();
 		return pkt.getBool1();
 	}
 
@@ -61,10 +54,9 @@ public class ArrivalLoungeStub {
 	 * @param flightId
 	 */
 	public void whatShouldIDo(int flightId) {
-		if (clientCom==null) {
-			this.clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
-			this.clientCom.open();	
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
+		clientCom.open();
+		
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 
@@ -72,8 +64,10 @@ public class ArrivalLoungeStub {
 		pkt.setId(passenger.getPassengerId());
 		pkt.setState(passenger.getCurrentState());
 		clientCom.writeObject(pkt);
+		pkt = (Message) clientCom.readObject();
 
 		passenger.setCurrentState(pkt.getState());
+		clientCom.close();
 	}
 
 	/**
@@ -82,17 +76,15 @@ public class ArrivalLoungeStub {
 	 * @return planeHasBags of type boolean
 	 */
 	public Luggage tryToCollectABag() {
-		if (clientCom==null) {
-			this.clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
-			this.clientCom.open();	
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
+		clientCom.open();
 		Porter porter = (Porter) Thread.currentThread();
 		Message pkt = new Message();
 
 		pkt.setType(MessageType.PORTER_COLLECT_BAG);
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
-
+		clientCom.close();
 		return new Luggage(pkt.getInt1(), pkt.getBool1() ? "FDT" : "TRT");
 	}
 
@@ -100,15 +92,14 @@ public class ArrivalLoungeStub {
 	 * Method to signal Porter that the simulation has ended
 	 */
 	public void endOfWork() {
-		if (clientCom==null) {
-			this.clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
-			this.clientCom.open();	
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
+		clientCom.open();
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
 
 		clientCom.writeObject(pkt);
-		pkt = (Message) clientCom.readObject();
+		clientCom.readObject();
+		clientCom.close();
 	}
 
 	/**
@@ -118,10 +109,8 @@ public class ArrivalLoungeStub {
 	 * @param situations
 	 */
 	public void updateStartingBags(int[] startingBags, String[] situations) {
-		if (clientCom==null) {
-			this.clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
-			this.clientCom.open();	
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
+		clientCom.open();
 		Passenger passenger = (Passenger) Thread.currentThread();
 		int[] sits = Arrays.asList(situations).stream().mapToInt(s -> s.equals("FDT") ? 1 : 0).toArray();
 		Message pkt = new Message();
@@ -131,13 +120,13 @@ public class ArrivalLoungeStub {
 		pkt.setIntArray2(sits);
 
 		clientCom.writeObject(pkt);
-		pkt = (Message) clientCom.readObject();
+		clientCom.readObject();
+		clientCom.close();
 	}
 
 	/**
-	 * Close the stub
+	 * Signals simulation finish
 	 */
 	public void closeStub() {
-		clientCom.close();
 	}
 }

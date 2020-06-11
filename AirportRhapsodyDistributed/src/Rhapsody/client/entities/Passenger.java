@@ -43,11 +43,6 @@ public class Passenger extends Thread {
     private int currentFlight;
 
     /**
-     * Passenger ID
-     */
-    private int passengerId;
-
-    /**
      * Passenger situations for each flight
      */
     private String[] situations;
@@ -109,10 +104,10 @@ public class Passenger extends Thread {
                     ArrivalQuayStub arrivalQuayStub, BaggageCollectionStub baggageCollectionStub,
                     BaggageReclaimStub baggageReclaimStub, DepartureEntranceStub departureEntranceStub,
                     DepartureQuayStub departureQuayStub) {
+		this.id=passengerId;
         this.startingBags = startingBags;
         this.currentBags = 0;
         this.currentFlight = 0;
-        this.passengerId = passengerId;
         this.situations = situations;
         this.currentState = States.AT_DISEMBARKING_ZONE;
         this.arrivalExit = arrivalExitStub;
@@ -148,7 +143,7 @@ public class Passenger extends Thread {
 	 * @return passenger id of type int
 	 */
 	public int getPassengerId() {
-		return this.passengerId;
+		return this.id;
 	}
 
 	/**
@@ -209,12 +204,12 @@ public class Passenger extends Thread {
      */
     public void run() {
 
-		System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is up\n", this.passengerId);
+		System.out.printf(ANSI_GREEN + "[PASSENGER] P%d is up\n", this.id);
 		arrivalLounge.updateStartingBags(startingBags, situations);
 		for (int flight = 0; flight < RunParameters.K; flight++){
 			this.currentBags=0;
 			arrivalLounge.whatShouldIDo(flight);
-			System.out.printf(ANSI_GREEN + "[PASSENGER] P%d disembarked from flight %d | SB %d\n", this.id, flight, this.startingBags[flight]);
+			System.out.printf(ANSI_GREEN + "[PASSENGER] P%d disembarked from flight %d | SB %d | SIT %s\n", this.id, flight, this.startingBags[flight], this.situations[flight]);
 			
 			// Transit passengers life-cycle
 			if ( this.situations[flight].equals("TRT") ){

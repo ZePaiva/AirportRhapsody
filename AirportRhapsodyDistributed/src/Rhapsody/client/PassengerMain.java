@@ -120,7 +120,6 @@ public class PassengerMain {
         arrivalLoungeStub.closeStub();
         baggageCollectionStub.closeStub();
         baggageReclaimStub.closeStub();
-        arrivalExitStub.closeStub();
         arrivalQuayStub.closeStub();
         departureEntranceStub.closeStub();
         departureQuayStub.closeStub();

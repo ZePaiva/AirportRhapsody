@@ -39,7 +39,8 @@ public class BaggageReclaimProxy implements SharedMemoryProxy {
     public Message proccesPacket(Message pkt) {
         Message reply = new Message();
         TunnelProvider provider = (TunnelProvider) Thread.currentThread();
-        
+        System.out.println("Got message of type " + pkt.getType());
+
         switch (pkt.getType()) {
             // passenger is reporting a loss bag
             case PASSENGER_COMPLAINT:

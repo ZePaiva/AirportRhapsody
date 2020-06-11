@@ -40,6 +40,8 @@ public class GeneralRepositoryProxy implements SharedMemoryProxy {
 
         Message reply = new Message();
 
+        System.out.println("Got message of type " + pkt.getType());
+
         switch(pkt.getType()) {
             case UP_PASS_STATE:
                 repository.updatePassengerState(pkt.getState(), pkt.getInt1(), pkt.getBool1());

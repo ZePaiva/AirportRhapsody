@@ -48,6 +48,7 @@ public class ArrivalExitProxy implements SharedMemoryProxy {
 
         Message reply = new Message();
         TunnelProvider provider = (TunnelProvider) Thread.currentThread();
+        System.out.println("Got message of type " + pkt.getType());
 
         switch (pkt.getType()) {
             // in case it is a pssenger going home

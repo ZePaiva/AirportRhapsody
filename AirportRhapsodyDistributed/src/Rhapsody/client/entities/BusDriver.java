@@ -54,11 +54,11 @@ public class BusDriver extends Thread{
     public BusDriver(long maxWait, 
             ArrivalQuayStub arrivalTerminalTransfer, 
 						DepartureQuayStub departureTerminalTransfer) {
-		this.currentState=States.PARKING_AT_THE_ARRIVAL_LOUNGE;
-		this.arrivalTerminalTransfer=arrivalTerminalTransfer;
-		this.departureTerminalTransfer=departureTerminalTransfer;
-		this.busSeats=new LinkedList<>();
-	}
+      this.currentState=States.PARKING_AT_THE_ARRIVAL_LOUNGE;
+      this.arrivalTerminalTransfer=arrivalTerminalTransfer;
+      this.departureTerminalTransfer=departureTerminalTransfer;
+      this.busSeats=new LinkedList<>();
+    }
 
     /**
      * Gets current BusDriver State
@@ -80,28 +80,27 @@ public class BusDriver extends Thread{
 
 	@Override
 	public void run() {
+      System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus PARKED AT ARRIVAL AND WAITING\n");
+      while(arrivalTerminalTransfer.hasDaysWorkEnded())  {
+        // starts boarding process
+        System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus Driver is announcing boarding\n");
+        arrivalTerminalTransfer.announcingBusBoarding();
+        
+        // starts voyage to departure terminal
+        System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus is going to DEPARTURE TERMINAL\n");
+        this.busSeats=arrivalTerminalTransfer.goToDepartureTerminal();
+
+        // arrives at the departure terminal and waits until all passengers exit the bus
+        System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus PARKED AT DEPARTURE AND WAITNG\n");
+        departureTerminalTransfer.parkTheBusAndLetPassOff(this.busSeats);
+
+        // starts voyage to the arrival terminal
+        System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus going to ARRIVAL TERMINAL\n");
+        departureTerminalTransfer.goToArrivalTerminal();
+
+        // arrives to the arrival terminal and alerts that the bus has arrived to the clients
         System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus PARKED AT ARRIVAL AND WAITING\n");
-        while(arrivalTerminalTransfer.hasDaysWorkEnded())  {
-			
-			// starts boarding process
-			System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus Driver is announcing boarding\n");
-			arrivalTerminalTransfer.announcingBusBoarding();
-			
-			// starts voyage to departure terminal
-			System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus is going to DEPARTURE TERMINAL\n");
-			this.busSeats=arrivalTerminalTransfer.goToDepartureTerminal();
-
-			// arrives at the departure terminal and waits until all passengers exit the bus
-			System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus PARKED AT DEPARTURE AND WAITNG\n");
-			departureTerminalTransfer.parkTheBusAndLetPassOff(this.busSeats);
-
-			// starts voyage to the arrival terminal
-			System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus going to ARRIVAL TERMINAL\n");
-			departureTerminalTransfer.goToArrivalTerminal();
-
-			// arrives to the arrival terminal and alerts that the bus has arrived to the clients
-			System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus PARKED AT ARRIVAL AND WAITING\n");
-			arrivalTerminalTransfer.parkTheBus();
-		}
+        arrivalTerminalTransfer.parkTheBus();
+      }
     }
 }

@@ -15,16 +15,9 @@ import Rhapsody.common.RunParameters;
 public class BaggageReclaimStub {
     
     /**
-	 * Client communication channelt
-	 */
-	private ClientCom clientCom;
-
-    /**
      * Bagggage reclaim stub constructor
      */
     public BaggageReclaimStub() {
-        clientCom=null;
-        
     }
 
     /**
@@ -32,10 +25,8 @@ public class BaggageReclaimStub {
 	 * @param lostBags
 	 */
 	public void reportMissingBags(int lostBags) {
-		if (clientCom==null) {
-            clientCom = new ClientCom(RunParameters.BaggageReclaimHostName, RunParameters.BaggageReclaimPort);
-            clientCom.open();
-		}
+		ClientCom clientCom = new ClientCom(RunParameters.BaggageReclaimHostName, RunParameters.BaggageReclaimPort);
+		clientCom.open();
         Passenger passenger = (Passenger) Thread.currentThread();
         Message pkt = new Message();
         pkt.setType(MessageType.PASSENGER_COMPLAINT);
@@ -44,19 +35,19 @@ public class BaggageReclaimStub {
 
         clientCom.writeObject(pkt);
         pkt = (Message) clientCom.readObject();
+        clientCom.close();
     }
 
     /**
      * Close the stub connection
      */
 	public void closeStub() {
-		if (clientCom==null) {
-            clientCom = new ClientCom(RunParameters.BaggageReclaimHostName, RunParameters.BaggageReclaimPort);
-            clientCom.open();
-		}
+        ClientCom clientCom = new ClientCom(RunParameters.BaggageReclaimHostName, RunParameters.BaggageReclaimPort);
+		clientCom.open();
         Message pkt = new Message();
         pkt.setType(MessageType.SIM_ENDED);
         clientCom.writeObject(pkt);
+        clientCom.readObject();
         clientCom.close();
 	}
 }

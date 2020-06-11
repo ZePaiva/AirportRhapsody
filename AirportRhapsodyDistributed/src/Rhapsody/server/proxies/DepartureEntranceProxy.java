@@ -39,6 +39,7 @@ public class DepartureEntranceProxy implements SharedMemoryProxy{
     public Message proccesPacket(Message pkt) {
         Message reply = new Message();
         TunnelProvider provider = (TunnelProvider) Thread.currentThread();
+        System.out.println("Got message of type " + pkt.getType());
 
         switch (pkt.getType()) {
             // passenger is preparing next flight

@@ -112,7 +112,7 @@ public class ClientCom {
         if (!success) return success;
 
         try { 
-            output = new ObjectOutputStream (sock.getOutputStream ());
+            output = new ObjectOutputStream (sock.getOutputStream());
         } catch (IOException e) { 
             System.err.printf ("%s socket output channel unable to open\n", Thread.currentThread().getName());
             e.printStackTrace ();
@@ -120,7 +120,7 @@ public class ClientCom {
         }
 
         try { 
-            input = new ObjectInputStream (sock.getInputStream ());
+            input = new ObjectInputStream (sock.getInputStream());
         } catch (IOException e) { 
             System.err.printf ("%s socket input channel unable to open\n", Thread.currentThread().getName());
             e.printStackTrace ();

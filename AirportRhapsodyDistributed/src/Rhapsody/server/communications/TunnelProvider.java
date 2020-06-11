@@ -114,7 +114,7 @@ public class TunnelProvider extends Thread implements PassengerInterface, BusDri
                 System.out.println("Received no message");
             }
         } catch (NullPointerException e) {
-            System.err.println("Nothing connected");
+            //System.err.println("Nothing connected");
         } catch (Exception e) {
             System.err.println("Exception");
         }
