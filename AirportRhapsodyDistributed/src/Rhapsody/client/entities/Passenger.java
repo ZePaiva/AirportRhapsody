@@ -209,7 +209,7 @@ public class Passenger extends Thread {
 		for (int flight = 0; flight < RunParameters.K; flight++){
 			this.currentBags=0;
 			System.out.printf(ANSI_GREEN + "[PASSENGER] P%d disembarked from flight %d | SB %d | SIT %s\n", this.id, flight, this.startingBags[flight], this.situations[flight]);
-			arrivalLounge.whatShouldIDo(flight);
+			arrivalLounge.whatShouldIDo(flight, startingBags[flight], situations[flight].equals("FDT") ? 1 : 0);
 			
 			// Transit passengers life-cycle
 			if ( this.situations[flight].equals("TRT") ){

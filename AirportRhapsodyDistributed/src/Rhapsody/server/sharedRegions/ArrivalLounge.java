@@ -172,9 +172,10 @@ public class ArrivalLounge {
      */
     public synchronized void whatShouldIDo(int flightId) {
         PassengerInterface passenger = (TunnelProvider) Thread.currentThread();
+        System.out.printf(ANSI_PASSENGER + "[PASSENGER] P%d disembarked on flight %d"+ANSI_RESET+"\n", passenger.getEntityID(), flightId);
         this.generalRepository.updatePassengerState(passenger.getEntityState(), passenger.getEntityID(), false);
-        System.out.printf("P%d disembarked on flight %d\n", passenger.getEntityID(), flightId);
         // delay to allow porter and bus to setup
+        System.out.println(this.passengersDisembarked > 0 && this.limit);
         if (this.passengersDisembarked > 0 && this.limit) {
             this.passengersDisembarked--;
             System.out.printf(ANSI_PASSENGER + "[PASSENGER] P%d terminated | PD %d "+ANSI_RESET+"\n", passenger.getEntityID(),
@@ -191,15 +192,19 @@ public class ArrivalLounge {
             }
         }
 
-        // updates state
+        // updates state    
         passenger.setEntityState(States.AT_DISEMBARKING_ZONE);
+        //System.out.println("Up Pass State");
         this.generalRepository.updatePassengerState(passenger.getEntityState(), passenger.getEntityID(), true);
+        //System.out.println("Add pass");
         this.generalRepository.addPassengerToFlight(passenger.getEntityID(), true);
+        //System.out.println("Add phb");
         this.generalRepository.updatePlaneHoldBags(passenger.getStartingBags(), true);
-        this.generalRepository.updateSituation(passenger.getEntityID(),
-                passenger.getSituation(), true);
-        this.generalRepository.updateStartingBags(passenger.getEntityID(),
-                passenger.getStartingBags(), true);
+        //System.out.println("Up sit");
+        this.generalRepository.updateSituation(passenger.getEntityID(), passenger.getSituation(), true);
+        //System.out.println("Up sb");
+        this.generalRepository.updateStartingBags(passenger.getEntityID(), passenger.getStartingBags(), true);
+        //System.out.println("Up cb");
         this.generalRepository.updateCurrentBags(passenger.getEntityID(), 0, false);
 
         // disembarks passenger

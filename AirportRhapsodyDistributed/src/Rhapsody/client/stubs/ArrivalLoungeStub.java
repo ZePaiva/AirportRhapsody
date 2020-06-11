@@ -52,8 +52,10 @@ public class ArrivalLoungeStub {
 	 * Puts passenger in {@link Rhapsody.entities.states.PassengerState#AT_DISEMBARKING_ZONE} state. <p/>
 	 * Disembarks passenger and notifies all other passengers
 	 * @param flightId
+	 * @param startingBags
+	 * @param situation
 	 */
-	public void whatShouldIDo(int flightId) {
+	public void whatShouldIDo(int flightId, int sb, int sit) {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
 		clientCom.open();
 		
@@ -63,6 +65,8 @@ public class ArrivalLoungeStub {
 		pkt.setType(MessageType.PASSENGER_ARRIVED);
 		pkt.setId(passenger.getPassengerId());
 		pkt.setState(passenger.getCurrentState());
+		pkt.setInt1(sb);
+		pkt.setInt2(sit);
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
 

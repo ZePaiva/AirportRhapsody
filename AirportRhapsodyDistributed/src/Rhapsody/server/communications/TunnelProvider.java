@@ -66,7 +66,7 @@ public class TunnelProvider extends Thread implements PassengerInterface, BusDri
      * 
      * @serialField startingBags
      */
-    private int[] startingBags;
+    private int startingBags;
 
     /**
      * Bus seats
@@ -79,7 +79,7 @@ public class TunnelProvider extends Thread implements PassengerInterface, BusDri
      * Situations array if it is a passenger
      * 0 is FDT 1 is TRT
      */
-    private int[] situation;
+    private int situation;
 
     /**
      * The bag the porter is holding, null if not a porter
@@ -238,7 +238,7 @@ public class TunnelProvider extends Thread implements PassengerInterface, BusDri
      * @return starting bags
      */
     public int getStartingBags() {
-        return this.startingBags[this.flightID];
+        return this.startingBags;
     }
 
     /**
@@ -259,8 +259,30 @@ public class TunnelProvider extends Thread implements PassengerInterface, BusDri
         this.currentBag=bag;
     }
 
-    @Override
+    /**
+     * Get passenger current situation
+     * 
+     * @return passengerSituation
+     */
     public String getSituation() {
-        return this.situation[this.flightID]==0 ? "FDT" : "TRT";
+        return this.situation==1 ? "FDT" : "TRT";
+    }
+
+    /**
+     * Set passenger startign bags
+     * 
+     * @param startingBags
+     */
+    public void setStartingBags(int startingbags) {
+        this.startingBags=startingbags;
+    }
+
+    /**
+     * Set passenget situation 
+     * 
+     * @param situation
+     */
+    public void setSituation(int situation) {
+        this.situation=situation;
     }
 }

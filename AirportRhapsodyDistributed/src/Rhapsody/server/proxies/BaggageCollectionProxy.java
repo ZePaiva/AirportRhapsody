@@ -64,8 +64,10 @@ public class BaggageCollectionProxy implements SharedMemoryProxy {
                 break;
             // case porter resetted
             case NEW_FLIGHT:
-                this.finished++;
                 baggageCollection.newFlight();
+                break;
+            case SIM_ENDED:
+                this.finished++;
                 break;
             default:
                 throw new RuntimeException("Wrong operation in message: " + pkt.getType());
@@ -77,7 +79,7 @@ public class BaggageCollectionProxy implements SharedMemoryProxy {
      * Check simulation status
      */
     public boolean hasSimEnded() {
-        return finished==RunParameters.K;
+        return finished==RunParameters.N+1;
     }
 
 }

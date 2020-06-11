@@ -55,6 +55,12 @@ public interface PassengerInterface {
     public int getStartingBags();
 
     /**
+     * Set the passenger starting bags
+     * @param startingbags
+     */
+    public void setStartingBags(int startingbags);
+
+    /**
      * Gets the current flight
      * @return flight ID
      */
@@ -65,4 +71,10 @@ public interface PassengerInterface {
      * @return passenger situation
      */
     public String getSituation();
+
+    /**
+     * Set passenger flight situation
+     * @param situation
+     */
+    public void setSituation(int situation);
 }

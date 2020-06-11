@@ -1,4 +1,6 @@
 #!/bin/bash
+rm -r /bin
+
 echo "creating necessary binaris directories"
 # server dirs
 mkdir -p bin/Rhapsody/server/communications

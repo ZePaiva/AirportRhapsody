@@ -7,3 +7,25 @@ St1 Si1 NR1 NA1
 null null -1  -1 
  1  0  WPTL  0  0   PKAT  -   - 
 --- ---  -   - 
+ 1  0  WPTL  0  0   PKAT  -   - 
+DEZ TRT -1  -1 
+ 1  0  WPTL  0  0   PKAT  -   - 
+DEZ TRT  2   0 
+ 1  0  WPTL  0  0   PKAT  0   - 
+ATT TRT  2   0 
+ 1  0  WPTL  0  0   PKAT  -   0 
+TTR TRT  2   0 
+ 1  0  WPTL  0  0   DRFW  -   0 
+TTR TRT  2   0 
+ 1  0  WPTL  0  0   PKDT  -   0 
+TTR TRT  2   0 
+ 1  0  WPTL  0  0   PKDT  -   - 
+DTT TRT  2   0 
+ 1  0  WPTL  0  0   DRBW  -   - 
+DTT TRT  2   0 
+ 1  0  WPTL  0  0   PKAT  -   - 
+DTT TRT  2   0 
+ 1  0  WPTL  0  0   PKAT  -   - 
+DTT TRT  2   0 
+ 1  0  WPTL  0  0   PKAT  -   - 
+DEP TRT  2   0 

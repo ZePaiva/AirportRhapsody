@@ -1,5 +1,7 @@
 package Rhapsody.server.proxies;
 
+import java.security.Provider;
+
 import Rhapsody.common.Luggage;
 import Rhapsody.common.Message;
 import Rhapsody.common.RunParameters;
@@ -55,6 +57,8 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
                 System.out.println(pkt.toString());
                 provider.setEntityID(pkt.getId());
                 provider.setEntityState(pkt.getState());
+                provider.setStartingBags(pkt.getInt1());
+                provider.setSituation(pkt.getInt2());
                 System.out.println("entering WSID");
                 this.arrivalLounge.whatShouldIDo(provider.getEntityID()); //induces blocking state
                 System.out.println("exit WSID");
