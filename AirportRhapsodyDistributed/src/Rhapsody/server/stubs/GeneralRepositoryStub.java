@@ -360,6 +360,7 @@ public class GeneralRepositoryStub {
 		System.out.println("Registering shared memory in the repository");
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
+		System.out.println("Closing conn");
 		clientCom.close();
 	}
 }

@@ -151,7 +151,8 @@ public class GeneralRepository {
         this.totalBagsTransported = 0;
         this.totalBagsLost = 0;
         this.bagsOnPlane = 0;
-        this.flight = 0;
+		this.flight = 0;
+		this.flightPassengers=new int[RunParameters.N];
         this.init();
     }
 
@@ -461,7 +462,12 @@ public class GeneralRepository {
 	 * @param noLog
 	 */
 	public synchronized void clearFlight(boolean noLog){
+		//System.out.println("clearing flight");
+		//System.out.println(this.flightPassengers.toString());
+		//System.out.println(this.flightPassengers.length);
+		//System.out.println(Arrays.toString(this.flightPassengers));
 		Arrays.fill(this.flightPassengers, -1);
+		//System.out.println("Flight cleared");
 		if (!noLog) {
 			this.updateFileLog();
 		}

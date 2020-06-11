@@ -101,6 +101,7 @@ public class ArrivalQuayStub {
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_HAS_ENDED);
+		pkt.setState(busDriver.getBusDriverState());
 
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();

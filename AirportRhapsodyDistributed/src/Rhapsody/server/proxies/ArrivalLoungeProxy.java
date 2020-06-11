@@ -52,9 +52,12 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
             // passenger login (whatShouldIDo), must allow passengers to add starting bags
             case PASSENGER_ARRIVED:
                 //this.arrivalLounge.updateStartingBags(pkt.getId(), pkt.getIntArray1(), pkt.getIntArray2());
+                System.out.println(pkt.toString());
                 provider.setEntityID(pkt.getId());
                 provider.setEntityState(pkt.getState());
+                System.out.println("entering WSID");
                 this.arrivalLounge.whatShouldIDo(provider.getEntityID()); //induces blocking state
+                System.out.println("exit WSID");
                 reply.setState(provider.getEntityState());
                 break;
             // Porter collecting bags from plane hold, will parse to a boolean and a int instead of a luggage

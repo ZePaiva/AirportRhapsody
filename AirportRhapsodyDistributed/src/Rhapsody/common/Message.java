@@ -453,4 +453,23 @@ public class Message implements Serializable {
     public boolean getValidIntArray2() {
         return this.validIntArray2;
     }
+
+    /**
+     * To String method
+     */
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", state='" + getState() + "'" +
+            ", type='" + getType() + "'" +
+            ", int1='" + getInt1() + "'" +
+            ", int2='" + getInt2() + "'" +
+            ", int3='" + getInt3() + "'" +
+            ", bool1='" + bool1 + "'" +
+            ", bool2='" + bool2 + "'" +
+            ", intArray1='" + getIntArray1() + "'" +
+            ", intArray2='" + getIntArray2() + "'" +
+            "}";
+    }
+
 }

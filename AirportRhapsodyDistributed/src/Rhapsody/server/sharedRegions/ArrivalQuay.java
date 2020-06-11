@@ -149,7 +149,7 @@ public class ArrivalQuay {
 		this.generalRepository.updateBusDriverState(busDriver.getEntityState(), false);
 		this.availableBus = true;
 		notifyAll();
-		System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver is waiting passengers or sim to end\n");
+		System.out.println(ANSI_BLUE+"[ARRTERTRA] BusDriver is waiting passengers or sim to end");
 		while (!this.dayFinished && this.transferQuay.size()==0) {
 			try {
 				wait();

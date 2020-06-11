@@ -120,7 +120,6 @@ public class ArrivalLoungeStub {
 		pkt.setIntArray2(sits);
 
 		clientCom.writeObject(pkt);
-		clientCom.readObject();
 		clientCom.close();
 	}
 

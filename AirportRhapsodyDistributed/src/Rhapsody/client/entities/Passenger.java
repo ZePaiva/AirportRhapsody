@@ -208,8 +208,8 @@ public class Passenger extends Thread {
 		arrivalLounge.updateStartingBags(startingBags, situations);
 		for (int flight = 0; flight < RunParameters.K; flight++){
 			this.currentBags=0;
-			arrivalLounge.whatShouldIDo(flight);
 			System.out.printf(ANSI_GREEN + "[PASSENGER] P%d disembarked from flight %d | SB %d | SIT %s\n", this.id, flight, this.startingBags[flight], this.situations[flight]);
+			arrivalLounge.whatShouldIDo(flight);
 			
 			// Transit passengers life-cycle
 			if ( this.situations[flight].equals("TRT") ){
