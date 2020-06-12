@@ -16,7 +16,7 @@ public class RunParameters {
     /**
      * Number of planes landing
      */
-    public static final int K = 5;
+    public static final int K = 1;
 
     /**
      * Number of passengers arriving in each plane

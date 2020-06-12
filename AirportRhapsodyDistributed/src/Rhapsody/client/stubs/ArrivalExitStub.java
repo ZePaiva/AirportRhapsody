@@ -94,4 +94,17 @@ public class ArrivalExitStub {
 		pkt = (Message) clientCom.readObject();
 		clientCom.close();
 	}
+
+	/**
+	 * Close stub
+	 */
+	public void closeStub() {
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
+		clientCom.open();
+		Message pkt = new Message();
+		pkt.setType(MessageType.SIM_ENDED);
+		clientCom.writeObject(pkt);
+		clientCom.readObject();
+		clientCom.close();
+	}
 }

@@ -123,5 +123,6 @@ public class PassengerMain {
         arrivalQuayStub.closeStub();
         departureEntranceStub.closeStub();
         departureQuayStub.closeStub();
+        arrivalExitStub.closeStub();
     }
 }
