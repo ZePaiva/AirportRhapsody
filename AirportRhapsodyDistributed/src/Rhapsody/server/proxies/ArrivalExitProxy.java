@@ -27,7 +27,7 @@ public class ArrivalExitProxy implements SharedMemoryProxy {
      * 
      * @serialField
      */
-    private int finished;
+    private boolean finished;
 
     /**
      * Arrival Exit Proxy constructor
@@ -35,7 +35,7 @@ public class ArrivalExitProxy implements SharedMemoryProxy {
      */
     public ArrivalExitProxy(ArrivalExit arrivalExit) {
         this.arrivalExit = arrivalExit;
-        this.finished = 0;
+        this.finished = false;
     }
 
     /**
@@ -69,6 +69,9 @@ public class ArrivalExitProxy implements SharedMemoryProxy {
             // in case it is departure entrance wanting to wake up all passengers
             case DEPARTURE_REQUEST_WAKEUP:
                 arrivalExit.wakeCurrentBlockedPassengers();
+                break;
+            case SIM_ENDED:
+                this.finished=true;
                 break;        
             default:
                 throw new RuntimeException("Wrong operation in message: " + pkt.getType());
@@ -80,6 +83,6 @@ public class ArrivalExitProxy implements SharedMemoryProxy {
      * Checks if the simulation has ended, terminates when all flights have been completed
      */
     public boolean hasSimEnded() {
-        return this.finished==RunParameters.K;
+        return this.finished;
     }
 }

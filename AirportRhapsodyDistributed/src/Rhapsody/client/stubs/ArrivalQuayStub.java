@@ -170,6 +170,13 @@ public class ArrivalQuayStub {
 	 * Close stub
 	 */
 	public void closeStub() {
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
+		clientCom.open();
+		Message pkt = new Message();
+		pkt.setType(MessageType.SIM_ENDED);
+		clientCom.writeObject(pkt);
+		clientCom.readObject();
+		clientCom.close();
 	}
 
 }

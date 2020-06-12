@@ -49,7 +49,9 @@ public class ArrivalExit {
     /**
      * Prettify
      */
-    public static final String ANSI_YELLOW = "\u001B[0m\u001B[33m";
+	public static final String ANSI_YELLOW = "\u001B[0m\u001B[33m";
+	public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_PASSENGER = "\u001B[0m\u001B[32m";
     
     /**
      * Arrival Exit constructor
@@ -76,20 +78,20 @@ public class ArrivalExit {
 		this.generalRepository.updatePassengerState(passenger.getEntityState(), passenger.getEntityID(), true);
 		this.generalRepository.updateTRTPassengers(1, false);
 		int departed = departureEntrance.currentBlockedPassengers();
-		System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d terminating... | PT %d | P %d\n", passenger.getEntityID(), this.passengersTerminated+departed, RunParameters.N);
+		System.out.printf(ANSI_PASSENGER+"[PASSENGER] P%d terminating... | PT %d | P %d"+ANSI_RESET+"\n", passenger.getEntityID(), this.passengersTerminated+departed, RunParameters.N);
 		if (!(this.passengersTerminated+departed==RunParameters.N)) {
-			System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d blocking \n", passenger.getEntityID());
+			System.out.printf(ANSI_PASSENGER+"[PASSENGER] P%d blocking "+ANSI_RESET+"\n", passenger.getEntityID());
 			try {
 				wait();
-				System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d woke \n", passenger.getEntityID());
+				System.out.printf(ANSI_PASSENGER+"[PASSENGER] P%d woke "+ANSI_RESET+"\n", passenger.getEntityID());
 			} catch (InterruptedException e) {}
 		}
 		this.passengersTerminated=0;
 		// in case it is the last flight
 		if ( lastFlight ) {
-			System.out.printf(ANSI_YELLOW+"[ARRTERMEX] Simulation ended\n");
-			arrivalQuay.endOfWork();
-			arrivalLounge.endOfWork();
+			System.out.printf(ANSI_PASSENGER+"[PASSENGER] Simulation ended"+ANSI_RESET+"\n");
+			//arrivalQuay.endOfWork();
+			//arrivalLounge.endOfWork();
 		}
 	}
 
@@ -113,7 +115,7 @@ public class ArrivalExit {
 	 */
 	public synchronized void wakeCurrentBlockedPassengers(){
 		PassengerInterface passenger = (TunnelProvider) Thread.currentThread();
-		System.out.printf(ANSI_YELLOW+"[ARRTERMEX] P%d waking others \n", passenger.getEntityID());
+		System.out.printf(ANSI_YELLOW+"[DEPTERMEN] P%d waking others "+ANSI_RESET+"\n", passenger.getEntityID());
 		notifyAll();
 	}
 

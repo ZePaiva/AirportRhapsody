@@ -1,5 +1,7 @@
 package Rhapsody.server.sharedRegions;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -95,8 +97,9 @@ public class ArrivalLounge {
         this.airportOpen=false;
         this.init=true;
         this.limit=false;
-        for (Queue<Luggage> queue: planeHoldLuggage) {
-            queue = new LinkedList<>();
+        for (int i = 0; i < RunParameters.K; i++) {
+            planeHoldLuggage[i] = new LinkedList<>();
+            System.out.println("Created flight "+i);
         }
         this.generalRepository.registerMem(0);
     }
@@ -134,15 +137,26 @@ public class ArrivalLounge {
         this.init = false;
         this.airportOpen = true;
         this.limit = false;
-        System.out.printf(ANSI_PORTER + "[PORTER---] Flight updated | NF %d %s\n", this.currentFlight,ANSI_RESET);
         this.generalRepository.updateFlight(this.currentFlight, true);
+        System.out.printf(ANSI_PORTER + "[PORTER---] Flight updated | NF %d %s\n", this.currentFlight,ANSI_RESET);
         notifyAll();
-
+        System.out.println("wake");
+        
         // update porter
         porter.setEntityState(States.WAITING_FOR_PLANE_TO_LAND);
-        this.generalRepository.updateBagsInPlane(planeHoldLuggage[this.currentFlight].size(), true);
+        System.out.println("set st8");
+        
+        System.out.println(planeHoldLuggage==null);
+        System.out.println(planeHoldLuggage);
+        System.out.println(planeHoldLuggage[this.currentFlight]==null);
+        if (this.currentFlight>1) {
+            this.generalRepository.updateBagsInPlane(planeHoldLuggage[this.currentFlight].size(), true);
+        }
+        System.out.println("wake");
+        
         this.generalRepository.updatePorterState(porter.getEntityState(), true);
-
+        System.out.println("log st8");
+        
         System.out.printf(ANSI_PORTER + "[PORTER---] Porter waiting for passengers | CP: %d | Sim %s %s\n",
                 this.passengersDisembarked, this.simulationStatus, ANSI_RESET);
         // waits for all passengers to arrive
@@ -185,26 +199,28 @@ public class ArrivalLounge {
         this.generalRepository.updatePassengerState(passenger.getEntityState(), passenger.getEntityID(), true);
         System.out.println(!this.airportOpen || (this.passengersDisembarked > 0 && this.limit));
         while (!this.airportOpen || (this.passengersDisembarked > 0 && this.limit)) {
+            System.out.println("sim stat:" + this.simulationStatus);
             try {
                 System.out.printf(ANSI_PASSENGER + "[PASSENGER] P%d | Porter not ready yet"+ANSI_RESET+"\n", passenger.getEntityID());
                 wait();
             } catch (InterruptedException e) {
             }
+            System.out.println("sim stat:" + this.simulationStatus);
         }
-
         // updates state    
+        System.out.println("Up Pass State");
         passenger.setEntityState(States.AT_DISEMBARKING_ZONE);
-        //System.out.println("Up Pass State");
+        System.out.println("Up Pass State");
         this.generalRepository.updatePassengerState(passenger.getEntityState(), passenger.getEntityID(), true);
-        //System.out.println("Add pass");
+        System.out.println("Add pass");
         this.generalRepository.addPassengerToFlight(passenger.getEntityID(), true);
-        //System.out.println("Add phb");
+        System.out.println("Add phb");
         this.generalRepository.updatePlaneHoldBags(passenger.getStartingBags(), true);
-        //System.out.println("Up sit");
+        System.out.println("Up sit");
         this.generalRepository.updateSituation(passenger.getEntityID(), passenger.getSituation(), true);
-        //System.out.println("Up sb");
+        System.out.println("Up sb");
         this.generalRepository.updateStartingBags(passenger.getEntityID(), passenger.getStartingBags(), true);
-        //System.out.println("Up cb");
+        System.out.println("Up cb");
         this.generalRepository.updateCurrentBags(passenger.getEntityID(), 0, false);
 
         // disembarks passenger
@@ -225,6 +241,10 @@ public class ArrivalLounge {
         PorterInterface porter = (TunnelProvider) Thread.currentThread();
         porter.setEntityState(States.AT_THE_PLANES_HOLD);
 
+        System.out.printf(ANSI_PORTER + "[PORTER---] Porter trying to collect a bag"+ANSI_RESET+"\n");
+        System.out.println(this.currentFlight);
+        System.out.println(planeHoldLuggage==null);
+        System.out.println(planeHoldLuggage[this.currentFlight]==null);
         try {
             if (this.planeHoldLuggage[this.currentFlight].isEmpty()) {
                 System.out.printf(ANSI_PORTER + "[PORTER---] Porter got 0 bags"+ANSI_RESET+"\n");
@@ -252,7 +272,9 @@ public class ArrivalLounge {
      * Method to signal Porter that the simulation has ended
      */
     public synchronized void endOfWork() {
+        System.out.println("sim stat:" + this.simulationStatus);
         this.simulationStatus = true;
+        System.out.println("sim stat:" + this.simulationStatus);
 		notifyAll();
     }   
     
@@ -266,12 +288,24 @@ public class ArrivalLounge {
         assert(bags.length==RunParameters.K);
         assert(situations.length==RunParameters.K);
 
+        System.out.println(passengerID);
+        System.out.println(Arrays.toString(bags));
+        System.out.println(Arrays.toString(situations));
         for(int i=0; i < RunParameters.K; i++) {
-            for (int j=0; j <= bags[i]; j++){
+            for (int j=0; j < bags[i]; j++){
+                System.out.println(planeHoldLuggage[i]==null);
+                if(planeHoldLuggage[i]==null) { planeHoldLuggage[i] = new LinkedList<>(); }
+                System.out.println(planeHoldLuggage[i]==null);
+                System.out.println("Adding luggage");
                 if (random.nextInt(100) <= 90) {
                     planeHoldLuggage[i].add(new Luggage(passengerID, situations[i]==1 ? "FDT" : "TRT"));
+                    System.out.println("Luggage added");
                 }
             }
         }
+        System.out.println(planeHoldLuggage[currentFlight]==null);
+        System.out.println(planeHoldLuggage[currentFlight].size());
+        this.generalRepository.updatePlaneHoldBags(planeHoldLuggage[this.currentFlight].size(), true);
+        System.out.println("upd8");
     }
 }

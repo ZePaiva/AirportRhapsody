@@ -26,6 +26,8 @@ public class DepartureQuay {
 	private Queue<Integer> busSeats;
 
 	public static final String ANSI_BLACK = "\033[1;37m";
+	public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_PASSENGER = "\u001B[0m\u001B[32m";
 
 	public DepartureQuay(GeneralRepositoryStub generalRepository) {
 		this.generalRepository=generalRepository;
@@ -38,20 +40,20 @@ public class DepartureQuay {
 	 */
 	public synchronized void leaveTheBus() {
 		PassengerInterface passenger = (TunnelProvider) Thread.currentThread();
-		System.out.printf(ANSI_BLACK+"[DEPTERTRA] P%d is on the bus traveling\n", passenger.getEntityID());
+		System.out.printf(ANSI_PASSENGER+"[PASSENGER] P%d is on the bus traveling"+ANSI_RESET+"\n", passenger.getEntityID());
 		while(!this.busArrived) {
 			try {
 				wait();
 			} catch (InterruptedException e) {}
 		}
-		System.out.printf(ANSI_BLACK+"[DEPTERTRA] P%d travel has ended\n", passenger.getEntityID());
+		System.out.printf(ANSI_PASSENGER+"[PASSENGER] P%d travel has ended"+ANSI_RESET+"\n", passenger.getEntityID());
 		//System.out.println(this.busSeats.toString());
 		while (this.busSeats.peek()!=passenger.getEntityID()) {
 			try {
 				wait();
 			} catch (InterruptedException e) {}
 		}
-		System.out.printf(ANSI_BLACK+"[DEPTERTRA] P%d exited the bus\n", passenger.getEntityID());
+		System.out.printf(ANSI_PASSENGER+"[PASSENGER] P%d exited the bus"+ANSI_RESET+"\n", passenger.getEntityID());
 		passenger.setEntityState(States.DEPARTING_TRANSFER_TERMINAL);
 		this.generalRepository.updatePassengerState(passenger.getEntityState(), passenger.getEntityID(), true);
 		this.generalRepository.removeFromBusSeat(false);
@@ -68,7 +70,7 @@ public class DepartureQuay {
 		this.generalRepository.updateBusDriverState(busDriver.getEntityState(), false);
 		this.busSeats=busSeats;
 		this.busArrived=true;
-		System.out.printf(ANSI_BLACK+"[DEPTERTRA] Bus has parked, waiting for all to leave\n");
+		System.out.printf(ANSI_BLACK+"[BUSDRIVER] Bus has parked, waiting for all to leave"+ANSI_RESET+"\n");
 		notifyAll();
 		while(!busSeats.isEmpty()) {
 			try {
@@ -85,7 +87,7 @@ public class DepartureQuay {
 		busDriver.setEntityState(States.DRIVING_BACKWARD);
 		this.generalRepository.updateBusDriverState(busDriver.getEntityState(), false);
 		this.busArrived=false;
-		System.out.printf(ANSI_BLACK+"[DEPTERTRA] Bus leaving to ARRIVAL TERMINAL TRANSFER\n");
+		System.out.printf(ANSI_BLACK+"[BUSDRIVER] Bus leaving to ARRIVAL TERMINAL TRANSFER"+ANSI_RESET+"\n");
 	}
 
 }

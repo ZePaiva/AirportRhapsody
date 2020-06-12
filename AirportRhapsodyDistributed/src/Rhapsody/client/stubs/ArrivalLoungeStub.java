@@ -89,7 +89,11 @@ public class ArrivalLoungeStub {
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
 		clientCom.close();
-		return new Luggage(pkt.getInt1(), pkt.getBool1() ? "FDT" : "TRT");
+		if (pkt.getValidInt1()) {
+			return new Luggage(pkt.getInt1(), pkt.getBool1() ? "FDT" : "TRT");
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -124,6 +128,7 @@ public class ArrivalLoungeStub {
 		pkt.setIntArray2(sits);
 
 		clientCom.writeObject(pkt);
+		clientCom.readObject();
 		clientCom.close();
 	}
 
@@ -131,5 +136,12 @@ public class ArrivalLoungeStub {
 	 * Signals simulation finish
 	 */
 	public void closeStub() {
+		ClientCom clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
+		clientCom.open();
+		Message pkt = new Message();
+		pkt.setType(MessageType.SIM_ENDED);
+		clientCom.writeObject(pkt);
+		clientCom.readObject();
+		clientCom.close();
 	}
 }

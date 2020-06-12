@@ -24,7 +24,7 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
     /**
      * Amount of flights, used when checking if it has ended or not
      */
-    private boolean finished;
+    private int finished;
 
     /**
      * Arrival lounge proxy constructor
@@ -33,7 +33,7 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
      */
     public ArrivalLoungeProxy(ArrivalLounge arrivalLounge) {
         this.arrivalLounge = arrivalLounge;
-        this.finished = false;
+        this.finished = 0;
     }
 
     /**
@@ -67,8 +67,10 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
             // Porter collecting bags from plane hold, will parse to a boolean and a int instead of a luggage
             case PORTER_COLLECT_BAG:
                 Luggage bag = this.arrivalLounge.tryToCollectABag();
-                reply.setInt1(bag.getPassengerId());
-                reply.setBool1(bag.getLuggageType().equals("FDT"));
+                if (bag!=null) {
+                    reply.setInt1(bag.getPassengerId());
+                    reply.setBool1(bag.getLuggageType().equals("FDT"));
+                }
                 break;
             // in case the passenger is logging into the lounge for the first time, useful to register it's situations and starting bags on the plane
             case PASSENGER_IN:
@@ -76,8 +78,10 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
                 break;
             // simulation has ended
             case SIM_ENDED:
-                arrivalLounge.endOfWork();
-                this.finished = true;
+                this.finished++;
+                System.out.println(finished);
+                if (this.finished==1) { arrivalLounge.endOfWork(); System.out.println("clear");}
+                break;
             default:
                 throw new RuntimeException("Wrong operation in message: " + pkt.getType());
         }
@@ -88,6 +92,6 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
      * Check simulation status
      */
     public boolean hasSimEnded() {
-        return this.finished;
+        return this.finished==2;
     }
 }

@@ -54,6 +54,8 @@ public class ArrivalQuay {
 	private boolean announcingBoarding;
 
 	public static final String ANSI_BLUE = "\u001B[0m\u001B[34m";
+	public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_PASSENGER = "\u001B[0m\u001B[32m";
 
 	/**
 	 * ArrivalTerminalTransfer constructor method
@@ -83,7 +85,7 @@ public class ArrivalQuay {
 	 */
 	public synchronized void takeABus() {
 		PassengerInterface passenger = (TunnelProvider) Thread.currentThread();
-		System.out.printf(ANSI_BLUE+"[ARRTERTRA] P%d wants to take a bus\n", passenger.getEntityID());
+		System.out.printf(ANSI_PASSENGER+"[PASSENGER] P%d wants to take a bus"+ANSI_RESET+"\n", passenger.getEntityID());
 		passenger.setEntityState(States.ARRIVING_TRANSFER_TERMINAL);
 		while (!this.availableBus) {
 			try {
@@ -106,7 +108,7 @@ public class ArrivalQuay {
 	 */
 	public synchronized boolean enterTheBus() {
 		PassengerInterface passenger = (TunnelProvider) Thread.currentThread();
-		System.out.printf(ANSI_BLUE+"[ARRTERTRA] P%d entering the bus\n", passenger.getEntityID());
+		System.out.printf(ANSI_PASSENGER+"[PASSENGER] P%d entering the bus"+ANSI_RESET+"\n", passenger.getEntityID());
 		// if this passenger is not the head of waiting line queue it must wait until it
 		//System.out.println(this.transferQuay.toString());
 		//System.out.println(this.transferQuay.peek());
@@ -118,7 +120,7 @@ public class ArrivalQuay {
 		}
 		
 
-		System.out.printf(ANSI_BLUE+"[ARRTERTRA] P%d entered the bus\n", passenger.getEntityID());
+		System.out.printf(ANSI_PASSENGER+"[PASSENGER] P%d entered the bus"+ANSI_RESET+"\n", passenger.getEntityID());
 		passenger.setEntityState(States.TERMINAL_TRANSFER);
 		this.busSeats.add(this.transferQuay.poll());
 		this.generalRepository.removeFromWaitingQueue(true);
@@ -132,7 +134,7 @@ public class ArrivalQuay {
 	 * Method used to signal BusDriver that day of work has ended
 	 */
 	public synchronized void endOfWork() {
-		System.out.printf(ANSI_BLUE+"[ARRTERTRA] Simulation ended\n");
+		System.out.printf(ANSI_PASSENGER+"[PASSENGER] Simulation ended"+ANSI_RESET+"\n");
 		this.dayFinished = true;
 		notifyAll();
 	}
@@ -149,18 +151,18 @@ public class ArrivalQuay {
 		this.generalRepository.updateBusDriverState(busDriver.getEntityState(), false);
 		this.availableBus = true;
 		notifyAll();
-		System.out.println(ANSI_BLUE+"[ARRTERTRA] BusDriver is waiting passengers or sim to end");
+		System.out.println(ANSI_BLUE+"[BUSDRIVER] BusDriver is waiting passengers or sim to end"+ANSI_RESET);
 		while (!this.dayFinished && this.transferQuay.size()==0) {
 			try {
 				wait();
-				System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver woke | Sim %s | PA %s\n", this.dayFinished, this.transferQuay.size()!=0);
+				System.out.printf(ANSI_BLUE+"[BUSDRIVER] BusDriver woke | Sim %s | PA %s"+ANSI_RESET+"\n", this.dayFinished, this.transferQuay.size()!=0);
 				System.out.println(!this.dayFinished && this.transferQuay.size()==0);
 				System.out.println(this.transferQuay.toString());
 			} catch (InterruptedException e) {
 			}
 		}
 		if (!this.dayFinished) {
-			System.out.printf(ANSI_BLUE+"[ARRTERTRA] First passenger arrived to ATT\n");
+			System.out.printf(ANSI_BLUE+"[BUSDRIVER] First passenger arrived to ATT"+ANSI_RESET+"\n");
 			try {
 				wait(this.busSchedule);
 			} catch (InterruptedException e) {
@@ -174,14 +176,14 @@ public class ArrivalQuay {
 	 */
 	public synchronized void announcingBusBoarding() {
 		this.announcingBoarding = true;
-		System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver announcing boarding\n");
+		System.out.printf(ANSI_BLUE+"[BUSDRIVER] BusDriver announcing boarding"+ANSI_RESET+"\n");
 		notifyAll();
 		while (!this.transferQuay.isEmpty() && this.busSeats.size()!=RunParameters.T) {
 			try {
 				wait();
 			} catch (InterruptedException e) {}
 		}
-		System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver boarded all passengers\n");
+		System.out.printf(ANSI_BLUE+"[BUSDRIVER] BusDriver boarded all passengers"+ANSI_RESET+"\n");
 	}
 
 	/**
@@ -193,7 +195,7 @@ public class ArrivalQuay {
 		busDriver.setEntityState(States.PARKING_AT_THE_ARRIVAL_LOUNGE);
 		this.generalRepository.updateBusDriverState(busDriver.getEntityState(), false);
 		this.availableBus = true;
-		System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver arrived to AT\n");
+		System.out.printf(ANSI_BLUE+"[BUSDRIVER] BusDriver arrived to AT"+ANSI_RESET+"\n");
 	}
 
 	/**
@@ -205,11 +207,11 @@ public class ArrivalQuay {
 		this.generalRepository.updateBusDriverState(busDriver.getEntityState(), false);
 		this.availableBus = false;
 		this.announcingBoarding=false;
-		System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver is starting FORWARD voyage\n");
+		System.out.printf(ANSI_BLUE+"[BUSDRIVER] BusDriver is starting FORWARD voyage"+ANSI_RESET+"\n");
 		try {
 			Thread.sleep(this.busSchedule);
 		} catch (InterruptedException e) {}
-		System.out.printf(ANSI_BLUE+"[ARRTERTRA] BusDriver ended FORWARD voyage\n");
+		System.out.printf(ANSI_BLUE+"[BUSDRIVER] BusDriver ended FORWARD voyage"+ANSI_RESET+"\n");
 		int[] seats = this.busSeats.stream().mapToInt(i -> i).toArray();
 		return seats;
 	}

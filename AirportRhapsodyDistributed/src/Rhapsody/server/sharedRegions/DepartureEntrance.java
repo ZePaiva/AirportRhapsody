@@ -77,20 +77,20 @@ public class DepartureEntrance {
 		this.generalRepository.updatePassengerState(passenger.getEntityState(), passenger.getEntityID(), true);
 		this.generalRepository.updateTRTPassengers(1, false);
 		int exited = arrivalExit.currentBlockedPassengers();
-		System.out.printf(ANSI_RED+"[DEPTERMEN] P%d terminating... | PT %d | P %d\n", passenger.getEntityID(), this.passengersTerminated+exited, RunParameters.N);
+		System.out.printf(ANSI_RED+"[PASSENGER] P%d terminating... | PT %d | P %d\n", passenger.getEntityID(), this.passengersTerminated+exited, RunParameters.N);
 		if (!(exited+this.passengersTerminated==RunParameters.N)) {
-			System.out.printf(ANSI_RED+"[DEPTERMEN] P%d blocking \n", passenger.getEntityID());
+			System.out.printf(ANSI_RED+"[PASSENGER] P%d blocking \n", passenger.getEntityID());
 			try {
 				wait();
-				System.out.printf(ANSI_RED+"[DEPTERMEN] P%d woke \n", passenger.getEntityID());
+				System.out.printf(ANSI_RED+"[PASSENGER] P%d woke \n", passenger.getEntityID());
 			} catch (InterruptedException e) {}	
 		}
 		this.passengersTerminated=0;
 		// in case it is the last flight
 		if ( lastFlight ) {
-			System.out.printf(ANSI_RED+"[DEPTERMEN] Simulation ended\n");
-			arrivalTerminalTransfer.endOfWork();
-			arrivalLounge.endOfWork();
+			System.out.printf(ANSI_RED+"[PASSENGER] Simulation ended\n");
+			//arrivalTerminalTransfer.endOfWork();
+			//arrivalLounge.endOfWork();
 		}
 	}
 
@@ -114,7 +114,7 @@ public class DepartureEntrance {
 	 */
 	public synchronized void wakeCurrentBlockedPassengers(){
 		PassengerInterface passenger = (TunnelProvider) Thread.currentThread();
-		System.out.printf(ANSI_RED+"[DEPTERMEN] P%d waking others\n", passenger.getEntityID());
+		System.out.printf(ANSI_RED+"[ARRTERMEX]  P%d waking others\n", passenger.getEntityID());
 		notifyAll();
 	}
 }

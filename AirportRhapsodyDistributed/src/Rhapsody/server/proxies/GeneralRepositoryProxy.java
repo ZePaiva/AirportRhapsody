@@ -19,7 +19,7 @@ public class GeneralRepositoryProxy implements SharedMemoryProxy {
     /**
      * Simulation status
      */
-    private boolean finished;
+    private int finished;
 
     /**
      * RepositoryProxy Construtor method
@@ -28,7 +28,7 @@ public class GeneralRepositoryProxy implements SharedMemoryProxy {
      */
     public GeneralRepositoryProxy(GeneralRepository repository) {
         this.repository = repository;
-        this.finished=false;
+        this.finished=0;
     }
 
     /**
@@ -129,7 +129,7 @@ public class GeneralRepositoryProxy implements SharedMemoryProxy {
                 break;
             
             case SIM_ENDED:
-                this.finished=true;
+                this.finished++;
                 break;
             
             case LOG_MEM:
@@ -179,6 +179,6 @@ public class GeneralRepositoryProxy implements SharedMemoryProxy {
     }
 
     public boolean hasSimEnded() {
-        return this.finished;
+        return this.finished==8;
     }
 }

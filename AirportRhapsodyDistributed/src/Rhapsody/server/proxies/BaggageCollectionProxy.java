@@ -24,7 +24,7 @@ public class BaggageCollectionProxy implements SharedMemoryProxy {
     /**
      * Check finished status
      */
-    private int finished;
+    private boolean finished;
 
     /**
      * Proxy constructor
@@ -32,7 +32,7 @@ public class BaggageCollectionProxy implements SharedMemoryProxy {
      */
     public BaggageCollectionProxy(BaggageCollection baggageCollection) {
         this.baggageCollection=baggageCollection;
-        this.finished=0;
+        this.finished=false;
     }
 
     /**
@@ -67,7 +67,7 @@ public class BaggageCollectionProxy implements SharedMemoryProxy {
                 baggageCollection.newFlight();
                 break;
             case SIM_ENDED:
-                this.finished++;
+                this.finished=true;
                 break;
             default:
                 throw new RuntimeException("Wrong operation in message: " + pkt.getType());
@@ -79,7 +79,7 @@ public class BaggageCollectionProxy implements SharedMemoryProxy {
      * Check simulation status
      */
     public boolean hasSimEnded() {
-        return finished==RunParameters.N+1;
+        return finished;
     }
 
 }

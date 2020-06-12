@@ -102,5 +102,6 @@ public class BusDriver extends Thread{
         System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus PARKED AT ARRIVAL AND WAITING\n");
         arrivalTerminalTransfer.parkTheBus();
       }
+      System.out.printf(ANSI_PURPLE+"[BUSDRIVER] BUS DRIVER FINISHED DAY OF WORK\n");
     }
 }
