@@ -43,6 +43,8 @@ public class DepartureEntrance {
 	private int passengersTerminated;
 
 	public static final String ANSI_RED = "\u001B[0m\u001B[31m";
+	public static final String ANSI_RESET = "\u001B[0m";
+	public static final String ANSI_BLUE = "\u001B[0m\u001B[34m";
 
 	/**
 	 * Constructor for DepartureTerminalEntrance
@@ -77,18 +79,18 @@ public class DepartureEntrance {
 		this.generalRepository.updatePassengerState(passenger.getEntityState(), passenger.getEntityID(), true);
 		this.generalRepository.updateTRTPassengers(1, false);
 		int exited = arrivalExit.currentBlockedPassengers();
-		System.out.printf(ANSI_RED+"[PASSENGER] P%d terminating... | PT %d | P %d\n", passenger.getEntityID(), this.passengersTerminated+exited, RunParameters.N);
+		System.out.printf(ANSI_RED+"[PASSENGER] P%d terminating... | PT %d | P %d"+ANSI_RESET+"\n", passenger.getEntityID(), this.passengersTerminated+exited, RunParameters.N);
 		if (!(exited+this.passengersTerminated==RunParameters.N)) {
-			System.out.printf(ANSI_RED+"[PASSENGER] P%d blocking \n", passenger.getEntityID());
+			System.out.printf(ANSI_RED+"[PASSENGER] P%d blocking \n"+ANSI_RESET+"", passenger.getEntityID());
 			try {
 				wait();
-				System.out.printf(ANSI_RED+"[PASSENGER] P%d woke \n", passenger.getEntityID());
+				System.out.printf(ANSI_RED+"[PASSENGER] P%d woke"+ANSI_RESET+"\n", passenger.getEntityID());
 			} catch (InterruptedException e) {}	
 		}
 		this.passengersTerminated=0;
 		// in case it is the last flight
 		if ( lastFlight ) {
-			System.out.printf(ANSI_RED+"[PASSENGER] Simulation ended\n");
+			System.out.printf(ANSI_RED+"[PASSENGER] Simulation ended"+ANSI_RESET+"\n");
 			//arrivalTerminalTransfer.endOfWork();
 			//arrivalLounge.endOfWork();
 		}
@@ -98,6 +100,7 @@ public class DepartureEntrance {
 	 * Method to increment the number of passengers that terminated in this monitor
 	 */
 	public synchronized void synchBlocked() {
+		System.out.printf(ANSI_BLUE+"[ARRIVALTERM] Synching "+ANSI_RESET+"\n");
 		this.passengersTerminated++;
 	}
 
@@ -114,7 +117,7 @@ public class DepartureEntrance {
 	 */
 	public synchronized void wakeCurrentBlockedPassengers(){
 		PassengerInterface passenger = (TunnelProvider) Thread.currentThread();
-		System.out.printf(ANSI_RED+"[ARRTERMEX]  P%d waking others\n", passenger.getEntityID());
+		System.out.printf(ANSI_RED+"[PASSENGER]  P%d waking others"+ANSI_RESET+"\n", passenger.getEntityID());
 		notifyAll();
 	}
 }

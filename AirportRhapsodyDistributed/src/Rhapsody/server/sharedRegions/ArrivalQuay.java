@@ -124,6 +124,7 @@ public class ArrivalQuay {
 		System.out.printf(ANSI_PASSENGER+"[PASSENGER] P%d entered the bus"+ANSI_RESET+"\n", passenger.getEntityID());
 		passenger.setEntityState(States.TERMINAL_TRANSFER);
 		this.busSeats.add(this.transferQuay.poll());
+		this.busSeats.stream().forEach(System.out::println);
 		this.generalRepository.removeFromWaitingQueue(true);
 		this.generalRepository.updatePassengerState(passenger.getEntityState(), passenger.getEntityID(), true);
 		this.generalRepository.addToBusSeat(passenger.getEntityID(), false);
@@ -225,6 +226,7 @@ public class ArrivalQuay {
 		int[] seats = this.busSeats.stream().mapToInt(i -> i).toArray();
 		System.out.println(seats==null);
 		System.out.println(Arrays.toString(seats));
+		busSeats.clear();
 		return seats;
 	}
 }

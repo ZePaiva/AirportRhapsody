@@ -112,6 +112,7 @@ public class Porter extends Thread {
 			}
 			System.out.println(ANSI_CYAN+"[PORTER---] No more bags to collect");
 			baggageCollectionPoint.noMoreBagsToCollect();
+			System.out.println(ANSI_CYAN+"[PORTER---] Porter is sleeping");
 		}
 		System.out.printf(ANSI_CYAN+"[PORTER---] Porter exiting run(), joining...\n");
 	}

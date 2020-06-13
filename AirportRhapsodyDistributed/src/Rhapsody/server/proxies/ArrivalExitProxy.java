@@ -55,6 +55,7 @@ public class ArrivalExitProxy implements SharedMemoryProxy {
             case PASSENGER_GOING_HOME:
                 provider.setEntityID(pkt.getId());
                 provider.setEntityState(pkt.getState());
+                arrivalExit.synchBlocked();
                 arrivalExit.goHome(pkt.getBool1()); // enters a blocking state
                 reply.setState(provider.getEntityState());
                 break;
@@ -65,6 +66,7 @@ public class ArrivalExitProxy implements SharedMemoryProxy {
             // in case it is departure entrance wanting to know how many are blocked @ exit
             case DEPARTURE_REQUEST_HOWMANY:
                 reply.setInt1(arrivalExit.currentBlockedPassengers());
+                //arrivalExit.synchBlocked();
                 break;
             // in case it is departure entrance wanting to wake up all passengers
             case DEPARTURE_REQUEST_WAKEUP:

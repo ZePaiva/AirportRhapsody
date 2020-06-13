@@ -21,7 +21,7 @@ public class RunParameters {
     /**
      * Number of passengers arriving in each plane
      */
-    public static final int N = 1;
+    public static final int N = 6;
 
     /**
      * Number of maximumum luggage each passenger has

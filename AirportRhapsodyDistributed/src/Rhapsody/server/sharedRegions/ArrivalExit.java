@@ -99,6 +99,7 @@ public class ArrivalExit {
 	 * Method to increment the number of passengers that terminated in this monitor
 	 */
 	public synchronized void synchBlocked() {
+		System.out.printf(ANSI_YELLOW+"[DEPTERMEN] Synching"+ANSI_RESET+"\n");
 		this.passengersTerminated++;
 	}
 
@@ -115,7 +116,7 @@ public class ArrivalExit {
 	 */
 	public synchronized void wakeCurrentBlockedPassengers(){
 		PassengerInterface passenger = (TunnelProvider) Thread.currentThread();
-		System.out.printf(ANSI_YELLOW+"[DEPTERMEN] P%d waking others "+ANSI_RESET+"\n", passenger.getEntityID());
+		System.out.printf(ANSI_PASSENGER+"[DEPTERMEN] P%d waking others "+ANSI_RESET+"\n", passenger.getEntityID());
 		notifyAll();
 	}
 

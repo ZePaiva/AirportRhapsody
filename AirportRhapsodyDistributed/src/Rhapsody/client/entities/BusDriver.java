@@ -82,6 +82,8 @@ public class BusDriver extends Thread{
 	public void run() {
       System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus PARKED AT ARRIVAL AND WAITING\n");
       while(arrivalTerminalTransfer.hasDaysWorkEnded())  {
+
+        this.busSeats.stream().forEach(System.out::println);
         // starts boarding process
         System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus Driver is announcing boarding\n");
         arrivalTerminalTransfer.announcingBusBoarding();
@@ -89,6 +91,8 @@ public class BusDriver extends Thread{
         // starts voyage to departure terminal
         System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus is going to DEPARTURE TERMINAL\n");
         this.busSeats=arrivalTerminalTransfer.goToDepartureTerminal();
+
+        this.busSeats.stream().forEach(System.out::println);
 
         // arrives at the departure terminal and waits until all passengers exit the bus
         System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus PARKED AT DEPARTURE AND WAITNG\n");
@@ -102,6 +106,7 @@ public class BusDriver extends Thread{
         // arrives to the arrival terminal and alerts that the bus has arrived to the clients
         System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus PARKED AT ARRIVAL AND WAITING\n");
         arrivalTerminalTransfer.parkTheBus();
+        System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus Driver is sleeping\n");
       }
       System.out.printf(ANSI_PURPLE+"[BUSDRIVER] BUS DRIVER FINISHED DAY OF WORK\n");
     }

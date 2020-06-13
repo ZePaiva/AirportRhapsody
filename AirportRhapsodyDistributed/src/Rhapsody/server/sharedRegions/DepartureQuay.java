@@ -72,6 +72,8 @@ public class DepartureQuay {
 		this.busSeats=busSeats;
 		this.busArrived=true;
 		System.out.printf(ANSI_BLACK+"[BUSDRIVER] Bus has parked, waiting for all to leave"+ANSI_RESET+"\n");
+		System.out.println(this.busSeats.isEmpty());
+		this.busSeats.stream().forEach(System.out::println);
 		notifyAll();
 		while(!this.busSeats.isEmpty()) {
 			try {

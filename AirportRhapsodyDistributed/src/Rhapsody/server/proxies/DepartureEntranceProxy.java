@@ -45,6 +45,7 @@ public class DepartureEntranceProxy implements SharedMemoryProxy{
             // passenger is preparing next flight
             case PASSENGER_NEXT_FLIGHT:
                 provider.setEntityID(pkt.getId());
+                departureEntrance.synchBlocked();
                 departureEntrance.prepareNextLeg(pkt.getBool1());
                 reply.setState(provider.getEntityState());
                 break;
@@ -55,6 +56,7 @@ public class DepartureEntranceProxy implements SharedMemoryProxy{
             // ATE requesting how many are blocked
             case ATE_REQUEST_HOWMANY:
                 reply.setInt1(departureEntrance.currentBlockedPassengers());
+                //departureEntrance.synchBlocked();
                 break;
             // ATE requesting to wake up
             case ATE_REQUEST_WAKEUP:
