@@ -69,6 +69,7 @@ public class StorageAreaMain {
                 e.printStackTrace();
             }
         }
+        repository.closeStub();
         System.out.println("[Baggage Reclaim] terminating...");
     }
 }

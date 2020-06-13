@@ -71,6 +71,7 @@ public class DepartureQuayMain {
                 e.printStackTrace();
             }    
         }
+        repository.closeStub();
         System.out.println("[Departure Transfer] terminating...");
     }
 }

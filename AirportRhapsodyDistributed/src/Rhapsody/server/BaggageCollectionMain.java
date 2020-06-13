@@ -69,6 +69,7 @@ public class BaggageCollectionMain {
                 e.printStackTrace();
             }
         }
+        repository.closeStub();
         System.out.println("[Baggage Collection] terminating...");
     }
 }

@@ -55,7 +55,7 @@ public class DepartureQuayProxy implements SharedMemoryProxy {
             // bus driver is parking the bus
             case BD_PARKING:
                 Queue<Integer> q = new LinkedList<>();
-                for (int i : pkt.getIntArray1()) { q.add(i); }
+                for (int i : pkt.getIntArray1()) { System.out.println (i); q.add(i); }
                 departureQuay.parkTheBusAndLetPassOff(q);
                 reply.setState(provider.getEntityState());
                 break; 

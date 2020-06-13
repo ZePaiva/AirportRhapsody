@@ -72,6 +72,7 @@ public class ArrivalLoungeMain {
                 e.printStackTrace();
             }
         }
+        repository.closeStub();
         System.out.println("[Arrival Lounge] terminating...");
     }
 }

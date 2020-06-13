@@ -78,6 +78,7 @@ public class DepartureEntranceMain {
                 e.printStackTrace();
             }    
         }
+        repository.closeStub();
         System.out.println("[Departure Transfer] terminating...");
     }
 }

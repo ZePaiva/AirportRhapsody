@@ -69,6 +69,7 @@ public class ArrivalQuayMain {
                 e.printStackTrace();
             }
         }
+        repository.closeStub();
         System.out.println("[Arrival Quay] terminating...");
     }
 }

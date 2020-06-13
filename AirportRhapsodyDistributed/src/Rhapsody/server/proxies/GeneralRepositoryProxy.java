@@ -130,6 +130,7 @@ public class GeneralRepositoryProxy implements SharedMemoryProxy {
             
             case SIM_ENDED:
                 this.finished++;
+                System.out.println(finished);
                 break;
             
             case LOG_MEM:
