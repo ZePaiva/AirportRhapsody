@@ -153,6 +153,10 @@ public class ArrivalQuay {
 		notifyAll();
 		System.out.println(ANSI_BLUE+"[BUSDRIVER] BusDriver is waiting passengers or sim to end"+ANSI_RESET);
 		while (!this.dayFinished && this.transferQuay.size()==0) {
+			System.out.println("1");
+			System.out.println(dayFinished);
+			System.out.println(transferQuay==null);
+			System.out.println(transferQuay.size());
 			try {
 				wait();
 				System.out.printf(ANSI_BLUE+"[BUSDRIVER] BusDriver woke | Sim %s | PA %s"+ANSI_RESET+"\n", this.dayFinished, this.transferQuay.size()!=0);
@@ -160,6 +164,10 @@ public class ArrivalQuay {
 				System.out.println(this.transferQuay.toString());
 			} catch (InterruptedException e) {
 			}
+			System.out.println("2");
+			System.out.println(dayFinished);
+			System.out.println(transferQuay==null);
+			System.out.println(transferQuay.size());
 		}
 		if (!this.dayFinished) {
 			System.out.printf(ANSI_BLUE+"[BUSDRIVER] First passenger arrived to ATT"+ANSI_RESET+"\n");

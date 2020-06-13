@@ -65,7 +65,7 @@ public class ArrivalQuayProxy implements SharedMemoryProxy{
             // simulation has ended
             case SIM_ENDED:
                 this.finished++;
-                if (finished==RunParameters.N) { arrivalQuay.endOfWork(); }
+                if (finished==1) { arrivalQuay.endOfWork(); }
                 break;
             // bus driver checking sim status
             case BD_HAS_ENDED:

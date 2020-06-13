@@ -363,4 +363,17 @@ public class GeneralRepositoryStub {
 		System.out.println("Closing conn");
 		clientCom.close();
 	}
+
+	/**
+	 * Close stub
+	 */
+	public void closeStub() {
+		ClientCom clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+		clientCom.open();
+		Message pkt = new Message();
+		pkt.setType(MessageType.SIM_ENDED);
+		clientCom.writeObject(pkt);
+		clientCom.readObject();
+		clientCom.close();
+	}
 }

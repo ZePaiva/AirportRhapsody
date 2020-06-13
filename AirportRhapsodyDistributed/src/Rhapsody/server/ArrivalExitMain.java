@@ -77,6 +77,7 @@ public class ArrivalExitMain {
                 e.printStackTrace();
             }
         }
+        repository.closeStub();
         System.out.println("[Arrival Terminal Exit] terminating...");
     }
 }
