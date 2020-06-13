@@ -1,19 +1,21 @@
 #!/bin/bash
-cd bin/
+cd bin
 echo "Running Shared Memories"
-konsole -e java -cp bin Rhapsody.server.GeneralRepositoryMain &> GeneralRepositoryLog &
-konsole -e java -cp bin Rhapsody.server.ArrivalExitMain &> ArrivalExitLog &
-konsole -e java -cp bin Rhapsody.server.ArrivalLoungeMain &> ArrivalLoungeLog &
-konsole -e java -cp bin Rhapsody.server.ArrivalQuayMain &> ArrivalQuayLog &
-konsole -e java -cp bin Rhapsody.server.BaggageCollectionMain &> BaggageCollectionLog &
-konsole -e java -cp bin Rhapsody.server.BaggageReclaimMain &> BaggageReclaimLog &
-konsole -e java -cp bin Rhapsody.server.DepartureEntranceMain &> DepartureEntranceLog &
-konsole -e java -cp bin Rhapsody.server.DepartureQuayMain &> DepartureQuayLog &
-konsole -e java -cp bin Rhapsody.server.StorageAreaMain &> StorageAreaLog &
+xterm -e java Rhapsody.server.GeneralRepositoryMain &
+sleep .5
+xterm -e java Rhapsody.server.ArrivalExitMain &
+xterm -e java Rhapsody.server.ArrivalLoungeMain &
+xterm -e java Rhapsody.server.ArrivalQuayMain &
+xterm -e java Rhapsody.server.BaggageCollectionMain &
+xterm -e java Rhapsody.server.BaggageReclaimMain &
+xterm -e java Rhapsody.server.DepartureEntranceMain &
+xterm -e java Rhapsody.server.DepartureQuayMain &
+xterm -e java Rhapsody.server.StorageAreaMain &
 
 echo "Running clients"
-konsole -e java -cp bin Rhapsody.client.PorterMain &> PorterLog &
-konsole -e java -cp bin Rhapsody.client.BusDriverMain &> BusDriverLog & 
-konsole -e java -cp bin Rhapsody.client.PassengerMain &> PassengerLog &
+sleep .5
+xterm -e java Rhapsody.client.PorterMain &
+xterm -e java Rhapsody.client.BusDriverMain & 
+xterm -e java Rhapsody.client.PassengerMain &
 
 echo "Now we wait"
