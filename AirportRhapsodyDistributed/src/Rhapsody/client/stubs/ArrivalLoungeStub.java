@@ -35,7 +35,14 @@ public class ArrivalLoungeStub {
 	public boolean takeARest() {
 
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Lounge  not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Porter porter = (Porter) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setState(porter.getPorterState());
@@ -57,7 +64,14 @@ public class ArrivalLoungeStub {
 	 */
 	public void whatShouldIDo(int flightId, int sb, int sit) {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Lounge  not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
@@ -81,7 +95,14 @@ public class ArrivalLoungeStub {
 	 */
 	public Luggage tryToCollectABag() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Lounge  not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Porter porter = (Porter) Thread.currentThread();
 		Message pkt = new Message();
 
@@ -101,7 +122,14 @@ public class ArrivalLoungeStub {
 	 */
 	public void endOfWork() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Lounge  not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
 
@@ -118,7 +146,14 @@ public class ArrivalLoungeStub {
 	 */
 	public void updateStartingBags(int[] startingBags, String[] situations) {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Lounge  not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Passenger passenger = (Passenger) Thread.currentThread();
 		int[] sits = Arrays.asList(situations).stream().mapToInt(s -> s.equals("FDT") ? 1 : 0).toArray();
 		Message pkt = new Message();
@@ -137,7 +172,14 @@ public class ArrivalLoungeStub {
 	 */
 	public void closeStub() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Lounge  not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
 		clientCom.writeObject(pkt);

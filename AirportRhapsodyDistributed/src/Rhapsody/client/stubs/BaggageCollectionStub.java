@@ -36,7 +36,14 @@ public class BaggageCollectionStub {
      */
     public void carryItToAppropriateStore(Luggage luggage) {
 		ClientCom clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Baggage Collection Point not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Porter porter = (Porter) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PORTER_STORE_BAG_CB);
@@ -55,7 +62,14 @@ public class BaggageCollectionStub {
      */
     public void noMoreBagsToCollect() {
         ClientCom clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Baggage Collection Point not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Porter porter = (Porter) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PORTER_NO_MORE_BAGS);
@@ -73,7 +87,14 @@ public class BaggageCollectionStub {
      */
     public int goCollectABag(int startingBags){
         ClientCom clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Baggage Collection Point not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PASSENGER_COLLECTING_BAG);
@@ -93,7 +114,14 @@ public class BaggageCollectionStub {
      */
     public void newFlight(){
         ClientCom clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Baggage Collection Point not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Message pkt = new Message();
 		pkt.setType(MessageType.NEW_FLIGHT);
 		
@@ -107,7 +135,14 @@ public class BaggageCollectionStub {
      */
 	public void closeStub() {
         ClientCom clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Baggage Collection Point not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
 		

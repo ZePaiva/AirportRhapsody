@@ -38,7 +38,14 @@ public class ArrivalQuayStub {
 	 */
 	public void takeABus() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Quay not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PASSENGERS_WAITING);
@@ -57,7 +64,14 @@ public class ArrivalQuayStub {
 	 */
 	public boolean enterTheBus() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Quay not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PASSENGER_INTO_BUS);
@@ -76,7 +90,14 @@ public class ArrivalQuayStub {
 	 */
 	public void endOfWork() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Quay not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
@@ -97,7 +118,14 @@ public class ArrivalQuayStub {
 	 */
 	public boolean hasDaysWorkEnded() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Quay not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_HAS_ENDED);
@@ -116,7 +144,14 @@ public class ArrivalQuayStub {
 	 */
 	public void announcingBusBoarding() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Quay not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_ANNOUNCING_BOARDING);
@@ -132,7 +167,14 @@ public class ArrivalQuayStub {
 	 */
 	public void parkTheBus() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Quay not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_ARRIVING);
@@ -149,7 +191,14 @@ public class ArrivalQuayStub {
 	 */
 	public Queue<Integer> goToDepartureTerminal() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Quay not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_DRIVING);
@@ -171,7 +220,14 @@ public class ArrivalQuayStub {
 	 */
 	public void closeStub() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Quay not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
 		clientCom.writeObject(pkt);

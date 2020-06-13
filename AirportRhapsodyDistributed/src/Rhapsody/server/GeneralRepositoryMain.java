@@ -64,7 +64,7 @@ public class GeneralRepositoryMain {
         GeneralRepositoryProxy repositoryProxy = new GeneralRepositoryProxy(repository);
         
         // start the repository server
-        serverCom = new ServerCom(RunParameters.RepositoryPort, 10000);
+        serverCom = new ServerCom(RunParameters.RepositoryPort, 1000);
         serverCom.start();
 
         System.out.println("Repository started, timeout set to 10 seconds");

@@ -31,7 +31,14 @@ public class ArrivalExitStub {
 	 */
 	public void goHome(boolean lastFlight) {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Exit not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PASSENGER_GOING_HOME);
@@ -53,7 +60,14 @@ public class ArrivalExitStub {
 	 */
 	public void synchBlocked() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Exit not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 
 		Message pkt = new Message();
 		pkt.setType(MessageType.DEPARTURE_SYNCH);
@@ -69,7 +83,14 @@ public class ArrivalExitStub {
 	 */
 	public int currentBlockedPassengers() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Exit not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 
 		Message pkt = new Message();
 		pkt.setType(MessageType.DEPARTURE_REQUEST_HOWMANY);
@@ -85,7 +106,14 @@ public class ArrivalExitStub {
 	 */
 	public void wakeCurrentBlockedPassengers(){
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Exit not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 
 		Message pkt = new Message();
 		pkt.setType(MessageType.DEPARTURE_REQUEST_WAKEUP);
@@ -100,7 +128,14 @@ public class ArrivalExitStub {
 	 */
 	public void closeStub() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Exit not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
 		clientCom.writeObject(pkt);

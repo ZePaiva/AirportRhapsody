@@ -29,7 +29,14 @@ public class DepartureEntranceStub {
 	 */
 	public void synchBlocked() {
 		ClientCom clientCom = new ClientCom(RunParameters.DepartureEntranceHostName, RunParameters.DepartureEntrancePort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Departure Entrance not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		Message pkt = new Message();
 		pkt.setType(MessageType.ATE_SYNCH);
 		
@@ -44,7 +51,14 @@ public class DepartureEntranceStub {
 	 */
 	public int currentBlockedPassengers() {
 		ClientCom clientCom = new ClientCom(RunParameters.DepartureEntranceHostName, RunParameters.DepartureEntrancePort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Departure Entrance not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		
 		Message pkt = new Message();
 		pkt.setType(MessageType.ATE_REQUEST_HOWMANY);
@@ -60,7 +74,14 @@ public class DepartureEntranceStub {
 	 */
 	public void wakeCurrentBlockedPassengers(){
 		ClientCom clientCom = new ClientCom(RunParameters.DepartureEntranceHostName, RunParameters.DepartureEntrancePort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Departure Entrance not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		
 		Message pkt = new Message();
 		pkt.setType(MessageType.ATE_REQUEST_WAKEUP);
@@ -75,7 +96,14 @@ public class DepartureEntranceStub {
 	 */
 	public void closeStub() {
 		ClientCom clientCom = new ClientCom(RunParameters.DepartureEntranceHostName, RunParameters.DepartureEntrancePort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Departure Entrance not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 		
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);

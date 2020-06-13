@@ -94,7 +94,7 @@ public class ClientCom {
             System.exit(1);
         } catch (ConnectException e) {
             System.err.printf("%s hostname %s not respondindg ", Thread.currentThread().getName(), host);
-            if (e.getMessage().equals("Connection refused")) {
+            if (e.getMessage().equals("Connection refused (Connection refused)")) {
                 success = false;
             } else {
                 e.printStackTrace();

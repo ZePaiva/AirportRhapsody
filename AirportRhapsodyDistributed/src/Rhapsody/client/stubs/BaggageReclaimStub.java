@@ -26,7 +26,14 @@ public class BaggageReclaimStub {
 	 */
 	public void reportMissingBags(int lostBags) {
 		ClientCom clientCom = new ClientCom(RunParameters.BaggageReclaimHostName, RunParameters.BaggageReclaimPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Baggage Reclaim not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
         Passenger passenger = (Passenger) Thread.currentThread();
         Message pkt = new Message();
         pkt.setType(MessageType.PASSENGER_COMPLAINT);
@@ -43,7 +50,14 @@ public class BaggageReclaimStub {
      */
 	public void closeStub() {
         ClientCom clientCom = new ClientCom(RunParameters.BaggageReclaimHostName, RunParameters.BaggageReclaimPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Baggage Reclaim not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
         Message pkt = new Message();
         pkt.setType(MessageType.SIM_ENDED);
         clientCom.writeObject(pkt);

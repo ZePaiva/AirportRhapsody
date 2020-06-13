@@ -93,8 +93,9 @@ public class ClientCom {
             e.printStackTrace();
             System.exit(1);
         } catch (ConnectException e) {
-            System.err.printf("%s hostname %s not respondindg ", Thread.currentThread().getName(), host);
-            if (e.getMessage().equals("Connection refused")) {
+            //System.err.printf("%s hostname %s not respondindg , might not be active yet\n", Thread.currentThread().getName(), host);
+            //System.out.println(e.getMessage());
+            if (e.getMessage().equals("Connection refused (Connection refused)")) {
                 success = false;
             } else {
                 e.printStackTrace();

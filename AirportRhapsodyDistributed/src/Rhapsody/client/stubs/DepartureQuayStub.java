@@ -33,7 +33,14 @@ public class DepartureQuayStub {
 	 */
 	public void leaveTheBus() {
         ClientCom clientCom = new ClientCom(RunParameters.DepartureQuayHostName, RunParameters.DepartureQuayPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Departure Quay not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
         Passenger passenger = (Passenger) Thread.currentThread();
         Message pkt = new Message();
         pkt.setType(MessageType.PASSENGER_EXITING_BUS);
@@ -50,7 +57,14 @@ public class DepartureQuayStub {
 	 */
 	public void parkTheBusAndLetPassOff(Queue<Integer> busSeats) {
         ClientCom clientCom = new ClientCom(RunParameters.DepartureQuayHostName, RunParameters.DepartureQuayPort);
-        clientCom.open();
+        while (!clientCom.open()) {
+			System.out.println("Departure Quay not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
         BusDriver busDriver = (BusDriver) Thread.currentThread();
         Message pkt = new Message();
         
@@ -70,7 +84,14 @@ public class DepartureQuayStub {
 	 */
 	public void goToArrivalTerminal() {
         ClientCom clientCom = new ClientCom(RunParameters.DepartureQuayHostName, RunParameters.DepartureQuayPort);
-        clientCom.open();
+        while (!clientCom.open()) {
+			System.out.println("Departure Quay not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
         BusDriver busDriver = (BusDriver) Thread.currentThread();
         Message pkt = new Message();
         
@@ -87,7 +108,14 @@ public class DepartureQuayStub {
      */
 	public void closeStub() {
 		ClientCom clientCom = new ClientCom(RunParameters.DepartureQuayHostName, RunParameters.DepartureQuayPort);
-        clientCom.open();
+        while (!clientCom.open()) {
+			System.out.println("Departure Quay not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
         Message pkt = new Message();
         pkt.setType(MessageType.SIM_ENDED);
         clientCom.writeObject(pkt);

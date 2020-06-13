@@ -33,7 +33,14 @@ public class ArrivalQuayStub {
 	public void endOfWork() {
 				
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalQuayHostName, RunParameters.ArrivalQuayPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Quay not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);

@@ -31,7 +31,14 @@ public class BaggageCollectionStub {
      */
     public void newFlight(){
         ClientCom clientCom = new ClientCom(RunParameters.BaggageCollectionHostName, RunParameters.BaggageCollectionPort);
-		clientCom.open();        
+		while (!clientCom.open()) {
+			System.out.println("Baggage Collection Point not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};        
         Message pkt = new Message();
 		pkt.setType(MessageType.NEW_FLIGHT);
 		

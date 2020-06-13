@@ -28,7 +28,14 @@ public class StorageAreaStub {
      */
     public void carryItToAppropriateStore(Luggage luggage) {
 		ClientCom clientCom = new ClientCom(RunParameters.StorageAreaHostName, RunParameters.StorageAreaPort);
-        clientCom.open();
+        while (!clientCom.open()) {
+			System.out.println("Storeage Area not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
         Porter porter = (Porter) Thread.currentThread();
         Message pkt = new Message();
         pkt.setType(MessageType.PORTER_STORE_BAG_SR);
@@ -46,7 +53,14 @@ public class StorageAreaStub {
      */
 	public void closeStub() {
         ClientCom clientCom = new ClientCom(RunParameters.StorageAreaHostName, RunParameters.StorageAreaPort);
-        clientCom.open();
+        while (!clientCom.open()) {
+			System.out.println("Storeage Area not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
         Message pkt = new Message();
         pkt.setType(MessageType.SIM_ENDED);
         clientCom.writeObject(pkt);

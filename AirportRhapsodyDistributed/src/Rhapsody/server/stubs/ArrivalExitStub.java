@@ -31,7 +31,14 @@ public class ArrivalExitStub {
 	 */
 	public int currentBlockedPassengers() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Exit not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 
 		Message pkt = new Message();
 		pkt.setType(MessageType.DEPARTURE_REQUEST_HOWMANY);
@@ -47,7 +54,14 @@ public class ArrivalExitStub {
 	 */
 	public void wakeCurrentBlockedPassengers(){
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
-		clientCom.open();
+		while (!clientCom.open()) {
+			System.out.println("Arrival Exit not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		};
 
 		Message pkt = new Message();
 		pkt.setType(MessageType.DEPARTURE_REQUEST_WAKEUP);
