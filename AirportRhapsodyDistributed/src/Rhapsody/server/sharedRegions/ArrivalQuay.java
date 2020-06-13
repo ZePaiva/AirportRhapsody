@@ -143,40 +143,28 @@ public class ArrivalQuay {
 
 	/**
 	 * Method used by the bus driver if it's day of work has ended or any passenger
-	 * arrived to arrival termina ltransfer quay
+	 * arrived to arrival terminal transfer quay
 	 * 
 	 * @return daysWorkEnded
 	 */
 	public synchronized boolean hasDaysWorkEnded() {
 		BusDriverInterface busDriver = (TunnelProvider) Thread.currentThread();
 		busDriver.setEntityState(States.PARKING_AT_THE_ARRIVAL_LOUNGE);
-		this.generalRepository.updateBusDriverState(busDriver.getEntityState(), false);
+		this.generalRepository.updateBusDriverState(busDriver.getEntityState(), true);
 		this.availableBus = true;
 		notifyAll();
 		System.out.println(ANSI_BLUE+"[BUSDRIVER] BusDriver is waiting passengers or sim to end"+ANSI_RESET);
 		while (!this.dayFinished && this.transferQuay.size()==0) {
-			System.out.println("1");
-			System.out.println(dayFinished);
-			System.out.println(transferQuay==null);
-			System.out.println(transferQuay.size());
 			try {
 				wait();
 				System.out.printf(ANSI_BLUE+"[BUSDRIVER] BusDriver woke | Sim %s | PA %s"+ANSI_RESET+"\n", this.dayFinished, this.transferQuay.size()!=0);
-				System.out.println(!this.dayFinished && this.transferQuay.size()==0);
-				System.out.println(this.transferQuay.toString());
-			} catch (InterruptedException e) {
-			}
-			System.out.println("2");
-			System.out.println(dayFinished);
-			System.out.println(transferQuay==null);
-			System.out.println(transferQuay.size());
+			} catch (InterruptedException e) {}
 		}
 		if (!this.dayFinished) {
 			System.out.printf(ANSI_BLUE+"[BUSDRIVER] First passenger arrived to ATT"+ANSI_RESET+"\n");
 			try {
 				wait(this.busSchedule);
-			} catch (InterruptedException e) {
-			}
+			} catch (InterruptedException e) {}
 		}
 		return !this.dayFinished;
 	}

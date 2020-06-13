@@ -35,7 +35,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_FLIGHT_CLEAR);
 		pkt.setBool1(b);
@@ -59,7 +59,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_FLIGHT);
 		pkt.setBool1(b);
@@ -84,7 +84,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_BAG_PLANE);
 		pkt.setBool1(b);
@@ -109,7 +109,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PORTER_STATE);
 		pkt.setBool1(b);
@@ -135,7 +135,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_STATE);
 		pkt.setBool1(b);
@@ -161,7 +161,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_IN_FLIGHT);
 		pkt.setBool1(b);
@@ -186,7 +186,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_BAG_PH);
 		pkt.setBool1(b);
@@ -212,7 +212,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_CB);
 		pkt.setBool1(b);
@@ -239,10 +239,10 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_SIT);
-		pkt.setBool1(b);
+		pkt.setBool2(b);
 		pkt.setInt1(entityID);
 		pkt.setBool1(situation.equals("FDT"));
 		clientCom.writeObject(pkt);
@@ -266,12 +266,12 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_SB);
 		pkt.setBool1(b);
 		pkt.setId(entityID);
-		pkt.setInt2(startingBags);
+		pkt.setInt1(startingBags);
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
 		clientCom.close();
@@ -292,7 +292,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_IN_WAIT);
 		pkt.setBool1(b);
@@ -316,7 +316,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_OUT_WAIT);
 		pkt.setBool1(b);
@@ -340,7 +340,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_IN_BUS);
 		pkt.setBool1(b);
@@ -365,7 +365,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_BD_STATE);
 		pkt.setBool1(b);
@@ -390,7 +390,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_BAG_CB);
 		pkt.setBool1(b);
@@ -415,7 +415,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_BAG_SR);
 		pkt.setBool1(b);
@@ -440,7 +440,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_BAG_L);
 		pkt.setBool1(b);
@@ -465,7 +465,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_TRT);
 		pkt.setBool1(b);
@@ -489,7 +489,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_PASS_OUT_BUS);
 		pkt.setBool1(b);
@@ -512,7 +512,7 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.LOG_MEM);
 		pkt.setInt1(i);
@@ -535,9 +535,67 @@ public class GeneralRepositoryStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
+		clientCom.writeObject(pkt);
+		clientCom.readObject();
+		clientCom.close();
+	}
+
+	/**
+	 * Burst add passenger method
+	 * 
+	 * @param id
+	 * @param state
+	 * @param sit
+	 * @param startBag
+	 * @param currentBag
+	 * @param noLog
+	 */
+	public void burstAddPass(int id, States state, String sit, int startBag, int currentBag, boolean noLog) {
+		ClientCom clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+		while (!clientCom.open()) {
+			System.out.println("General Repository not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
+		Message pkt = new Message();
+		pkt.setType(MessageType.BURST_PASS);
+		pkt.setId(id);
+		pkt.setState(state);
+		pkt.setInt1(startBag);
+		pkt.setInt2(currentBag);
+		pkt.setBool1(sit.equals("FDT"));
+		pkt.setBool2(noLog);
+		clientCom.writeObject(pkt);
+		clientCom.readObject();
+		clientCom.close();
+	}
+
+	/**
+	 * Update amount of fdt passengers
+	 * 
+	 * @param pass
+	 * @param noLog
+	 */
+	public void updateFDTPassengers(int pass, boolean noLog) {
+		ClientCom clientCom = new ClientCom(RunParameters.RepositoryHostName, RunParameters.RepositoryPort);
+		while (!clientCom.open()) {
+			System.out.println("General Repository not active yet, sleeping for 1 seccond");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
+		Message pkt = new Message();
+		pkt.setType(MessageType.UP_FDT);
+		pkt.setInt1(pass);
+		pkt.setBool1(noLog);
 		clientCom.writeObject(pkt);
 		clientCom.readObject();
 		clientCom.close();

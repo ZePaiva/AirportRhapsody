@@ -82,6 +82,6 @@ public class GeneralRepositoryMain {
                 e.printStackTrace();
             } 
         }
-
+        repository.finish();
     }
 }

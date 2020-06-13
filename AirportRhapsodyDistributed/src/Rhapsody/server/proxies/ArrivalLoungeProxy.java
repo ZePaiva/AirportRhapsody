@@ -75,6 +75,7 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
             // in case the passenger is logging into the lounge for the first time, useful to register it's situations and starting bags on the plane
             case PASSENGER_IN:
                 this.arrivalLounge.updateStartingBags(pkt.getId(), pkt.getIntArray1(), pkt.getIntArray2());
+                System.out.println("upd8d bags");
                 break;
             // simulation has ended
             case SIM_ENDED:

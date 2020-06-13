@@ -13,18 +13,18 @@ import Rhapsody.server.communications.TunnelProvider;
 import Rhapsody.server.sharedRegions.ArrivalQuay;
 
 /**
- * Arrival Quay proxy 
+ * Arrival Quay proxy
  * 
  * @author José Paiva
  * @author André Mourato
  */
-public class ArrivalQuayProxy implements SharedMemoryProxy{
-    
+public class ArrivalQuayProxy implements SharedMemoryProxy {
+
     /**
      * entity to proxy
      */
     private final ArrivalQuay arrivalQuay;
-    
+
     /**
      * Simulation status
      */
@@ -32,28 +32,28 @@ public class ArrivalQuayProxy implements SharedMemoryProxy{
 
     /**
      * Proxy constructor
+     * 
      * @param arrivalQuay
      */
     public ArrivalQuayProxy(ArrivalQuay arrivalQuay) {
-        this.arrivalQuay=arrivalQuay;
-        this.finished=0;
+        this.arrivalQuay = arrivalQuay;
+        this.finished = 0;
     }
 
     /**
      * Process message and generate reply
      */
-	public Message proccesPacket(Message pkt) {
-        
+    public Message proccesPacket(Message pkt) {
+
         Message reply = new Message();
         TunnelProvider provider = (TunnelProvider) Thread.currentThread();
         System.out.println("Got message of type " + pkt.getType());
 
         switch (pkt.getType()) {
-            // in case a passenger arrives to the arrival quay 
+            // in case a passenger arrives to the arrival quay
             case PASSENGERS_WAITING:
-                System.out.printf("P %d taking a bus\n", pkt.getId());
                 provider.setEntityID(pkt.getId());
-                arrivalQuay.takeABus();         // will sert in a blocking state
+                arrivalQuay.takeABus(); // will sert in a blocking state
                 reply.setState(provider.getEntityState());
                 break;
             // has bus and bus has seats
@@ -65,7 +65,9 @@ public class ArrivalQuayProxy implements SharedMemoryProxy{
             // simulation has ended
             case SIM_ENDED:
                 this.finished++;
-                if (finished==1) { arrivalQuay.endOfWork(); }
+                if (finished == 1) {
+                    arrivalQuay.endOfWork();
+                }
                 break;
             // bus driver checking sim status
             case BD_HAS_ENDED:
@@ -94,13 +96,13 @@ public class ArrivalQuayProxy implements SharedMemoryProxy{
                 throw new RuntimeException("Wrong operation in message: " + pkt.getType());
         }
         return reply;
-	}
+    }
 
     /**
      * Check simulation status
      */
-	public boolean hasSimEnded() {
-		return finished==2;
-	}
+    public boolean hasSimEnded() {
+        return finished == 2;
+    }
 
 }
