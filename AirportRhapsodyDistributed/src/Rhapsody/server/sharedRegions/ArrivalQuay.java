@@ -1,5 +1,6 @@
 package Rhapsody.server.sharedRegions;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -220,7 +221,10 @@ public class ArrivalQuay {
 			Thread.sleep(this.busSchedule);
 		} catch (InterruptedException e) {}
 		System.out.printf(ANSI_BLUE+"[BUSDRIVER] BusDriver ended FORWARD voyage"+ANSI_RESET+"\n");
+		System.out.println(busSeats==null);
 		int[] seats = this.busSeats.stream().mapToInt(i -> i).toArray();
+		System.out.println(seats==null);
+		System.out.println(Arrays.toString(seats));
 		return seats;
 	}
 }

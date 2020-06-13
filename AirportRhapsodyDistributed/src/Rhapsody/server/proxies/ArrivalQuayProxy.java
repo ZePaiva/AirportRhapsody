@@ -88,6 +88,7 @@ public class ArrivalQuayProxy implements SharedMemoryProxy{
                 provider.setEntityState(pkt.getState());
                 reply.setIntArray1(arrivalQuay.goToDepartureTerminal());
                 reply.setState(provider.getEntityState());
+                System.out.println("finito");
                 break;
             default:
                 throw new RuntimeException("Wrong operation in message: " + pkt.getType());

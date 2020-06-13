@@ -92,6 +92,7 @@ public class BusDriver extends Thread{
 
         // arrives at the departure terminal and waits until all passengers exit the bus
         System.out.printf(ANSI_PURPLE+"[BUSDRIVER] Bus PARKED AT DEPARTURE AND WAITNG\n");
+        System.out.println(busSeats==null);
         departureTerminalTransfer.parkTheBusAndLetPassOff(this.busSeats);
 
         // starts voyage to the arrival terminal

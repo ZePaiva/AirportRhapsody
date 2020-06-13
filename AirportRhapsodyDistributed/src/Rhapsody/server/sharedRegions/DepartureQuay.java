@@ -67,16 +67,18 @@ public class DepartureQuay {
 	public synchronized void parkTheBusAndLetPassOff(Queue<Integer> busSeats) {
 		BusDriverInterface busDriver = (TunnelProvider) Thread.currentThread();
 		busDriver.setEntityState(States.PARKING_AT_THE_DEPARTURE_TERMINAL);
+		System.out.println(busSeats==null);
 		this.generalRepository.updateBusDriverState(busDriver.getEntityState(), false);
 		this.busSeats=busSeats;
 		this.busArrived=true;
 		System.out.printf(ANSI_BLACK+"[BUSDRIVER] Bus has parked, waiting for all to leave"+ANSI_RESET+"\n");
 		notifyAll();
-		while(!busSeats.isEmpty()) {
+		while(!this.busSeats.isEmpty()) {
 			try {
 				wait();
 			} catch (InterruptedException e) {}
 		}
+		System.out.printf(ANSI_BLACK+"[BUSDRIVER] Bus has parked, all left"+ANSI_RESET+"\n");
 	}
 
 	/**
