@@ -1,7 +1,6 @@
 package Rhapsody.server.proxies;
 
 import Rhapsody.common.Message;
-import Rhapsody.common.RunParameters;
 import Rhapsody.server.communications.TunnelProvider;
 import Rhapsody.server.sharedRegions.BaggageReclaim;
 
@@ -29,9 +28,9 @@ public class BaggageReclaimProxy implements SharedMemoryProxy {
      * @param baggageReclaim
      */
     public BaggageReclaimProxy(BaggageReclaim baggageReclaim) {
-        this.baggageReclaim=baggageReclaim;
-        this.finished=false;
-    } 
+        this.baggageReclaim = baggageReclaim;
+        this.finished = false;
+    }
 
     /**
      * Process message and generate reply
@@ -50,12 +49,12 @@ public class BaggageReclaimProxy implements SharedMemoryProxy {
                 break;
             // signaling simulation finish
             case SIM_ENDED:
-                this.finished=true;
+                this.finished = true;
                 break;
             default:
                 throw new RuntimeException("Wrong operation in message: " + pkt.getType());
-        }   
-        
+        }
+
         return reply;
     }
 
@@ -65,6 +64,5 @@ public class BaggageReclaimProxy implements SharedMemoryProxy {
     public boolean hasSimEnded() {
         return finished;
     }
-
 
 }

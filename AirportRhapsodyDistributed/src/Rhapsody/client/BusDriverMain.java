@@ -3,7 +3,6 @@ package Rhapsody.client;
 import Rhapsody.client.entities.BusDriver;
 import Rhapsody.client.stubs.ArrivalQuayStub;
 import Rhapsody.client.stubs.DepartureQuayStub;
-import Rhapsody.common.States;
 
 /**
  * Bus Driver main

@@ -1,9 +1,6 @@
 package Rhapsody.server.sharedRegions;
 
 import Rhapsody.server.stubs.GeneralRepositoryStub;
-
-import java.net.ConnectException;
-
 import Rhapsody.common.RunParameters;
 import Rhapsody.common.States;
 import Rhapsody.server.communications.TunnelProvider;

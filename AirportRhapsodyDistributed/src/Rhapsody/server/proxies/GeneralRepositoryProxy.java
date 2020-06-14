@@ -1,7 +1,6 @@
 package Rhapsody.server.proxies;
 
 import Rhapsody.common.Message;
-import Rhapsody.common.RunParameters;
 import Rhapsody.server.sharedRegions.GeneralRepository;
 
 /**

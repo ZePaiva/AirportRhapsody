@@ -1,6 +1,5 @@
 package Rhapsody.client.stubs;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -18,16 +17,16 @@ import Rhapsody.common.RunParameters;
  * @author André Mourato
  */
 public class ArrivalQuayStub {
-    
-    /**
-     * Prettify
-     */
-    public static final String ANSI_BLUE = "\u001B[0m\u001B[34m";
 
-    /**
-     * Arrival quay stub constructor
-     */
-    public ArrivalQuayStub(){
+	/**
+	 * Prettify
+	 */
+	public static final String ANSI_BLUE = "\u001B[0m\u001B[34m";
+
+	/**
+	 * Arrival quay stub constructor
+	 */
+	public ArrivalQuayStub() {
 	}
 
 	/**
@@ -45,7 +44,8 @@ public class ArrivalQuayStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PASSENGERS_WAITING);
@@ -71,7 +71,8 @@ public class ArrivalQuayStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PASSENGER_INTO_BUS);
@@ -83,7 +84,7 @@ public class ArrivalQuayStub {
 		passenger.setCurrentState(pkt.getState());
 		clientCom.close();
 		return pkt.getBool1();
-    }
+	}
 
 	/**
 	 * Method used to signal BusDriver that day of work has ended
@@ -97,7 +98,8 @@ public class ArrivalQuayStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
@@ -125,7 +127,8 @@ public class ArrivalQuayStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_HAS_ENDED);
@@ -136,7 +139,7 @@ public class ArrivalQuayStub {
 
 		busDriver.setBusDriverState(pkt.getState());
 		clientCom.close();
-        return pkt.getBool1();
+		return pkt.getBool1();
 	}
 
 	/**
@@ -151,7 +154,8 @@ public class ArrivalQuayStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_ANNOUNCING_BOARDING);
@@ -174,7 +178,8 @@ public class ArrivalQuayStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_ARRIVING);
@@ -198,7 +203,8 @@ public class ArrivalQuayStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 		BusDriver busDriver = (BusDriver) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.BD_DRIVING);
@@ -210,9 +216,11 @@ public class ArrivalQuayStub {
 		busDriver.setBusDriverState(pkt.getState());
 
 		Queue<Integer> q = new LinkedList<>();
-		for (int i : seats) { q.add(i); }
+		for (int i : seats) {
+			q.add(i);
+		}
 		clientCom.close();
-        return q;
+		return q;
 	}
 
 	/**
@@ -227,7 +235,8 @@ public class ArrivalQuayStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
 		clientCom.writeObject(pkt);

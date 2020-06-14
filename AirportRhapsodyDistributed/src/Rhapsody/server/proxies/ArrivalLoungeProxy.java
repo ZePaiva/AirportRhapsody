@@ -1,10 +1,7 @@
 package Rhapsody.server.proxies;
 
-import java.security.Provider;
-
 import Rhapsody.common.Luggage;
 import Rhapsody.common.Message;
-import Rhapsody.common.RunParameters;
 import Rhapsody.server.communications.TunnelProvider;
 import Rhapsody.server.sharedRegions.ArrivalLounge;
 
@@ -53,26 +50,29 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
                 break;
             // passenger login (whatShouldIDo), must allow passengers to add starting bags
             case PASSENGER_ARRIVED:
-                //this.arrivalLounge.updateStartingBags(pkt.getId(), pkt.getIntArray1(), pkt.getIntArray2());
+                // this.arrivalLounge.updateStartingBags(pkt.getId(), pkt.getIntArray1(),
+                // pkt.getIntArray2());
                 System.out.println(pkt.toString());
                 provider.setEntityID(pkt.getId());
                 provider.setEntityState(pkt.getState());
                 provider.setStartingBags(pkt.getInt1());
                 provider.setSituation(pkt.getInt2());
                 System.out.println("entering WSID");
-                this.arrivalLounge.whatShouldIDo(provider.getEntityID()); //induces blocking state
+                this.arrivalLounge.whatShouldIDo(provider.getEntityID()); // induces blocking state
                 System.out.println("exit WSID");
                 reply.setState(provider.getEntityState());
                 break;
-            // Porter collecting bags from plane hold, will parse to a boolean and a int instead of a luggage
+            // Porter collecting bags from plane hold, will parse to a boolean and a int
+            // instead of a luggage
             case PORTER_COLLECT_BAG:
                 Luggage bag = this.arrivalLounge.tryToCollectABag();
-                if (bag!=null) {
+                if (bag != null) {
                     reply.setInt1(bag.getPassengerId());
                     reply.setBool1(bag.getLuggageType().equals("FDT"));
                 }
                 break;
-            // in case the passenger is logging into the lounge for the first time, useful to register it's situations and starting bags on the plane
+            // in case the passenger is logging into the lounge for the first time, useful
+            // to register it's situations and starting bags on the plane
             case PASSENGER_IN:
                 this.arrivalLounge.updateStartingBags(pkt.getId(), pkt.getIntArray1(), pkt.getIntArray2());
                 System.out.println("upd8d bags");
@@ -81,7 +81,10 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
             case SIM_ENDED:
                 this.finished++;
                 System.out.println(finished);
-                if (this.finished==1) { arrivalLounge.endOfWork(); System.out.println("clear");}
+                if (this.finished == 1) {
+                    arrivalLounge.endOfWork();
+                    System.out.println("clear");
+                }
                 break;
             default:
                 throw new RuntimeException("Wrong operation in message: " + pkt.getType());
@@ -93,6 +96,6 @@ public class ArrivalLoungeProxy implements SharedMemoryProxy {
      * Check simulation status
      */
     public boolean hasSimEnded() {
-        return this.finished==2;
+        return this.finished == 2;
     }
 }

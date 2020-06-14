@@ -9,7 +9,6 @@ import Rhapsody.common.RunParameters;
 import Rhapsody.server.communications.ServerCom;
 import Rhapsody.server.communications.TunnelProvider;
 import Rhapsody.server.proxies.DepartureEntranceProxy;
-import Rhapsody.server.sharedRegions.ArrivalLounge;
 import Rhapsody.server.sharedRegions.DepartureEntrance;
 import Rhapsody.server.stubs.ArrivalExitStub;
 

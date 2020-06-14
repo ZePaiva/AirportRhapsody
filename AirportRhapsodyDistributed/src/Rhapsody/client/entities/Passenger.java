@@ -1,7 +1,5 @@
 package Rhapsody.client.entities;
 
-import java.lang.Thread.State;
-
 import Rhapsody.client.stubs.ArrivalExitStub;
 import Rhapsody.client.stubs.ArrivalLoungeStub;
 import Rhapsody.client.stubs.ArrivalQuayStub;

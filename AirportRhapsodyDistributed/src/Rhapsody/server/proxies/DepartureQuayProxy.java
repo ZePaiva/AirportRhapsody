@@ -1,8 +1,6 @@
 package Rhapsody.server.proxies;
 
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import Rhapsody.common.Message;
@@ -21,20 +19,20 @@ public class DepartureQuayProxy implements SharedMemoryProxy {
      * Entity to proxy
      */
     private DepartureQuay departureQuay;
-    
+
     /**
      * Simulation status
      */
     private boolean finished;
-    
+
     /**
      * Constructor method
      * 
      * @param departureQuay
      */
     public DepartureQuayProxy(DepartureQuay departureQuay) {
-        this.finished=false;
-        this.departureQuay=departureQuay;
+        this.finished = false;
+        this.departureQuay = departureQuay;
     }
 
     /**
@@ -55,10 +53,13 @@ public class DepartureQuayProxy implements SharedMemoryProxy {
             // bus driver is parking the bus
             case BD_PARKING:
                 Queue<Integer> q = new LinkedList<>();
-                for (int i : pkt.getIntArray1()) { System.out.println (i); q.add(i); }
+                for (int i : pkt.getIntArray1()) {
+                    System.out.println(i);
+                    q.add(i);
+                }
                 departureQuay.parkTheBusAndLetPassOff(q);
                 reply.setState(provider.getEntityState());
-                break; 
+                break;
             // bus driver is starting travel to ATQ
             case BD_DRIVING:
                 departureQuay.goToArrivalTerminal();
@@ -66,7 +67,7 @@ public class DepartureQuayProxy implements SharedMemoryProxy {
                 break;
             // simulation ended
             case SIM_ENDED:
-                this.finished=true;
+                this.finished = true;
                 break;
             default:
                 throw new RuntimeException("Wrong operation in message: " + pkt.getType());
