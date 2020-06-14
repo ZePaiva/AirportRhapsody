@@ -1,5 +1,5 @@
 #!/bin/bash
-rm -r /bin
+rm -r bin
 
 echo "creating necessary binaris directories"
 # server dirs

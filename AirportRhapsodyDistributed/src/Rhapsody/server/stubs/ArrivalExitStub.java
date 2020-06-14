@@ -14,19 +14,20 @@ import Rhapsody.server.communications.ClientCom;
 public class ArrivalExitStub {
 
 	/**
-     * Prettify
-     */
+	 * Prettify
+	 */
 	public static final String ANSI_YELLOW = "\u001B[0m\u001B[33m";
 
 	/**
 	 * Arrival exit stub constructor
 	 */
-    public ArrivalExitStub() {
-		
-    }
+	public ArrivalExitStub() {
+
+	}
 
 	/**
 	 * Getter method to obtain currentBlocked threads
+	 * 
 	 * @return number of waiting threads in object
 	 */
 	public int currentBlockedPassengers() {
@@ -38,7 +39,8 @@ public class ArrivalExitStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 
 		Message pkt = new Message();
 		pkt.setType(MessageType.DEPARTURE_REQUEST_HOWMANY);
@@ -52,7 +54,7 @@ public class ArrivalExitStub {
 	/**
 	 * Method to wake all threads in object monitor
 	 */
-	public void wakeCurrentBlockedPassengers(){
+	public void wakeCurrentBlockedPassengers() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
 		while (!clientCom.open()) {
 			System.out.println("Arrival Exit not active yet, sleeping for 1 seccond");
@@ -61,7 +63,8 @@ public class ArrivalExitStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 
 		Message pkt = new Message();
 		pkt.setType(MessageType.DEPARTURE_REQUEST_WAKEUP);
@@ -70,11 +73,4 @@ public class ArrivalExitStub {
 		pkt = (Message) clientCom.readObject();
 		clientCom.close();
 	}
-
-	/**
-	 * Close teh stub
-	 */
-	public void closeStub() {
-	}
-    
 }

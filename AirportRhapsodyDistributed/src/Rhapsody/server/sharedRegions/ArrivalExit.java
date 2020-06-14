@@ -8,8 +8,6 @@ import Rhapsody.common.RunParameters;
 import Rhapsody.common.States;
 import Rhapsody.server.communications.TunnelProvider;
 import Rhapsody.server.interfaces.PassengerInterface;
-import Rhapsody.server.stubs.ArrivalLoungeStub;
-import Rhapsody.server.stubs.ArrivalQuayStub;
 import Rhapsody.server.stubs.DepartureEntranceStub;
 
 /**
@@ -28,19 +26,9 @@ public class ArrivalExit {
 	private GeneralRepositoryStub generalRepository;
 
 	/**
-	 * Arrival terminal transfer quay stub
-	 */
-	private ArrivalQuayStub arrivalQuay;
-
-	/**
 	 * Departure terminal entrance stub
 	 */
 	private DepartureEntranceStub departureEntrance;
-
-	/**
-	 * Arrival lounge stub
-	 */
-	private ArrivalLoungeStub arrivalLounge;
 
 	/**
 	 * Passengers that finished flight
@@ -61,13 +49,10 @@ public class ArrivalExit {
 	 * 
 	 * @param gStub
 	 */
-	public ArrivalExit(GeneralRepositoryStub gStub, ArrivalQuayStub aStub, DepartureEntranceStub dStub,
-			ArrivalLoungeStub aStub2) {
+	public ArrivalExit(GeneralRepositoryStub gStub, DepartureEntranceStub dStub) {
 		this.passengersTerminated = 0;
 		this.generalRepository = gStub;
-		this.arrivalQuay = aStub;
 		this.departureEntrance = dStub;
-		this.arrivalLounge = aStub2;
 		this.generalRepository.registerMem(1);
 	}
 

@@ -12,8 +12,6 @@ import Rhapsody.server.proxies.DepartureEntranceProxy;
 import Rhapsody.server.sharedRegions.ArrivalLounge;
 import Rhapsody.server.sharedRegions.DepartureEntrance;
 import Rhapsody.server.stubs.ArrivalExitStub;
-import Rhapsody.server.stubs.ArrivalLoungeStub;
-import Rhapsody.server.stubs.ArrivalQuayStub;
 
 /**
  * Departure entrance entity main
@@ -30,7 +28,7 @@ public class DepartureEntranceMain {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        
+
         /**
          * Create communication utilities
          */
@@ -41,20 +39,18 @@ public class DepartureEntranceMain {
          * Create stubs
          */
         GeneralRepositoryStub repository = new GeneralRepositoryStub();
-        ArrivalLoungeStub lounge = new ArrivalLoungeStub();
-        ArrivalQuayStub arrivalTerminalTransfer = new ArrivalQuayStub();
         ArrivalExitStub arrivalExitStub = new ArrivalExitStub();
 
         /**
          * Create main entity
          */
-        DepartureEntrance departureEntrance = new DepartureEntrance(repository, arrivalExitStub, lounge, arrivalTerminalTransfer);
+        DepartureEntrance departureEntrance = new DepartureEntrance(repository, arrivalExitStub);
 
         /**
          * Create proxy
          */
         DepartureEntranceProxy proxy = new DepartureEntranceProxy(departureEntrance);
-    
+
         /**
          * Start comms
          */
@@ -69,14 +65,14 @@ public class DepartureEntranceMain {
                 provider.start();
             } catch (SocketTimeoutException e) {
                 System.err.printf("%s [DEPARTUREENTRANCE] socket timouted\n", Thread.currentThread().getName());
-            }  catch (NullPointerException e) {
-                //System.err.println("Nothing Connected");  
+            } catch (NullPointerException e) {
+                // System.err.println("Nothing Connected");
             } catch (RuntimeException e) {
                 System.err.println("Error on proxy");
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
-            }    
+            }
         }
         repository.closeStub();
         System.out.println("[Departure Transfer] terminating...");

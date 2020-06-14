@@ -5,8 +5,6 @@ import Rhapsody.common.States;
 import Rhapsody.server.communications.TunnelProvider;
 import Rhapsody.server.interfaces.PassengerInterface;
 import Rhapsody.server.stubs.ArrivalExitStub;
-import Rhapsody.server.stubs.ArrivalLoungeStub;
-import Rhapsody.server.stubs.ArrivalQuayStub;
 import Rhapsody.server.stubs.GeneralRepositoryStub;
 
 /**
@@ -21,16 +19,6 @@ public class DepartureEntrance {
 	 * Logger entity
 	 */
 	private GeneralRepositoryStub generalRepository;
-
-	/**
-	 * Entity to signal porter simulation has ended
-	 */
-	private ArrivalLoungeStub arrivalLounge;
-
-	/**
-	 * Entity to signal busdriver simulation has ended
-	 */
-	private ArrivalQuayStub arrivalTerminalTransfer;
 
 	/**
 	 * Entity to synch the exits
@@ -54,11 +42,8 @@ public class DepartureEntrance {
 	 * @param lounge
 	 * @param arrivalTerminalTransfer
 	 */
-	public DepartureEntrance(GeneralRepositoryStub generalRepository, ArrivalExitStub arrivalExitStub,
-			ArrivalLoungeStub lounge, ArrivalQuayStub arrivalTerminalTransfer) {
+	public DepartureEntrance(GeneralRepositoryStub generalRepository, ArrivalExitStub arrivalExitStub) {
 		this.generalRepository = generalRepository;
-		this.arrivalLounge = lounge;
-		this.arrivalTerminalTransfer = arrivalTerminalTransfer;
 		this.passengersTerminated = 0;
 		this.arrivalExit = arrivalExitStub;
 		this.generalRepository.registerMem(5);

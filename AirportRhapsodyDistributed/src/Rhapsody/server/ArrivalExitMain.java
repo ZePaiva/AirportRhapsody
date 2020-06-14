@@ -10,8 +10,6 @@ import Rhapsody.server.communications.ServerCom;
 import Rhapsody.server.communications.TunnelProvider;
 import Rhapsody.server.proxies.ArrivalExitProxy;
 import Rhapsody.server.sharedRegions.ArrivalExit;
-import Rhapsody.server.stubs.ArrivalLoungeStub;
-import Rhapsody.server.stubs.ArrivalQuayStub;
 import Rhapsody.server.stubs.GeneralRepositoryStub;
 
 /**
@@ -40,14 +38,12 @@ public class ArrivalExitMain {
          * Create stubs for cross comunication
          */
         GeneralRepositoryStub repository = new GeneralRepositoryStub();
-        ArrivalQuayStub arrivalQuay = new ArrivalQuayStub();
         DepartureEntranceStub departureEntrance = new DepartureEntranceStub();
-        ArrivalLoungeStub arrivalLounge = new ArrivalLoungeStub();
 
         /**
          * Create main entity
          */
-        ArrivalExit arrivalExit = new ArrivalExit(repository, arrivalQuay, departureEntrance, arrivalLounge);
+        ArrivalExit arrivalExit = new ArrivalExit(repository, departureEntrance);
 
         /**
          * Create main entity proxy
@@ -69,7 +65,7 @@ public class ArrivalExitMain {
             } catch (SocketTimeoutException e) {
                 System.err.printf("%s [ARRIVALEXIT] socket timouted\n", Thread.currentThread().getName());
             } catch (NullPointerException e) {
-                //System.err.println("Nothing Connected");  
+                // System.err.println("Nothing Connected");
             } catch (RuntimeException e) {
                 System.err.println("Error on proxy");
                 e.printStackTrace();

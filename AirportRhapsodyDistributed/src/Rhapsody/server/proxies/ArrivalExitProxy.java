@@ -1,9 +1,6 @@
 package Rhapsody.server.proxies;
 
-import javax.management.RuntimeOperationsException;
-
 import Rhapsody.common.Message;
-import Rhapsody.common.RunParameters;
 import Rhapsody.server.communications.TunnelProvider;
 import Rhapsody.server.sharedRegions.ArrivalExit;
 
@@ -31,6 +28,7 @@ public class ArrivalExitProxy implements SharedMemoryProxy {
 
     /**
      * Arrival Exit Proxy constructor
+     * 
      * @param arrivalExit
      */
     public ArrivalExitProxy(ArrivalExit arrivalExit) {
@@ -66,15 +64,15 @@ public class ArrivalExitProxy implements SharedMemoryProxy {
             // in case it is departure entrance wanting to know how many are blocked @ exit
             case DEPARTURE_REQUEST_HOWMANY:
                 reply.setInt1(arrivalExit.currentBlockedPassengers());
-                //arrivalExit.synchBlocked();
+                // arrivalExit.synchBlocked();
                 break;
             // in case it is departure entrance wanting to wake up all passengers
             case DEPARTURE_REQUEST_WAKEUP:
                 arrivalExit.wakeCurrentBlockedPassengers();
                 break;
             case SIM_ENDED:
-                this.finished=true;
-                break;        
+                this.finished = true;
+                break;
             default:
                 throw new RuntimeException("Wrong operation in message: " + pkt.getType());
         }
@@ -82,7 +80,8 @@ public class ArrivalExitProxy implements SharedMemoryProxy {
     }
 
     /**
-     * Checks if the simulation has ended, terminates when all flights have been completed
+     * Checks if the simulation has ended, terminates when all flights have been
+     * completed
      */
     public boolean hasSimEnded() {
         return this.finished;
