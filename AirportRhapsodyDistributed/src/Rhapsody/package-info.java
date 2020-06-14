@@ -1,5 +1,5 @@
 /**
- * Main Classes of the simulation entities
+ * Simulation package
  * 
  * @author José Paiva
  * @author André Paiva

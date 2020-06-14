@@ -76,8 +76,7 @@ public class TunnelProvider extends Thread implements PassengerInterface, BusDri
     private int[] seats;
 
     /**
-     * Situations array if it is a passenger
-     * 0 is FDT 1 is TRT
+     * Situations array if it is a passenger 0 is FDT 1 is TRT
      */
     private int situation;
 
@@ -106,7 +105,7 @@ public class TunnelProvider extends Thread implements PassengerInterface, BusDri
     public void run() {
         try {
             Message rcv = (Message) serverCom.readObject();
-            if (rcv!=null) {
+            if (rcv != null) {
                 Message snd = sharedMemory.proccesPacket(rcv);
                 serverCom.writeObject(snd);
                 serverCom.close();
@@ -114,11 +113,11 @@ public class TunnelProvider extends Thread implements PassengerInterface, BusDri
                 System.out.println("Received no message");
             }
         } catch (NullPointerException e) {
-            //System.err.println("Nothing connected");
+            // System.err.println("Nothing connected");
         } catch (Exception e) {
             System.err.println("Exception");
         }
-        
+
     }
 
     /**
@@ -256,7 +255,7 @@ public class TunnelProvider extends Thread implements PassengerInterface, BusDri
      * @param bag
      */
     public void setCurrentBag(Luggage bag) {
-        this.currentBag=bag;
+        this.currentBag = bag;
     }
 
     /**
@@ -265,24 +264,24 @@ public class TunnelProvider extends Thread implements PassengerInterface, BusDri
      * @return passengerSituation
      */
     public String getSituation() {
-        return this.situation==1 ? "FDT" : "TRT";
+        return this.situation == 1 ? "FDT" : "TRT";
     }
 
     /**
      * Set passenger startign bags
      * 
-     * @param startingBags
+     * @param startingbags
      */
     public void setStartingBags(int startingbags) {
-        this.startingBags=startingbags;
+        this.startingBags = startingbags;
     }
 
     /**
-     * Set passenget situation 
+     * Set passenget situation
      * 
      * @param situation
      */
     public void setSituation(int situation) {
-        this.situation=situation;
+        this.situation = situation;
     }
 }

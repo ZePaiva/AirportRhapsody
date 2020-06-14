@@ -11,7 +11,7 @@ import Rhapsody.common.MessageType;
 import Rhapsody.common.RunParameters;
 
 /**
- * Arrival lounge stub, implements an interface for the clients to interact with 
+ * Arrival lounge stub, implements an interface for the clients to interact with
  * the arrival lounge from a safe distance
  * 
  * @author José Paiva
@@ -20,16 +20,18 @@ import Rhapsody.common.RunParameters;
  * @version 1.0
  */
 public class ArrivalLoungeStub {
-    
-    /**
-     * Prettify
-     */
+
+	/**
+	 * Prettify
+	 */
 	public static final String ANSI_WHITE = "\u001B[0m\u001B[37m";
 
-    public ArrivalLoungeStub() {}
-    
+	public ArrivalLoungeStub() {
+	}
+
 	/**
-	 * Puts porter in {@link Rhapsody.entities.states.PorterState#WAITING_FOR_PLANE_TO_LAND} state
+	 * Puts porter in {@link Rhapsody.common.States#WAITING_FOR_PLANE_TO_LAND} state
+	 * 
 	 * @return simulationContinue
 	 */
 	public boolean takeARest() {
@@ -42,7 +44,8 @@ public class ArrivalLoungeStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 		Porter porter = (Porter) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setState(porter.getPorterState());
@@ -56,11 +59,13 @@ public class ArrivalLoungeStub {
 	}
 
 	/**
-	 * Puts passenger in {@link Rhapsody.entities.states.PassengerState#AT_DISEMBARKING_ZONE} state. <p/>
+	 * Puts passenger in {@link Rhapsody.common.States#AT_DISEMBARKING_ZONE} state.
+	 * <p/>
 	 * Disembarks passenger and notifies all other passengers
+	 * 
 	 * @param flightId
-	 * @param startingBags
-	 * @param situation
+	 * @param sb
+	 * @param sit
 	 */
 	public void whatShouldIDo(int flightId, int sb, int sit) {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalLoungeHostName, RunParameters.ArrivalLoungePort);
@@ -71,8 +76,9 @@ public class ArrivalLoungeStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
-		
+		}
+		;
+
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 
@@ -89,8 +95,11 @@ public class ArrivalLoungeStub {
 	}
 
 	/**
-	 * Porter method to try to collect a bag or fail and exit the bag collection loop <p/>
-     * <b>DOES NOT ALTER BAGS IN PLANE'S HOLD OR STOREROOM</b>  
+	 * Porter method to try to collect a bag or fail and exit the bag collection
+	 * loop
+	 * <p/>
+	 * <b>DOES NOT ALTER BAGS IN PLANE'S HOLD OR STOREROOM</b>
+	 * 
 	 * @return planeHasBags of type boolean
 	 */
 	public Luggage tryToCollectABag() {
@@ -102,7 +111,8 @@ public class ArrivalLoungeStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 		Porter porter = (Porter) Thread.currentThread();
 		Message pkt = new Message();
 
@@ -129,7 +139,8 @@ public class ArrivalLoungeStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
 
@@ -153,7 +164,8 @@ public class ArrivalLoungeStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 		Passenger passenger = (Passenger) Thread.currentThread();
 		int[] sits = Arrays.asList(situations).stream().mapToInt(s -> s.equals("FDT") ? 1 : 0).toArray();
 		Message pkt = new Message();
@@ -179,7 +191,8 @@ public class ArrivalLoungeStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
 		clientCom.writeObject(pkt);

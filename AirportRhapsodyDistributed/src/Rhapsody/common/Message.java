@@ -3,8 +3,8 @@ package Rhapsody.common;
 import java.io.Serializable;
 
 /**
- * TCP Packet data type for the message passing
- * This is the most important class for the message-apssing logic as it implements the messages structures
+ * TCP Packet data type for the message passing This is the most important class
+ * for the message-apssing logic as it implements the messages structures
  * 
  * @author José Paiva
  * @author André Mourato
@@ -12,12 +12,12 @@ import java.io.Serializable;
  * @version 1.0
  */
 public class Message implements Serializable {
-    
+
     /**
      * Serial UID
      */
     private static final long serialVersionUID = 202005L;
-    
+
     /**
      * Entity ID
      * 
@@ -47,7 +47,7 @@ public class Message implements Serializable {
     private boolean validState;
 
     /**
-     * Packet type 
+     * Packet type
      * 
      * @serial type
      */
@@ -65,65 +65,65 @@ public class Message implements Serializable {
      * 
      * @serial int1
      */
-	private int int1;
+    private int int1;
 
-	/**
+    /**
      * First int value is valid
      * 
      * @serial validInt1
      */
-	private boolean validInt1;
+    private boolean validInt1;
 
-	/**
+    /**
      * Second int value to be transported
      * 
      * @serial int2
      */
-	private int int2;
+    private int int2;
 
-	/**
+    /**
      * Second int value is valid
      * 
      * @serial validInt2
      */
-	private boolean validInt2;
+    private boolean validInt2;
 
-	/**
+    /**
      * Third int value to be transported
      * 
      * @serial int3
      */
-	private int int3;
+    private int int3;
 
-	/**
+    /**
      * Third int value is valid
      * 
      * @serial validInt3
      */
-	private boolean validInt3;
+    private boolean validInt3;
 
-	/**
+    /**
      * First boolean value to be transported
      * 
      * @serial bool1
      */
-	private boolean bool1;
+    private boolean bool1;
 
-	/**
+    /**
      * First boolean value is valid
      * 
      * @serial validBool1
      */
-	private boolean validBool1;
+    private boolean validBool1;
 
-	/**
+    /**
      * Second boolean value to be transported
      * 
      * @serial boole2
      */
-	private boolean bool2;
+    private boolean bool2;
 
-	/**
+    /**
      * Second boolean value is valid
      * 
      * @serial validBool2
@@ -143,7 +143,7 @@ public class Message implements Serializable {
      * @serial validIntArray1
      */
     private boolean validIntArray1;
-    
+
     /**
      * Integer array, useful to pass amount of luggages at start of passenger
      * 
@@ -158,7 +158,7 @@ public class Message implements Serializable {
      */
     private boolean validIntArray2;
 
-    /** 
+    /**
      * Packet instantiation
      */
     public Message() {
@@ -190,7 +190,7 @@ public class Message implements Serializable {
      */
     public void setId(int id) {
         this.id = id;
-        this.validID=true;
+        this.validID = true;
     }
 
     /**
@@ -224,7 +224,7 @@ public class Message implements Serializable {
     /**
      * Return entity state validity
      * 
-     * @return entity state validity 
+     * @return entity state validity
      */
     public boolean getValidState() {
         return this.validState;
@@ -250,9 +250,9 @@ public class Message implements Serializable {
     }
 
     /**
-     * Get type validity 
+     * Get type validity
      * 
-     * @return packet type validity 
+     * @return packet type validity
      */
     public boolean getValidType() {
         return this.validType;
@@ -274,7 +274,7 @@ public class Message implements Serializable {
      */
     public void setInt1(int int1) {
         this.int1 = int1;
-        this.validInt1=true;
+        this.validInt1 = true;
     }
 
     /**
@@ -302,7 +302,7 @@ public class Message implements Serializable {
      */
     public void setInt2(int int2) {
         this.int2 = int2;
-        this.validInt2=true;
+        this.validInt2 = true;
     }
 
     /**
@@ -330,7 +330,7 @@ public class Message implements Serializable {
      */
     public void setInt3(int int3) {
         this.int3 = int3;
-        this.validInt3=true;
+        this.validInt3 = true;
     }
 
     /**
@@ -358,7 +358,7 @@ public class Message implements Serializable {
      */
     public void setBool1(boolean bool1) {
         this.bool1 = bool1;
-        this.validBool1=true;
+        this.validBool1 = true;
     }
 
     /**
@@ -386,7 +386,7 @@ public class Message implements Serializable {
      */
     public void setBool2(boolean bool2) {
         this.bool2 = bool2;
-        this.validBool2=true;
+        this.validBool2 = true;
     }
 
     /**
@@ -414,13 +414,13 @@ public class Message implements Serializable {
      */
     public void setIntArray1(int[] intArray1) {
         this.intArray1 = intArray1;
-        this.validIntArray1=true;
+        this.validIntArray1 = true;
     }
 
     /**
      * Get validity of intArray1 field
      * 
-     * @return
+     * @return validIntArray1
      */
     public boolean getValidIntArray1() {
         return this.validIntArray1;
@@ -442,13 +442,13 @@ public class Message implements Serializable {
      */
     public void setIntArray2(int[] intArray2) {
         this.intArray2 = intArray2;
-        this.validIntArray2=true;
+        this.validIntArray2 = true;
     }
 
     /**
      * Get validity of intArray2 field
      * 
-     * @return
+     * @return validIntArray2
      */
     public boolean getValidIntArray2() {
         return this.validIntArray2;
@@ -458,18 +458,10 @@ public class Message implements Serializable {
      * To String method
      */
     public String toString() {
-        return "{" +
-            " id='" + getId() + "'" +
-            ", state='" + getState() + "'" +
-            ", type='" + getType() + "'" +
-            ", int1='" + getInt1() + "'" +
-            ", int2='" + getInt2() + "'" +
-            ", int3='" + getInt3() + "'" +
-            ", bool1='" + bool1 + "'" +
-            ", bool2='" + bool2 + "'" +
-            ", intArray1='" + getIntArray1() + "'" +
-            ", intArray2='" + getIntArray2() + "'" +
-            "}";
+        return "{" + " id='" + getId() + "'" + ", state='" + getState() + "'" + ", type='" + getType() + "'"
+                + ", int1='" + getInt1() + "'" + ", int2='" + getInt2() + "'" + ", int3='" + getInt3() + "'"
+                + ", bool1='" + bool1 + "'" + ", bool2='" + bool2 + "'" + ", intArray1='" + getIntArray1() + "'"
+                + ", intArray2='" + getIntArray2() + "'" + "}";
     }
 
 }

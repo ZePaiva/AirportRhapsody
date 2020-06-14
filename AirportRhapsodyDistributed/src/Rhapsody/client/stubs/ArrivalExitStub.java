@@ -13,21 +13,22 @@ import Rhapsody.common.RunParameters;
  * @author André Mourato
  */
 public class ArrivalExitStub {
-	
+
 	/**
-     * Prettify
-     */
+	 * Prettify
+	 */
 	public static final String ANSI_YELLOW = "\u001B[0m\u001B[33m";
 
 	/**
 	 * Arrival exit stub constructor
 	 */
-    public ArrivalExitStub() {}
+	public ArrivalExitStub() {
+	}
 
 	/**
 	 * GoHome method to signal a passenger his rhapsody has ended
+	 * 
 	 * @param lastFlight
-	 * @param departed
 	 */
 	public void goHome(boolean lastFlight) {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
@@ -38,7 +39,8 @@ public class ArrivalExitStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 		Passenger passenger = (Passenger) Thread.currentThread();
 		Message pkt = new Message();
 		pkt.setType(MessageType.PASSENGER_GOING_HOME);
@@ -46,12 +48,11 @@ public class ArrivalExitStub {
 		pkt.setState(passenger.getCurrentState());
 		pkt.setBool1(lastFlight);
 
-		
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
 
 		passenger.setCurrentState(pkt.getState());
-		
+
 		clientCom.close();
 	}
 
@@ -67,11 +68,12 @@ public class ArrivalExitStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 
 		Message pkt = new Message();
 		pkt.setType(MessageType.DEPARTURE_SYNCH);
-		
+
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
 		clientCom.close();
@@ -79,6 +81,7 @@ public class ArrivalExitStub {
 
 	/**
 	 * Getter method to obtain currentBlocked threads
+	 * 
 	 * @return number of waiting threads in object
 	 */
 	public int currentBlockedPassengers() {
@@ -90,7 +93,8 @@ public class ArrivalExitStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 
 		Message pkt = new Message();
 		pkt.setType(MessageType.DEPARTURE_REQUEST_HOWMANY);
@@ -104,7 +108,7 @@ public class ArrivalExitStub {
 	/**
 	 * Method to wake all threads in object monitor
 	 */
-	public void wakeCurrentBlockedPassengers(){
+	public void wakeCurrentBlockedPassengers() {
 		ClientCom clientCom = new ClientCom(RunParameters.ArrivalExitHostName, RunParameters.ArrivalExitPort);
 		while (!clientCom.open()) {
 			System.out.println("Arrival Exit not active yet, sleeping for 1 seccond");
@@ -113,7 +117,8 @@ public class ArrivalExitStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 
 		Message pkt = new Message();
 		pkt.setType(MessageType.DEPARTURE_REQUEST_WAKEUP);
@@ -135,7 +140,8 @@ public class ArrivalExitStub {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		};
+		}
+		;
 		Message pkt = new Message();
 		pkt.setType(MessageType.SIM_ENDED);
 		clientCom.writeObject(pkt);

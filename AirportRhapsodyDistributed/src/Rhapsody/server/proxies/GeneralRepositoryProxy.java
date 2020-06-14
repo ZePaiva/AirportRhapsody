@@ -34,7 +34,7 @@ public class GeneralRepositoryProxy implements SharedMemoryProxy {
     /**
      * Message processor
      * 
-     * @param packet message from clients
+     * @param pkt message from clients
      * @return reply to message
      */
     public Message proccesPacket(Message pkt) {

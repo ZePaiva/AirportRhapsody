@@ -1,0 +1,11 @@
+Rhapsody.client
+Rhapsody.client.communications
+Rhapsody.client.entities
+Rhapsody.client.stubs
+Rhapsody.common
+Rhapsody.server
+Rhapsody.server.communications
+Rhapsody.server.interfaces
+Rhapsody.server.proxies
+Rhapsody.server.sharedRegions
+Rhapsody.server.stubs

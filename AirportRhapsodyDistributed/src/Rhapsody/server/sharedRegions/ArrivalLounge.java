@@ -111,8 +111,7 @@ public class ArrivalLounge {
     }
 
     /**
-     * Puts porter in
-     * {@link Rhapsody.entities.states.PorterState#WAITING_FOR_PLANE_TO_LAND} state
+     * Puts porter in {@link Rhapsody.common.States#WAITING_FOR_PLANE_TO_LAND}
      * 
      * @return simulationContinue
      */
@@ -180,8 +179,7 @@ public class ArrivalLounge {
     }
 
     /**
-     * Puts passenger in
-     * {@link Rhapsody.entities.states.PassengerState#AT_DISEMBARKING_ZONE} state.
+     * Puts passenger in {@link Rhapsody.common.States#AT_DISEMBARKING_ZONE} state.
      * <p/>
      * Disembarks passenger and notifies all other passengers
      * 

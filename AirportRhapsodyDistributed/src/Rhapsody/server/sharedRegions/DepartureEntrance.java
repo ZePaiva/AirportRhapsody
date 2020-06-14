@@ -36,7 +36,7 @@ public class DepartureEntrance {
 	 * Entity to synch the exits
 	 */
 	private ArrivalExitStub arrivalExit;
-	
+
 	/**
 	 * Variable to account for terminated passengers
 	 */
@@ -47,31 +47,30 @@ public class DepartureEntrance {
 	public static final String ANSI_BLUE = "\u001B[0m\u001B[34m";
 
 	/**
-	 * Constructor for DepartureTerminalEntrance
+	 * Constructor for Departure Terminal Entrance
 	 * 
 	 * @param generalRepository
-	 * @param arrivalTerminalExit
+	 * @param arrivalExitStub
 	 * @param lounge
 	 * @param arrivalTerminalTransfer
-	 * @param passengers
 	 */
-	public DepartureEntrance(GeneralRepositoryStub generalRepository, 
-								ArrivalExitStub arrivalExitStub,
-                                ArrivalLoungeStub lounge, 
-                                ArrivalQuayStub arrivalTerminalTransfer) {
-		this.generalRepository=generalRepository;
-		this.arrivalLounge=lounge;
-		this.arrivalTerminalTransfer=arrivalTerminalTransfer;
-		this.passengersTerminated=0;
-		this.arrivalExit=arrivalExitStub;
+	public DepartureEntrance(GeneralRepositoryStub generalRepository, ArrivalExitStub arrivalExitStub,
+			ArrivalLoungeStub lounge, ArrivalQuayStub arrivalTerminalTransfer) {
+		this.generalRepository = generalRepository;
+		this.arrivalLounge = lounge;
+		this.arrivalTerminalTransfer = arrivalTerminalTransfer;
+		this.passengersTerminated = 0;
+		this.arrivalExit = arrivalExitStub;
 		this.generalRepository.registerMem(5);
 	}
 
 	/**
-	 * Blocking method that signals a passenger is ready to leave the airport. <p/>
-	 * Internally will communicate with ArrivalTerminalExit to coordinate passengers exiting the airport.
+	 * Blocking method that signals a passenger is ready to leave the airport.
+	 * <p/>
+	 * Internally will communicate with ArrivalTerminalExit to coordinate passengers
+	 * exiting the airport.
+	 * 
 	 * @param lastFlight
-	 * @param exited
 	 */
 	public synchronized void prepareNextLeg(boolean lastFlight) {
 		PassengerInterface passenger = (TunnelProvider) Thread.currentThread();
@@ -79,20 +78,22 @@ public class DepartureEntrance {
 		this.generalRepository.updatePassengerState(passenger.getEntityState(), passenger.getEntityID(), true);
 		this.generalRepository.updateTRTPassengers(1, false);
 		int exited = arrivalExit.currentBlockedPassengers();
-		System.out.printf(ANSI_RED+"[PASSENGER] P%d terminating... | PT %d | P %d"+ANSI_RESET+"\n", passenger.getEntityID(), this.passengersTerminated+exited, RunParameters.N);
-		if (!(exited+this.passengersTerminated==RunParameters.N)) {
-			System.out.printf(ANSI_RED+"[PASSENGER] P%d blocking \n"+ANSI_RESET+"", passenger.getEntityID());
+		System.out.printf(ANSI_RED + "[PASSENGER] P%d terminating... | PT %d | P %d" + ANSI_RESET + "\n",
+				passenger.getEntityID(), this.passengersTerminated + exited, RunParameters.N);
+		if (!(exited + this.passengersTerminated == RunParameters.N)) {
+			System.out.printf(ANSI_RED + "[PASSENGER] P%d blocking \n" + ANSI_RESET + "", passenger.getEntityID());
 			try {
 				wait();
-				System.out.printf(ANSI_RED+"[PASSENGER] P%d woke"+ANSI_RESET+"\n", passenger.getEntityID());
-			} catch (InterruptedException e) {}	
+				System.out.printf(ANSI_RED + "[PASSENGER] P%d woke" + ANSI_RESET + "\n", passenger.getEntityID());
+			} catch (InterruptedException e) {
+			}
 		}
-		this.passengersTerminated=0;
+		this.passengersTerminated = 0;
 		// in case it is the last flight
-		if ( lastFlight ) {
-			System.out.printf(ANSI_RED+"[PASSENGER] Simulation ended"+ANSI_RESET+"\n");
-			//arrivalTerminalTransfer.endOfWork();
-			//arrivalLounge.endOfWork();
+		if (lastFlight) {
+			System.out.printf(ANSI_RED + "[PASSENGER] Simulation ended" + ANSI_RESET + "\n");
+			// arrivalTerminalTransfer.endOfWork();
+			// arrivalLounge.endOfWork();
 		}
 	}
 
@@ -100,12 +101,13 @@ public class DepartureEntrance {
 	 * Method to increment the number of passengers that terminated in this monitor
 	 */
 	public synchronized void synchBlocked() {
-		System.out.printf(ANSI_BLUE+"[ARRIVALTERM] Synching "+ANSI_RESET+"\n");
+		System.out.printf(ANSI_BLUE + "[ARRIVALTERM] Synching " + ANSI_RESET + "\n");
 		this.passengersTerminated++;
 	}
 
 	/**
 	 * Method to get all waiting threads in this object monitor
+	 * 
 	 * @return waitingThreads
 	 */
 	public synchronized int currentBlockedPassengers() {
@@ -115,9 +117,9 @@ public class DepartureEntrance {
 	/**
 	 * Method to wake all waiting threads in this object monitor
 	 */
-	public synchronized void wakeCurrentBlockedPassengers(){
+	public synchronized void wakeCurrentBlockedPassengers() {
 		PassengerInterface passenger = (TunnelProvider) Thread.currentThread();
-		System.out.printf(ANSI_RED+"[PASSENGER]  P%d waking others"+ANSI_RESET+"\n", passenger.getEntityID());
+		System.out.printf(ANSI_RED + "[PASSENGER]  P%d waking others" + ANSI_RESET + "\n", passenger.getEntityID());
 		notifyAll();
 	}
 }

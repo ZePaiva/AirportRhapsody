@@ -109,25 +109,17 @@ public class GeneralRepository {
 	private int bagsOnPlane;
 
 	/**
-	 * General Repository constructor
+	 * General repository constructor
 	 * 
 	 * @param logFilePath
-	 * @param flight
 	 * @param busDriverState
 	 * @param porterState
 	 * @param passengersStates
-	 * @param bagsOnConveyorBelt
-	 * @param bagsOnStoreRoom
 	 * @param waitingQueue
 	 * @param busSeats
 	 * @param passengersSituation
 	 * @param startingBags
 	 * @param currentBags
-	 * @param passengersFDT
-	 * @param passengersTRT
-	 * @param totalBagsTransported
-	 * @param totalBagsLost
-	 * @param bagsOnPlane
 	 */
 	public GeneralRepository(String logFilePath, States busDriverState, States porterState, States[] passengersStates,
 			int[] waitingQueue, int[] busSeats, String[] passengersSituation, int[] startingBags, int[] currentBags) {
@@ -352,7 +344,6 @@ public class GeneralRepository {
 	 * Update bus waiting line with one less passenger
 	 * <p/>
 	 * 
-	 * @param passengerId
 	 * @param noLog
 	 */
 	public synchronized void removeFromWaitingQueue(boolean noLog) {
@@ -388,7 +379,6 @@ public class GeneralRepository {
 	 * Update bus seats with one less passenger
 	 * <p/>
 	 * 
-	 * @param passengerId
 	 * @param noLog
 	 */
 	public synchronized void removeFromBusSeat(boolean noLog) {

@@ -75,7 +75,6 @@ public class ArrivalExit {
 	 * GoHome method to signal a passenger his rhapsody has ended
 	 * 
 	 * @param lastFlight
-	 * @param departed
 	 */
 	public synchronized void goHome(boolean lastFlight) {
 		PassengerInterface passenger = (TunnelProvider) Thread.currentThread();
