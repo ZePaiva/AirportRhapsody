@@ -444,7 +444,7 @@ public class GeneralRepositoryStub {
 		Message pkt = new Message();
 		pkt.setType(MessageType.UP_BAG_L);
 		pkt.setBool1(b);
-		pkt.setId(lostBags);
+		pkt.setInt1(lostBags);
 		clientCom.writeObject(pkt);
 		pkt = (Message) clientCom.readObject();
 		clientCom.close();

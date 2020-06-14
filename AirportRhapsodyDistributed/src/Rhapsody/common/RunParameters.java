@@ -39,17 +39,21 @@ public class RunParameters {
     public static final int busSchedule = 100;
 
     /**
+     * Bag loss chance (in 0 to 100)
+     */
+    public static final int lossChance = 10;
+
+    /**
      * Log filename
      */
-    public static final String logFile = "log_"+ new Date().toString().replace(' ', '_') +".txt";
-
+    public static final String logFile = "log_" + new Date().toString().replace(' ', '_') + ".txt";
 
     /**
      * Arrival Lounge Port
      */
     public static final int ArrivalLoungePort = 22120;
 
-    /** 
+    /**
      * Arrival Lounge Hostname
      */
     public static final String ArrivalLoungeHostName = "localhost";
@@ -78,7 +82,7 @@ public class RunParameters {
      * Baggage Collection Point Port
      */
     public static final int BaggageCollectionPort = 22123;
-     
+
     /**
      * Baggage Collection Point Hostname
      */
@@ -109,7 +113,7 @@ public class RunParameters {
      */
     public static final int DepartureQuayPort = 22126;
 
-    /** 
+    /**
      * Departure Terminal Transfer Quay Hostname
      */
     public static final String DepartureQuayHostName = "localhost";
@@ -133,5 +137,5 @@ public class RunParameters {
      * Repository Hostname
      */
     public static final String RepositoryHostName = "localhost";
-    
+
 }

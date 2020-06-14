@@ -286,7 +286,7 @@ public class ArrivalLounge {
                 if (planeHoldLuggage[i] == null) {
                     planeHoldLuggage[i] = new LinkedList<>();
                 }
-                if (random.nextInt(100) <= 90) {
+                if (random.nextInt(101) <= 100 - RunParameters.lossChance) {
                     planeHoldLuggage[i].add(new Luggage(passengerID, situations[i] == 1 ? "FDT" : "TRT"));
                 }
             }
